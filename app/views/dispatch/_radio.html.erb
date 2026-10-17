@@ -2,7 +2,7 @@
 <% can_listen = Current.user.can_listen_to?(radio) %>
 <% can_transmit = Current.user.can_transmit_on?(radio) %>
 <% can_link = Current.user.can_connect?(radio) %>
-<% webrtc = radio.server.webrtc_url.present? %>
+<% webrtc = radio.server.webrtc? %>
 <article id="<%= dom_id(radio) %>"
          class="<%= class_names("card flex min-w-0 flex-col gap-2 p-3 transition-colors",
                "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-rx",
@@ -11,10 +11,12 @@
                "can-link": can_link) %>"
          data-controller="radio" data-dispatch-target="radio"
          data-radio-id-value="<%= radio.id %>" data-radio-node-value="<%= radio.node %>"
-         data-radio-webrtc-value="<%= radio.server.webrtc_url %>"
+         data-radio-call-url-value="<%= radio_call_path(radio) %>"
+         data-radio-ptt-url-value="<%= radio_ptt_path(radio) %>"
          data-radio-can-transmit-value="<%= can_transmit %>"
          data-action="click->radio#select">
   <%= turbo_stream_from DispatchBroadcast.stream(radio) %>
+  <audio data-radio-target="audio" autoplay hidden></audio>
   <header class="flex min-w-0 items-center gap-2">
     <h2 class="truncate text-base font-semibold text-ink-strong"><%= radio.name %></h2>
     <span class="shrink-0 text-faint tabular-nums"><%= radio.node %></span>

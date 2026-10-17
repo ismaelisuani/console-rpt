@@ -1,0 +1,15 @@
+#!/bin/sh
+# Rebuilds vendor/javascript/jssip.js: JsSIP and its dependencies in one ES
+# module (the jspm build that importmap downloads is split in chunks it
+# doesn't fetch). Needs Node.js. usage: script/vendor-jssip [version]
+set -e
+version="${1:-3.13.8}"
+out="$(cd "$(dirname "$0")/.." && pwd)/vendor/javascript/jssip.js"
+work=$(mktemp -d)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
+npm init -y > /dev/null
+npm install --silent "jssip@$version" esbuild
+echo 'export { default } from "jssip"' > entry.js
+./node_modules/.bin/esbuild entry.js --bundle --format=esm --platform=browser --minify \
+	--legal-comments=eof --define:process.env.NODE_ENV='"production"' --outfile="$out"

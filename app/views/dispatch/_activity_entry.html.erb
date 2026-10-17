@@ -8,7 +8,7 @@
     <% elsif event.unit_identifier.present? %>· <span class="text-warn-ink"><%= unit_identifier_label(event.decoder, event.unit_identifier) %> <%= t("dispatch.radio.unregistered") %></span>
     <% end %>
   <% when "transmit_start" %>
-    <span class="font-semibold text-tx-ink"><%= t("dispatch.activity.tx") %></span> <%= event.radio.name %> · <%= link_source_label(event.radio, event.other_node) %>
+    <span class="font-semibold text-tx-ink"><%= t("dispatch.activity.tx") %></span> <%= event.radio.name %> · <%= transmitter_label(event.radio, event.other_node, event.user) %>
   <% when "linked", "unlinked" %>
     <%= t("dispatch.activity.#{event.kind}", radio: event.radio.name, other: link_source_label(event.radio, event.other_node)) %>
     <% if event.user %><%= t("dispatch.activity.by", user: event.user.name) %><% end %>

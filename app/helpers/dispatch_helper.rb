@@ -15,6 +15,13 @@ module DispatchHelper
     Radio.find_by(server: radio.server, node: node)&.name || t("dispatch.radio.node", node: node)
   end
 
+  # Who transmits: a console user, the radio that keyed it up through a link, or the node itself
+  def transmitter_label(radio, node, user)
+    return t("dispatch.radio.console_user", user: user.name) if user
+
+    link_source_label(radio, node)
+  end
+
   def elapsed_tag(since)
     tag.span("", data: { controller: "elapsed", elapsed_since_value: since&.iso8601 }, class: "tabular-nums")
   end

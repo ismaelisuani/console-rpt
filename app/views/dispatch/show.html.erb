@@ -1,7 +1,9 @@
 <% content_for :title, t("nav.dispatch") %>
 <script type="application/json" id="dispatch-strings"><%= json_escape({
   muted: t("dispatch.radio.muted"), connected: t("dispatch.radio.connected"), disconnected: t("dispatch.radio.disconnected"),
-  pttHold: t("dispatch.radio.ptt_hold"), connectFirst: t("dispatch.radio.connect_first")
+  pttHold: t("dispatch.radio.ptt_hold"), connectFirst: t("dispatch.radio.connect_first"),
+  connecting: t("dispatch.radio.connecting"), callFailed: t("dispatch.radio.call_failed"),
+  callEnded: t("dispatch.radio.call_ended"), microphoneDenied: t("dispatch.radio.microphone_denied")
 }.to_json).html_safe %></script>
 <div class="flex min-h-0 flex-1" data-controller="dispatch" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup">
   <%= render "dispatch/phone" %>

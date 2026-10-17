@@ -30,10 +30,13 @@ en:
         ami_port: AMI port
         ami_username: AMI user
         archive_path: Air archive directory
+        console_secret: Console secret
         host: Address
         local: Local server
         name: Name
         online: Status
+        sip_password: SIP password
+        sip_username: SIP user
         ssh_port: SSH port
         ssh_username: SSH user
         webrtc_url: WebRTC address
@@ -95,9 +98,12 @@ en:
         ok: "%{server}: AMI connection OK (%{version})"
       form:
         ami: Manager interface (AMI)
+        generated: Generated automatically
         keep_password: Leave empty to keep it
         local_hint: The server where this console runs. Its configuration and air archive are read from disk; the others are reached over SSH.
         remote: Remote access (SSH)
+        webrtc: Audio (WebRTC)
+        webrtc_hint: The console calls the radios from the browser. The server's Asterisk needs the web-console configuration of asterisk-rpt with these values.
       index:
         check: Test
         empty: No servers yet.
@@ -134,9 +140,13 @@ en:
       tx: TX
       unlinked: "%{radio} ⇄ %{other} unlinked"
     radio:
+      call_ended: Call ended
+      call_failed: Could not connect
       connect: Connect
       connect_first: connect first
       connected: Connected
+      connecting: Connecting…
+      console_user: Console · %{user}
       disconnect: Disconnect
       disconnected: Disconnected
       incoming_audio: Incoming audio
@@ -146,6 +156,7 @@ en:
       link_title: Link %{radio} with
       links: Links
       local: Local
+      microphone_denied: Microphone blocked
       mode:
         listen: Listen only
         operate: Operation

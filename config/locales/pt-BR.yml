@@ -30,10 +30,13 @@ pt-BR:
         ami_port: Porta AMI
         ami_username: Usuário AMI
         archive_path: Diretório do arquivo de áudio
+        console_secret: Segredo do console
         host: Endereço
         local: Servidor local
         name: Nome
         online: Status
+        sip_password: Senha SIP
+        sip_username: Usuário SIP
         ssh_port: Porta SSH
         ssh_username: Usuário SSH
         webrtc_url: Endereço WebRTC
@@ -95,9 +98,12 @@ pt-BR:
         ok: "%{server}: conexão AMI OK (%{version})"
       form:
         ami: Interface de gerenciamento (AMI)
+        generated: Gerada automaticamente
         keep_password: Deixe vazio para manter
         local_hint: O servidor onde este console roda. A configuração e o arquivo de áudio são lidos do disco; os outros são acessados por SSH.
         remote: Acesso remoto (SSH)
+        webrtc: Áudio (WebRTC)
+        webrtc_hint: O console chama os rádios pelo navegador. O Asterisk do servidor precisa da configuração web-console do asterisk-rpt com estes valores.
       index:
         check: Testar
         empty: Ainda não há servidores.
@@ -134,9 +140,13 @@ pt-BR:
       tx: TX
       unlinked: "%{radio} ⇄ %{other} desconectados"
     radio:
+      call_ended: Chamada encerrada
+      call_failed: Não foi possível conectar
       connect: Conectar
       connect_first: conecte primeiro
       connected: Conectado
+      connecting: Conectando…
+      console_user: Console · %{user}
       disconnect: Desconectar
       disconnected: Desconectado
       incoming_audio: Áudio entrando
@@ -146,6 +156,7 @@ pt-BR:
       link_title: Interligar %{radio} com
       links: Interligações
       local: Local
+      microphone_denied: Microfone bloqueado
       mode:
         listen: Só escuta
         operate: Operação

@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       post :link
       post :unlink
     end
+    scope module: :radios do
+      resource :call, only: :create
+      resource :ptt, only: :create
+    end
   end
 
   resources :units, except: :show do

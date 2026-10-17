@@ -29,6 +29,21 @@
   </fieldset>
 
   <fieldset class="space-y-3 border-t border-line pt-4">
+    <legend class="label pr-2"><%= t(".webrtc") %></legend>
+    <p class="text-xs text-muted"><%= t(".webrtc_hint") %></p>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="field"><%= form.label :sip_username %><%= form.text_field :sip_username, class: "input" %></div>
+      <div class="field">
+        <%= form.label :sip_password %>
+        <%= form.password_field :sip_password, class: "input", autocomplete: "new-password", placeholder: (t(".generated") if server.new_record?) || t(".keep_password") %>
+      </div>
+    </div>
+    <% if server.persisted? %>
+      <dl class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 rounded-md bg-canvas p-3 text-xs">
+        <dt class="text-muted"><%= Server.human_attribute_name(:sip_password) %></dt><dd class="select-all font-mono"><%= server.sip_password %></dd>
+        <dt class="text-muted"><%= Server.human_attribute_name(:console_secret) %></dt><dd class="select-all font-mono"><%= server.console_secret %></dd>
+      </dl>
+    <% end %>
     <div class="field"><%= form.label :webrtc_url %><%= form.text_field :webrtc_url, class: "input", placeholder: "wss://radio.example.com:8089/ws" %></div>
     <div class="field"><%= form.label :archive_path %><%= form.text_field :archive_path, class: "input" %></div>
     <label class="flex items-center gap-2"><%= form.check_box :active, class: "checkbox" %><span><%= Server.human_attribute_name(:active) %></span></label>

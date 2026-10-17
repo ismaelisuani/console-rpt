@@ -51,8 +51,13 @@ class RadioState
       if event["Direction"] == "TX"
         return if @radio.transmitting? == keyed
 
-        @radio.update!(transmitting: keyed, transmitted_by: (event["Who"].presence if keyed), transmitting_since: now, last_activity_at: now)
-        record("transmit_start", other_node: event["Who"].presence) if keyed
+        who = event["Who"].presence
+        # Blank (the node itself) or a phone-mode link ("0..."): maybe the console
+        console_user = @radio.console_transmitter(now) if keyed && (who.nil? || who.start_with?("0"))
+        who = nil if console_user || who&.start_with?("0")
+        @radio.update!(transmitting: keyed, transmitted_by: (who if keyed), transmitted_by_user: (console_user if keyed),
+          transmitting_since: now, last_activity_at: now)
+        record("transmit_start", other_node: who, user: console_user) if keyed
       else
         return if @radio.receiving? == keyed
 

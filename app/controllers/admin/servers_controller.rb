@@ -27,6 +27,7 @@ module Admin
       # An empty password field keeps the stored one
       attributes = server_params
       attributes = attributes.except(:ami_password) if attributes[:ami_password].blank?
+      attributes = attributes.except(:sip_password) if attributes[:sip_password].blank?
       if @server.update(attributes)
         redirect_saved(admin_servers_path, @server, :updated)
       else
@@ -52,7 +53,7 @@ module Admin
       end
 
       def server_params
-        params.expect(server: %i[name host local ami_port ami_username ami_password ssh_port ssh_username webrtc_url archive_path active])
+        params.expect(server: %i[name host local ami_port ami_username ami_password ssh_port ssh_username sip_username sip_password webrtc_url archive_path active])
       end
   end
 end

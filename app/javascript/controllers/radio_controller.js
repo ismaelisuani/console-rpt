@@ -1,12 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
+import { RadioCall } from "lib/radio_audio"
 
 // One radio tile: selection (space bar PTT), volume and mute (kept per radio
-// in this browser), console connection and PTT. The audio itself (WebRTC to
-// the radio's server) plugs in through connect()/disconnect()/setPtt().
+// in this browser), the console's WebRTC call to the radio and PTT.
 export default class extends Controller {
   static targets = [ "volume", "volumeLabel", "muteButton", "speakerIcon", "mutedIcon", "connectButton",
-    "connectionBadge", "ptt", "pttHint", "linkDialog" ]
-  static values = { id: Number, node: String, webrtc: String, canTransmit: Boolean }
+    "connectionBadge", "ptt", "pttHint", "linkDialog", "audio" ]
+  static values = { id: Number, node: String, callUrl: String, pttUrl: String, canTransmit: Boolean }
+
+  disconnect() {
+    this.call?.stop()
+  }
 
   connect() {
     const saved = this.load()
@@ -52,7 +56,7 @@ export default class extends Controller {
     this.muteButtonTarget.classList.toggle("border-tx-strong", this.muted)
     this.muteButtonTarget.classList.toggle("text-tx-ink", this.muted)
     this.volumeTarget.classList.toggle("opacity-40", this.muted)
-    this.dispatch("volume", { detail: { volume: this.muted ? 0 : this.volumeTarget.value / 100 } })
+    this.call?.setVolume(this.volumeTarget.value / 100, this.muted)
   }
 
   // Console connection
@@ -60,18 +64,51 @@ export default class extends Controller {
     this.connected ? this.disconnectRadio() : this.connectRadio()
   }
 
-  connectRadio() {
-    if (this.connectButtonTarget.disabled) return
-    this.connected = true
-    this.renderConnection()
-    this.dispatch("connect")
+  async connectRadio() {
+    if (this.connectButtonTarget.disabled || this.call) return
+    this.setStatus("connecting")
+    const call = new RadioCall(this.audioTarget, { onEnded: () => this.callEnded(call) })
+    this.call = call
+    try {
+      const response = await fetch(this.callUrlValue, { method: "POST", headers: this.headers })
+      if (!response.ok) throw new Error(`http ${response.status}`)
+      await call.start(await response.json())
+      if (this.call !== call) return call.stop()
+      call.setVolume(this.volumeTarget.value / 100, this.muted)
+      this.connected = true
+      this.renderConnection()
+    } catch (error) {
+      if (this.call === call) this.call = null
+      call.stop()
+      this.connected = false
+      this.renderConnection()
+      this.setStatus(error.message === "microphone" ? "microphoneDenied" : "callFailed", "text-tx-ink")
+    }
   }
 
   disconnectRadio() {
-    this.connected = false
     this.pttUp()
+    const call = this.call
+    this.call = null
+    call?.stop()
+    this.connected = false
     this.renderConnection()
-    this.dispatch("disconnect")
+  }
+
+  callEnded(call) {
+    if (this.call !== call) return
+    this.call = null
+    this.pttUp()
+    const wasConnected = this.connected
+    this.connected = false
+    this.renderConnection()
+    if (wasConnected) this.setStatus("callEnded", "text-warn-ink")
+  }
+
+  setStatus(key, color) {
+    this.connectionBadgeTarget.textContent = this.t(key)
+    this.connectionBadgeTarget.classList.remove("text-tx-ink", "text-warn-ink")
+    if (color) this.connectionBadgeTarget.classList.add(color)
   }
 
   renderConnection() {
@@ -80,7 +117,7 @@ export default class extends Controller {
     button.classList.toggle("border-accent", this.connected)
     button.classList.toggle("bg-accent-soft", this.connected)
     button.classList.toggle("text-accent-ink", this.connected)
-    this.connectionBadgeTarget.textContent = this.t(this.connected ? "connected" : "disconnected")
+    this.setStatus(this.connected ? "connected" : "disconnected")
     if (this.hasPttTarget) {
       this.pttTarget.disabled = !this.connected
       this.pttHintTarget.textContent = this.t(this.connected ? "pttHold" : "connectFirst")
@@ -93,13 +130,14 @@ export default class extends Controller {
     event?.preventDefault()
     this.pttTarget.setPointerCapture?.(event.pointerId)
     this.pttTarget.toggleAttribute("data-pressed", true)
-    this.dispatch("ptt", { detail: { pressed: true } })
+    this.call?.ptt(true)
+    fetch(this.pttUrlValue, { method: "POST", headers: this.headers }).catch(() => {})
   }
 
   pttUp() {
     if (!this.hasPttTarget || !this.pttTarget.hasAttribute("data-pressed")) return
     this.pttTarget.removeAttribute("data-pressed")
-    this.dispatch("ptt", { detail: { pressed: false } })
+    this.call?.ptt(false)
   }
 
   // Link dialog
@@ -112,6 +150,10 @@ export default class extends Controller {
   }
 
   // Helpers
+  get headers() {
+    return { "X-CSRF-Token": document.querySelector("meta[name=csrf-token]")?.content, "Accept": "application/json" }
+  }
+
   t(key) {
     return JSON.parse(document.getElementById("dispatch-strings").textContent)[key]
   }

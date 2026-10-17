@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_190800) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_200000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -89,8 +89,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_190800) do
     t.datetime "updated_at", null: false
     t.datetime "unit_identified_at"
     t.datetime "transmitting_since"
+    t.bigint "ptt_user_id"
+    t.datetime "ptt_at"
+    t.bigint "transmitted_by_user_id"
+    t.index ["ptt_user_id"], name: "index_radios_on_ptt_user_id"
     t.index ["server_id", "node"], name: "index_radios_on_server_id_and_node", unique: true
     t.index ["server_id"], name: "index_radios_on_server_id"
+    t.index ["transmitted_by_user_id"], name: "index_radios_on_transmitted_by_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -117,6 +122,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_190800) do
     t.datetime "status_changed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "sip_username", default: "webconsole", null: false
+    t.string "sip_password"
+    t.string "console_secret"
     t.index ["name"], name: "index_servers_on_name", unique: true
   end
 
@@ -164,6 +172,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_190800) do
   add_foreign_key "radio_group_memberships", "radio_groups"
   add_foreign_key "radio_group_memberships", "radios"
   add_foreign_key "radios", "servers"
+  add_foreign_key "radios", "users", column: "ptt_user_id"
+  add_foreign_key "radios", "users", column: "transmitted_by_user_id"
   add_foreign_key "sessions", "users"
   add_foreign_key "users", "roles"
 end

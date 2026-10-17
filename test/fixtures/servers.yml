@@ -5,3 +5,6 @@ local:
   online: true
   ami_username: console
   ami_password: secret
+  webrtc_url: wss://radio.example.com:8089/ws
+  sip_password: sip-secret
+  console_secret: console-secret
