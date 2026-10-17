@@ -1,0 +1,13 @@
+<%= form_with model: unit, class: "card max-w-2xl space-y-4 p-5" do |form| %>
+  <%= render "shared/errors", record: unit %>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="field"><%= form.label :identifier %><%= form.text_field :identifier, class: "input", required: true %></div>
+    <div class="field"><%= form.label :decoder %><%= form.select :decoder, Unit::DECODERS.map { |decoder| [ decoder_label(decoder), decoder ] }, {}, class: "input" %></div>
+    <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
+    <div class="field"><%= form.label :person %><%= form.text_field :person, class: "input" %></div>
+    <div class="field"><%= form.label :fleet %><%= form.text_field :fleet, class: "input", list: "fleets" %></div>
+  </div>
+  <datalist id="fleets"><% Unit.distinct.where.not(fleet: [ nil, "" ]).order(:fleet).pluck(:fleet).each do |fleet| %><option value="<%= fleet %>"><% end %></datalist>
+  <label class="flex items-center gap-2"><%= form.check_box :active, class: "checkbox" %><span><%= Unit.human_attribute_name(:active) %></span></label>
+  <%= render "shared/form_actions", form: form, cancel_path: units_path %>
+<% end %>

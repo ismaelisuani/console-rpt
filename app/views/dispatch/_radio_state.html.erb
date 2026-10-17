@@ -1,0 +1,62 @@
+<%# Same for every user: broadcast to all the screens that show the radio %>
+<% unit = radio.last_unit %>
+<% offline = !radio.online? %>
+<div id="<%= dom_id(radio, :state) %>" class="flex flex-col gap-2"
+     <%= "data-receiving" if radio.receiving? && !offline %> <%= "data-transmitting" if radio.transmitting? && !radio.receiving? && !offline %> <%= "data-offline" if offline %>>
+  <% if offline %>
+    <div class="flex h-7 items-center gap-2 truncate rounded bg-raised px-2 text-xs font-bold uppercase tracking-wide text-faint">
+      <%= t("dispatch.radio.server_down") %>
+      <% if radio.server.status_changed_at %>· <%= local_time_tag(radio.server.status_changed_at) %><% end %>
+    </div>
+  <% elsif radio.receiving? %>
+    <div class="flex h-7 items-center gap-2 truncate rounded bg-rx-soft px-2 text-xs font-bold uppercase tracking-wide text-rx-ink">
+      ◉ <%= t("dispatch.radio.incoming_audio") %> · <%= elapsed_tag(radio.receiving_since) %>
+      <%= level_meter(true) %>
+    </div>
+  <% elsif radio.transmitting? %>
+    <div class="flex h-7 items-center gap-2 truncate rounded bg-tx-soft px-2 text-xs font-bold uppercase tracking-wide text-tx-ink">
+      ● <%= t("dispatch.radio.transmitting") %> · <%= elapsed_tag(radio.transmitting_since) %>
+      <%= level_meter(true) %>
+    </div>
+  <% else %>
+    <div class="flex h-7 items-center gap-2 truncate rounded bg-raised px-2 text-xs font-bold uppercase tracking-wide text-muted">
+      ○ <%= t("dispatch.radio.no_audio") %>
+      <% if radio.last_activity_at %>· <%= t("dispatch.radio.last_activity") %> <%= local_time_tag(radio.last_activity_at) %><% end %>
+      <%= level_meter(false) %>
+    </div>
+  <% end %>
+
+  <dl class="grid grid-cols-[auto_1fr] items-baseline gap-x-3 gap-y-0.5 text-xs">
+    <% if radio.transmitting? && !radio.receiving? && !offline %>
+      <dt class="text-muted"><%= t("dispatch.radio.transmits") %></dt>
+      <dd class="truncate text-sm font-semibold text-ink-strong"><%= link_source_label(radio, radio.transmitted_by) %></dd>
+    <% end %>
+    <% if radio.last_unit_identifier.present? %>
+      <% talking = !offline && radio.talking_unit_identified? %>
+      <dt class="text-muted"><%= talking ? t("dispatch.radio.talking") : t("dispatch.radio.last") %></dt>
+      <dd class="truncate <%= "text-sm font-semibold text-ink-strong" if talking %>">
+        <% if unit %>
+          <%= unit_name(unit) %> <span class="font-normal text-muted">(<%= unit_identifier_label(radio.last_decoder, radio.last_unit_identifier) %>)</span>
+        <% else %>
+          <span class="font-normal text-warn-ink"><%= unit_identifier_label(radio.last_decoder, radio.last_unit_identifier) %> · <%= t("dispatch.radio.unregistered") %></span>
+          <%= link_to "＋", new_unit_path(decoder: radio.last_decoder, identifier: radio.last_unit_identifier),
+                class: "text-warn-ink hover:text-ink-strong", title: t("dispatch.radio.register_unit"), data: { turbo_frame: "_top" } %>
+        <% end %>
+      </dd>
+    <% end %>
+    <dt class="text-muted"><%= t("dispatch.radio.links") %></dt>
+    <dd class="flex flex-wrap gap-1">
+      <% linked = radio.linked_radios %>
+      <% radio.links.each do |link| %>
+        <% monitor = link["mode"] == "monitor" %>
+        <span class="badge <%= monitor ? "bg-warn-soft text-warn-ink" : "bg-accent-soft text-accent-ink" %>">
+          <%= linked[link["node"]]&.name || link["node"] %><%= " (#{t("dispatch.radio.monitor").downcase})" if monitor %>
+          <%= button_to "×", unlink_radio_path(radio, node: link["node"]), class: "hidden cursor-pointer leading-none hover:text-ink-strong [.can-link_&]:inline",
+                form: { class: "inline", data: { turbo_confirm: t("dispatch.radio.unlink_confirm", node: linked[link["node"]]&.name || link["node"]) } },
+                title: t("dispatch.radio.unlink") %>
+        </span>
+      <% end %>
+      <% if radio.links.empty? %><span class="text-faint"><%= t("dispatch.radio.no_links") %></span><% end %>
+    </dd>
+  </dl>
+</div>

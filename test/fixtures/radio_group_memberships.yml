@@ -1,0 +1,7 @@
+north_base:
+  radio_group: north
+  radio: base
+
+north_mobile:
+  radio_group: north
+  radio: mobile

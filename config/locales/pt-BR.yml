@@ -1,0 +1,281 @@
+---
+pt-BR:
+  actions:
+    cancel: Cancelar
+    confirm_delete: Excluir %{name}?
+    delete: Excluir
+    edit: Editar
+    edit_resource: Editar %{resource}
+    new: Novo
+    new_resource: Novo %{resource}
+    save: Salvar
+  activerecord:
+    attributes:
+      radio:
+        active: Ativo
+        name: Nome
+        node: Nó
+        position: Ordem
+        server: Servidor
+        server_id: Servidor
+      radio_group:
+        name: Nome
+        position: Ordem
+      role:
+        name: Nome
+        permissions: Permissões
+      server:
+        active: Ativo
+        ami_password: Senha AMI
+        ami_port: Porta AMI
+        ami_username: Usuário AMI
+        archive_path: Diretório do arquivo de áudio
+        host: Endereço
+        local: Servidor local
+        name: Nome
+        online: Status
+        ssh_port: Porta SSH
+        ssh_username: Usuário SSH
+        webrtc_url: Endereço WebRTC
+      unit:
+        active: Ativa
+        decoder: Decodificador
+        fleet: Grupo
+        identifier: ID
+        name: Unidade / viatura
+        person: Pessoa
+      user:
+        active: Ativo
+        email_address: E-mail
+        locale: Idioma
+        name: Nome
+        password: Senha
+        password_confirmation: Confirmar senha
+        role: Perfil
+        role_id: Perfil
+    errors:
+      models:
+        role:
+          attributes:
+            permissions:
+              keeps_admin: deve manter "%{attribute}" no seu próprio perfil; senão ninguém poderia administrar usuários
+        user:
+          attributes:
+            active:
+              self: não pode ser desativado no seu próprio usuário
+    models:
+      radio:
+        one: Rádio
+        other: Rádios
+      radio_group:
+        one: Grupo de rádios
+        other: Grupos de rádios
+      role:
+        one: Perfil
+        other: Perfis
+      server:
+        one: Servidor
+        other: Servidores
+      unit:
+        one: Unidade
+        other: Unidades
+      user:
+        one: Usuário
+        other: Usuários
+  admin:
+    radio_groups:
+      index:
+        empty: Ainda não há grupos. Os grupos organizam a tela de despacho e dão acesso aos rádios para os usuários.
+    radios:
+      index:
+        empty: Ainda não há rádios.
+    servers:
+      check:
+        failed: "%{server}: sem conexão AMI (%{error})"
+        ok: "%{server}: conexão AMI OK (%{version})"
+      form:
+        ami: Interface de gerenciamento (AMI)
+        keep_password: Deixe vazio para manter
+        local_hint: O servidor onde este console roda. A configuração e o arquivo de áudio são lidos do disco; os outros são acessados por SSH.
+        remote: Acesso remoto (SSH)
+      index:
+        check: Testar
+        empty: Ainda não há servidores.
+    users:
+      destroy:
+        self: Você não pode excluir seu próprio usuário.
+      form:
+        keep_password: Deixe vazio para manter
+        radio_access: Rádios
+        radio_access_hint: Os grupos de rádios que este usuário vê, e se pode operá-los ou só escutá-los. Usuários cujo perfil administra rádios veem todos.
+      index:
+        all_radios: Todos os rádios
+  app_name: Console RPT
+  authorization:
+    denied: Você não tem permissão para isso.
+  decoders:
+    CCIR: Selcall CCIR
+    DTMF: DTMF
+    EEA: Selcall EEA
+    EIA: Selcall EIA
+    MDC1200: MDC1200
+    Mototrbo: MOTOTRBO
+    P25: P25
+    ZVEI1: Selcall ZVEI1
+    ZVEI2: Selcall ZVEI2
+    ZVEI3: Selcall ZVEI3
+  dispatch:
+    activity:
+      by: " por %{user}"
+      linked: "%{radio} ⇄ %{other} interligados"
+      rx: RX
+      server_offline: "%{server} não responde (%{radio})"
+      server_online: "%{server} voltou a ficar online (%{radio})"
+      tx: TX
+      unlinked: "%{radio} ⇄ %{other} desconectados"
+    radio:
+      connect: Conectar
+      connect_first: conecte primeiro
+      connected: Conectado
+      disconnect: Desconectar
+      disconnected: Desconectado
+      incoming_audio: Áudio entrando
+      last: Último
+      last_activity: última atividade
+      link: Interligar
+      link_title: Interligar %{radio} com
+      links: Interligações
+      local: Local
+      mode:
+        listen: Só escuta
+        operate: Operação
+      monitor: Monitor
+      mute: Silenciar
+      muted: silêncio
+      no_audio: Sem áudio
+      no_links: nenhuma
+      no_permission: sem permissão
+      no_webrtc: O servidor não tem endereço WebRTC configurado
+      node: nó %{node}
+      ptt: PTT
+      ptt_hint: Segure para falar (barra de espaço nos rádios selecionados)
+      ptt_hold: segure · espaço
+      register_unit: Cadastrar este ID
+      server_down: Sem conexão com o servidor
+      talking: Falando
+      transceive: Transceptor
+      transmits: Transmite
+      transmitting: Transmitindo
+      unlink: Desfazer interligação
+      unlink_confirm: Desfazer a interligação com %{node}?
+      unregistered: não cadastrado
+      volume: Volume
+    show:
+      activity: Atividade
+      count:
+        one: 1 rádio · %{online} online
+        other: "%{count} rádios · %{online} online"
+      empty: Não há rádios para mostrar. Um administrador precisa lhe dar acesso a um grupo de rádios.
+      layout: Rádios por tela
+      listen_all: Escutar todos
+      mute_all: Silenciar todos
+  flash:
+    created: "%{resource}: criado."
+    destroyed: "%{resource}: excluído."
+    updated: "%{resource}: salvo."
+  form_errors:
+    one: 'Não foi salvo: 1 erro.'
+    other: 'Não foi salvo: %{count} erros.'
+  locales:
+    en: English
+    es: Español
+    pt-BR: Português (Brasil)
+  nav:
+    dispatch: Despacho
+    radios: Rádios
+    roles: Perfis
+    servers: Servidores
+    units: Unidades
+    users: Usuários
+  permissions:
+    connect: Interligar rádios
+    hints:
+      connect: Interligar e desfazer interligações de rádios na tela de despacho.
+      listen: Conectar-se aos rádios e escutá-los.
+      manage_radios: Servidores, rádios e grupos; vê e opera todos os rádios.
+      manage_units: A tabela de IDs de unidades, viaturas e pessoas.
+      manage_users: Usuários e perfis.
+      transmit: Falar pelos rádios (PTT).
+      view_dispatch: A tela de despacho com o estado ao vivo dos rádios.
+      view_recordings: Escutar o arquivo de áudio.
+    listen: Escutar
+    manage_radios: Administrar rádios
+    manage_units: Administrar unidades
+    manage_users: Administrar usuários
+    transmit: Transmitir
+    view_dispatch: Despacho
+    view_recordings: Gravações
+  phone:
+    call: Ligar
+    hangup: Desligar
+    idle: Em espera
+    mute: Mudo
+    not_registered: Não registrado
+    number: Número
+    pending: O telefone conecta quando o servidor tiver WebRTC.
+    title: Telefone
+    transfer: Transferir
+  profiles:
+    show:
+      new_password: Nova senha (opcional)
+      title: Meu perfil
+    update:
+      updated: Perfil salvo.
+  radio_access:
+    listen: Só escuta
+    none: Sem acesso
+    operate: Operar
+  radios:
+    command_failed: "%{server} não aceitou o comando: %{error}"
+    link:
+      sent: Interligando %{radio} com %{other}…
+    unlink:
+      sent: Desfazendo a interligação de %{radio} com %{node}…
+  roles:
+    defaults:
+      administrator: Administrador
+      dispatcher: Despachante
+      listener: Ouvinte
+      supervisor: Supervisor
+  servers:
+    status:
+      offline: Offline
+      online: Online
+      summary:
+        one: "%{online} de 1 servidor online"
+        other: "%{online} de %{count} servidores online"
+  sessions:
+    invalid: E-mail ou senha incorretos.
+    rate_limited: Muitas tentativas; tente de novo em alguns minutos.
+    sign_in: Entrar
+    sign_out: Sair
+  units:
+    import:
+      done: 'Importação concluída: %{created} criadas, %{updated} atualizadas.'
+      no_file: Escolha um arquivo CSV.
+      row_error: 'Linha %{line}: %{errors}'
+    index:
+      empty: Ainda não há unidades.
+      import: Importar
+      intro: Cada ID decodificado pelo app_rpt é procurado aqui, para que o console mostre quem está falando em vez do número. O mesmo número pode existir em dois decodificadores.
+      search: Buscar
+    new_import:
+      decoders: 'Decodificadores: %{decoders}.'
+      example:
+        fleet: Norte
+        name: Viatura 12
+        name_2: Ambulância 3
+        person: João Silva
+      intro: Um arquivo CSV (separado por vírgula ou ponto e vírgula) com estas colunas na primeira linha. As unidades que já existem (mesmo ID e decodificador) são atualizadas. Se uma linha tiver erros, nada é salvo.
+      submit: Importar
+      title: Importar unidades

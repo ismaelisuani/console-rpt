@@ -1,0 +1,17 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: t("units.new_import.title") %>
+  <div class="card max-w-2xl space-y-4 p-5">
+    <p><%= t("units.new_import.intro") %></p>
+    <pre class="overflow-x-auto rounded-md bg-canvas p-3 text-xs text-muted"><%= Unit::Import::HEADERS.join(",") %>
+7301,Mototrbo,<%= t("units.new_import.example.name") %>,<%= t("units.new_import.example.person") %>,<%= t("units.new_import.example.fleet") %>,true
+43981,P25,<%= t("units.new_import.example.name_2") %>,,<%= t("units.new_import.example.fleet") %>,true</pre>
+    <p class="text-xs text-muted"><%= t("units.new_import.decoders", decoders: Unit::DECODERS.join(", ")) %></p>
+    <%= form_with url: import_units_path, multipart: true, class: "space-y-4" do |form| %>
+      <%= form.file_field :file, accept: ".csv,text/csv", required: true, class: "input" %>
+      <div class="flex gap-2">
+        <%= form.submit t("units.new_import.submit"), class: "btn-primary" %>
+        <%= link_to t("actions.cancel"), units_path, class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,26 @@
+<aside class="flex w-60 shrink-0 flex-col gap-2 border-r border-line bg-panel p-3" data-controller="phone">
+  <div class="flex items-center justify-between">
+    <h2 class="font-semibold text-ink-strong"><%= t("phone.title") %></h2>
+    <span class="text-xs text-faint" data-phone-target="status"><%= t("phone.not_registered") %></span>
+  </div>
+  <div class="rounded-md border border-line bg-canvas p-2">
+    <div class="text-xs text-muted" data-phone-target="callState"><%= t("phone.idle") %></div>
+    <input type="tel" class="w-full bg-transparent text-xl text-ink-strong outline-none" data-phone-target="number"
+           placeholder="<%= t("phone.number") %>" aria-label="<%= t("phone.number") %>">
+  </div>
+  <div class="grid grid-cols-3 gap-1.5">
+    <% [ %w[1], %w[2 ABC], %w[3 DEF], %w[4 GHI], %w[5 JKL], %w[6 MNO], %w[7 PQRS], %w[8 TUV], %w[9 WXYZ], %w[*], %w[0], %w[#] ].each do |key, letters| %>
+      <button type="button" class="flex flex-col items-center rounded-md border border-line bg-raised py-1.5 text-lg leading-tight text-ink-strong hover:border-line-strong"
+              data-action="phone#press" data-key="<%= key %>">
+        <%= key %><span class="h-3 text-[9px] text-faint"><%= letters %></span>
+      </button>
+    <% end %>
+  </div>
+  <div class="grid grid-cols-2 gap-1.5">
+    <button type="button" class="btn border-rx bg-rx/80 text-white hover:bg-rx" data-action="phone#call" disabled data-phone-target="callButton"><%= t("phone.call") %></button>
+    <button type="button" class="btn border-tx-strong bg-tx-strong text-white hover:bg-tx" data-action="phone#hangup" disabled data-phone-target="hangupButton"><%= t("phone.hangup") %></button>
+    <button type="button" class="btn" disabled><%= t("phone.mute") %></button>
+    <button type="button" class="btn" disabled><%= t("phone.transfer") %></button>
+  </div>
+  <p class="mt-auto text-xs text-faint"><%= t("phone.pending") %></p>
+</aside>

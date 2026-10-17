@@ -1,0 +1,4 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: t("actions.new_resource", resource: Unit.model_name.human) %>
+  <%= render "form", unit: @unit %>
+<% end %>

@@ -1,0 +1,17 @@
+<%= form_with model: [ :admin, role ], class: "card max-w-2xl space-y-4 p-5" do |form| %>
+  <%= render "shared/errors", record: role %>
+  <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
+  <div class="field">
+    <span class="label"><%= Role.human_attribute_name(:permissions) %></span>
+    <%= hidden_field_tag "role[permissions][]", "" %>
+    <div class="space-y-2">
+      <% Role::PERMISSIONS.each do |permission| %>
+        <label class="flex items-start gap-2">
+          <%= check_box_tag "role[permissions][]", permission, role.grants?(permission), id: "permission_#{permission}", class: "checkbox mt-0.5" %>
+          <span><span class="text-ink-strong"><%= t("permissions.#{permission}") %></span><br><span class="text-xs text-muted"><%= t("permissions.hints.#{permission}") %></span></span>
+        </label>
+      <% end %>
+    </div>
+  </div>
+  <%= render "shared/form_actions", form: form, cancel_path: admin_roles_path %>
+<% end %>

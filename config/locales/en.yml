@@ -1,0 +1,281 @@
+---
+en:
+  actions:
+    cancel: Cancel
+    confirm_delete: Delete %{name}?
+    delete: Delete
+    edit: Edit
+    edit_resource: Edit %{resource}
+    new: New
+    new_resource: New %{resource}
+    save: Save
+  activerecord:
+    attributes:
+      radio:
+        active: Active
+        name: Name
+        node: Node
+        position: Order
+        server: Server
+        server_id: Server
+      radio_group:
+        name: Name
+        position: Order
+      role:
+        name: Name
+        permissions: Permissions
+      server:
+        active: Active
+        ami_password: AMI password
+        ami_port: AMI port
+        ami_username: AMI user
+        archive_path: Air archive directory
+        host: Address
+        local: Local server
+        name: Name
+        online: Status
+        ssh_port: SSH port
+        ssh_username: SSH user
+        webrtc_url: WebRTC address
+      unit:
+        active: Active
+        decoder: Decoder
+        fleet: Group
+        identifier: ID
+        name: Unit / vehicle
+        person: Person
+      user:
+        active: Active
+        email_address: Email
+        locale: Language
+        name: Name
+        password: Password
+        password_confirmation: Confirm password
+        role: Role
+        role_id: Role
+    errors:
+      models:
+        role:
+          attributes:
+            permissions:
+              keeps_admin: must keep "%{attribute}" for your own role, or nobody could manage users
+        user:
+          attributes:
+            active:
+              self: can't be turned off for your own user
+    models:
+      radio:
+        one: Radio
+        other: Radios
+      radio_group:
+        one: Radio group
+        other: Radio groups
+      role:
+        one: Role
+        other: Roles
+      server:
+        one: Server
+        other: Servers
+      unit:
+        one: Unit
+        other: Units
+      user:
+        one: User
+        other: Users
+  admin:
+    radio_groups:
+      index:
+        empty: No groups yet. Groups organize the dispatch screen and give users access to radios.
+    radios:
+      index:
+        empty: No radios yet.
+    servers:
+      check:
+        failed: "%{server}: no AMI connection (%{error})"
+        ok: "%{server}: AMI connection OK (%{version})"
+      form:
+        ami: Manager interface (AMI)
+        keep_password: Leave empty to keep it
+        local_hint: The server where this console runs. Its configuration and air archive are read from disk; the others are reached over SSH.
+        remote: Remote access (SSH)
+      index:
+        check: Test
+        empty: No servers yet.
+    users:
+      destroy:
+        self: You can't delete your own user.
+      form:
+        keep_password: Leave empty to keep it
+        radio_access: Radios
+        radio_access_hint: Groups of radios this user sees, and whether they can operate them or only listen. Users whose role manages radios see all of them.
+      index:
+        all_radios: All radios
+  app_name: RPT Console
+  authorization:
+    denied: You don't have permission for that.
+  decoders:
+    CCIR: Selcall CCIR
+    DTMF: DTMF
+    EEA: Selcall EEA
+    EIA: Selcall EIA
+    MDC1200: MDC1200
+    Mototrbo: MOTOTRBO
+    P25: P25
+    ZVEI1: Selcall ZVEI1
+    ZVEI2: Selcall ZVEI2
+    ZVEI3: Selcall ZVEI3
+  dispatch:
+    activity:
+      by: " by %{user}"
+      linked: "%{radio} ⇄ %{other} linked"
+      rx: RX
+      server_offline: "%{server} not responding (%{radio})"
+      server_online: "%{server} back online (%{radio})"
+      tx: TX
+      unlinked: "%{radio} ⇄ %{other} unlinked"
+    radio:
+      connect: Connect
+      connect_first: connect first
+      connected: Connected
+      disconnect: Disconnect
+      disconnected: Disconnected
+      incoming_audio: Incoming audio
+      last: Last
+      last_activity: last activity
+      link: Link
+      link_title: Link %{radio} with
+      links: Links
+      local: Local
+      mode:
+        listen: Listen only
+        operate: Operation
+      monitor: Monitor
+      mute: Mute
+      muted: muted
+      no_audio: No audio
+      no_links: none
+      no_permission: no permission
+      no_webrtc: The server has no WebRTC address configured
+      node: node %{node}
+      ptt: PTT
+      ptt_hint: Hold to talk (space bar on the selected radios)
+      ptt_hold: hold · space
+      register_unit: Register this ID
+      server_down: No connection with the server
+      talking: Talking
+      transceive: Transceive
+      transmits: Transmits
+      transmitting: Transmitting
+      unlink: Unlink
+      unlink_confirm: Unlink %{node}?
+      unregistered: unregistered
+      volume: Volume
+    show:
+      activity: Activity
+      count:
+        one: 1 radio · %{online} online
+        other: "%{count} radios · %{online} online"
+      empty: No radios to show. An administrator has to give you access to a group of radios.
+      layout: Radios per screen
+      listen_all: Listen to all
+      mute_all: Mute all
+  flash:
+    created: "%{resource} created."
+    destroyed: "%{resource} deleted."
+    updated: "%{resource} saved."
+  form_errors:
+    one: 'It was not saved: 1 error.'
+    other: 'It was not saved: %{count} errors.'
+  locales:
+    en: English
+    es: Español
+    pt-BR: Português (Brasil)
+  nav:
+    dispatch: Dispatch
+    radios: Radios
+    roles: Roles
+    servers: Servers
+    units: Units
+    users: Users
+  permissions:
+    connect: Link radios
+    hints:
+      connect: Link and unlink radios from the dispatch screen.
+      listen: Connect to radios and listen to them.
+      manage_radios: Servers, radios and groups; sees and operates every radio.
+      manage_units: The table of unit IDs, vehicles and people.
+      manage_users: Users and roles.
+      transmit: Talk on radios (PTT).
+      view_dispatch: The dispatch screen with the live state of the radios.
+      view_recordings: Listen to the air archive.
+    listen: Listen
+    manage_radios: Manage radios
+    manage_units: Manage units
+    manage_users: Manage users
+    transmit: Transmit
+    view_dispatch: Dispatch
+    view_recordings: Recordings
+  phone:
+    call: Call
+    hangup: Hang up
+    idle: Idle
+    mute: Mute
+    not_registered: Not registered
+    number: Number
+    pending: The phone connects once the server has WebRTC.
+    title: Phone
+    transfer: Transfer
+  profiles:
+    show:
+      new_password: New password (optional)
+      title: My profile
+    update:
+      updated: Profile saved.
+  radio_access:
+    listen: Listen only
+    none: No access
+    operate: Operate
+  radios:
+    command_failed: "%{server} did not take the command: %{error}"
+    link:
+      sent: Linking %{radio} with %{other}…
+    unlink:
+      sent: Unlinking %{node} from %{radio}…
+  roles:
+    defaults:
+      administrator: Administrator
+      dispatcher: Dispatcher
+      listener: Listener
+      supervisor: Supervisor
+  servers:
+    status:
+      offline: Offline
+      online: Online
+      summary:
+        one: "%{online} of 1 server online"
+        other: "%{online} of %{count} servers online"
+  sessions:
+    invalid: Wrong email or password.
+    rate_limited: Too many attempts, try again in a few minutes.
+    sign_in: Sign in
+    sign_out: Sign out
+  units:
+    import:
+      done: 'Import done: %{created} created, %{updated} updated.'
+      no_file: Choose a CSV file.
+      row_error: 'Line %{line}: %{errors}'
+    index:
+      empty: No units yet.
+      import: Import
+      intro: Each ID that app_rpt decodes is looked up here, so the console shows who is talking instead of the number. The same number can exist under two decoders.
+      search: Search
+    new_import:
+      decoders: 'Decoders: %{decoders}.'
+      example:
+        fleet: North
+        name: Vehicle 12
+        name_2: Ambulance 3
+        person: John Smith
+      intro: A CSV file (comma or semicolon separated) with these columns in the first row. Existing units (same ID and decoder) are updated. Nothing is saved if a line has errors.
+      submit: Import
+      title: Import units

@@ -1,0 +1,19 @@
+<%= form_with model: [ :admin, radio ], class: "card max-w-2xl space-y-4 p-5" do |form| %>
+  <%= render "shared/errors", record: radio %>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
+    <div class="field"><%= form.label :node %><%= form.text_field :node, class: "input", required: true, inputmode: "numeric" %></div>
+    <div class="field"><%= form.label :server_id %><%= form.collection_select :server_id, Server.ordered, :id, :name, {}, class: "input" %></div>
+    <div class="field"><%= form.label :position %><%= form.number_field :position, class: "input" %></div>
+  </div>
+  <div class="field">
+    <span class="label"><%= RadioGroup.model_name.human(count: 2) %></span>
+    <div class="flex flex-wrap gap-3">
+      <%= form.collection_check_boxes :radio_group_ids, RadioGroup.ordered, :id, :name do |box| %>
+        <label class="flex items-center gap-2"><%= box.check_box(class: "checkbox") %><%= box.text %></label>
+      <% end %>
+    </div>
+  </div>
+  <label class="flex items-center gap-2"><%= form.check_box :active, class: "checkbox" %><span><%= Radio.human_attribute_name(:active) %></span></label>
+  <%= render "shared/form_actions", form: form, cancel_path: admin_radios_path %>
+<% end %>

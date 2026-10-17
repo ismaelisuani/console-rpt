@@ -1,0 +1,5 @@
+<%# locals: (form:, cancel_path:) %>
+<div class="flex gap-2 pt-2">
+  <%= form.submit t("actions.save"), class: "btn-primary" %>
+  <%= link_to t("actions.cancel"), cancel_path, class: "btn" %>
+</div>

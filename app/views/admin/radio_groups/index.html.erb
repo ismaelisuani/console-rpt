@@ -1,0 +1,25 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: RadioGroup.model_name.human(count: 2), new_path: new_admin_radio_group_path,
+        tabs: [ [ Radio.model_name.human(count: 2), admin_radios_path ], [ RadioGroup.model_name.human(count: 2), admin_radio_groups_path ] ] %>
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead><tr>
+        <th><%= RadioGroup.human_attribute_name(:name) %></th>
+        <th><%= Radio.model_name.human(count: 2) %></th>
+        <th><%= RadioGroup.human_attribute_name(:position) %></th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        <% @radio_groups.each do |group| %>
+          <tr>
+            <td class="font-medium text-ink-strong"><%= group.name %></td>
+            <td><% group.radios.each do |radio| %><span class="badge mr-1 bg-raised text-ink"><%= radio.name %></span><% end %></td>
+            <td class="tabular-nums text-muted"><%= group.position %></td>
+            <td><%= render "shared/row_actions", record: group, edit_path: edit_admin_radio_group_path(group), destroy_path: admin_radio_group_path(group) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @radio_groups.empty? %><p class="p-6 text-center text-muted"><%= t("admin.radio_groups.index.empty") %></p><% end %>
+  </div>
+<% end %>

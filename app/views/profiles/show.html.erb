@@ -1,0 +1,27 @@
+<% content_for :title, t(".title") %>
+<main class="mx-auto w-full max-w-xl space-y-4 p-6">
+  <h1 class="page-title"><%= t(".title") %></h1>
+  <div class="card p-5">
+    <dl class="mb-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
+      <dt class="text-muted"><%= User.human_attribute_name(:name) %></dt><dd><%= @user.name %></dd>
+      <dt class="text-muted"><%= User.human_attribute_name(:email_address) %></dt><dd><%= @user.email_address %></dd>
+      <dt class="text-muted"><%= User.human_attribute_name(:role) %></dt><dd><%= @user.role.name %></dd>
+    </dl>
+    <%= form_with model: @user, url: profile_path, method: :patch, class: "space-y-4" do |form| %>
+      <%= render "shared/errors", record: @user %>
+      <div class="field">
+        <%= form.label :locale %>
+        <%= form.select :locale, locale_options, {}, class: "input" %>
+      </div>
+      <div class="field">
+        <%= form.label :password, t(".new_password") %>
+        <%= form.password_field :password, autocomplete: "new-password", maxlength: 72, class: "input" %>
+      </div>
+      <div class="field">
+        <%= form.label :password_confirmation %>
+        <%= form.password_field :password_confirmation, autocomplete: "new-password", maxlength: 72, class: "input" %>
+      </div>
+      <%= form.submit t("actions.save"), class: "btn-primary" %>
+    <% end %>
+  </div>
+</main>

@@ -1,0 +1,25 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: Role.model_name.human(count: 2), new_path: new_admin_role_path %>
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead><tr>
+        <th><%= Role.human_attribute_name(:name) %></th>
+        <% Role::PERMISSIONS.each do |permission| %><th class="text-center"><%= t("permissions.#{permission}") %></th><% end %>
+        <th><%= User.model_name.human(count: 2) %></th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        <% @roles.each do |role| %>
+          <tr>
+            <td class="font-medium text-ink-strong"><%= role.name %></td>
+            <% Role::PERMISSIONS.each do |permission| %>
+              <td class="text-center"><%= role.grants?(permission) ? tag.span("✓", class: "text-rx-ink") : tag.span("·", class: "text-faint") %></td>
+            <% end %>
+            <td class="tabular-nums"><%= role.users.size %></td>
+            <td><%= render "shared/row_actions", record: role, edit_path: edit_admin_role_path(role), destroy_path: admin_role_path(role) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

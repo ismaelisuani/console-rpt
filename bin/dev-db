@@ -1,0 +1,6 @@
+#!/bin/sh
+# Starts the development PostgreSQL in Docker (127.0.0.1:5433), see config/database.yml
+docker start console-rpt-db 2> /dev/null || docker run -d --name console-rpt-db \
+	--restart unless-stopped -p 127.0.0.1:5433:5432 \
+	-e POSTGRES_USER=console_rpt -e POSTGRES_PASSWORD=console_rpt \
+	-v console-rpt-db:/var/lib/postgresql postgres:18

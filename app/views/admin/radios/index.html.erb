@@ -1,0 +1,29 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: Radio.model_name.human(count: 2), new_path: new_admin_radio_path,
+        tabs: [ [ Radio.model_name.human(count: 2), admin_radios_path ], [ RadioGroup.model_name.human(count: 2), admin_radio_groups_path ] ] %>
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead><tr>
+        <th><%= Radio.human_attribute_name(:name) %></th>
+        <th><%= Radio.human_attribute_name(:node) %></th>
+        <th><%= Radio.human_attribute_name(:server) %></th>
+        <th><%= RadioGroup.model_name.human(count: 2) %></th>
+        <th><%= Radio.human_attribute_name(:position) %></th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        <% @radios.each do |radio| %>
+          <tr class="<%= "opacity-50" unless radio.active? %>">
+            <td class="font-medium text-ink-strong"><%= radio.name %></td>
+            <td class="tabular-nums"><%= radio.node %></td>
+            <td class="text-muted"><%= radio.server.name %></td>
+            <td><% radio.radio_groups.each do |group| %><span class="badge mr-1 bg-raised text-ink"><%= group.name %></span><% end %></td>
+            <td class="tabular-nums text-muted"><%= radio.position %></td>
+            <td><%= render "shared/row_actions", record: radio, edit_path: edit_admin_radio_path(radio), destroy_path: admin_radio_path(radio) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @radios.empty? %><p class="p-6 text-center text-muted"><%= t("admin.radios.index.empty") %></p><% end %>
+  </div>
+<% end %>

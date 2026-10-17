@@ -1,0 +1,6 @@
+<% servers = Server.active %>
+<% online = servers.count(&:online?) %>
+<span id="servers_status" class="flex items-center gap-1.5" title="<%= servers.map { |server| "#{server.name}: #{t(server.online? ? "servers.status.online" : "servers.status.offline")}" }.join("\n") %>">
+  <span class="size-2 rounded-full <%= online == servers.size ? "bg-rx" : "bg-tx" %>"></span>
+  <%= t("servers.status.summary", online: online, count: servers.size) %>
+</span>

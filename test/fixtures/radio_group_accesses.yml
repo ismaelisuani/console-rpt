@@ -1,0 +1,9 @@
+dispatcher_north:
+  user: dispatcher
+  radio_group: north
+  level: operate
+
+listener_north:
+  user: listener
+  radio_group: north
+  level: listen

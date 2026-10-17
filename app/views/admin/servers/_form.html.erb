@@ -1,0 +1,38 @@
+<%= form_with model: [ :admin, server ], class: "card max-w-2xl space-y-4 p-5" do |form| %>
+  <%= render "shared/errors", record: server %>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
+    <div class="field"><%= form.label :host %><%= form.text_field :host, class: "input", required: true, placeholder: "127.0.0.1" %></div>
+  </div>
+  <label class="flex items-center gap-2"><%= form.check_box :local, class: "checkbox" %><span><%= Server.human_attribute_name(:local) %></span></label>
+  <p class="-mt-2 text-xs text-muted"><%= t(".local_hint") %></p>
+
+  <fieldset class="space-y-3 border-t border-line pt-4">
+    <legend class="label pr-2"><%= t(".ami") %></legend>
+    <div class="grid grid-cols-3 gap-4">
+      <div class="field"><%= form.label :ami_port %><%= form.number_field :ami_port, class: "input" %></div>
+      <div class="field"><%= form.label :ami_username %><%= form.text_field :ami_username, class: "input", required: true, autocomplete: "off" %></div>
+      <div class="field">
+        <%= form.label :ami_password %>
+        <%= form.password_field :ami_password, class: "input", required: server.new_record?, autocomplete: "new-password",
+              placeholder: (t(".keep_password") if server.persisted?) %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="space-y-3 border-t border-line pt-4">
+    <legend class="label pr-2"><%= t(".remote") %></legend>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="field"><%= form.label :ssh_username %><%= form.text_field :ssh_username, class: "input" %></div>
+      <div class="field"><%= form.label :ssh_port %><%= form.number_field :ssh_port, class: "input" %></div>
+    </div>
+  </fieldset>
+
+  <fieldset class="space-y-3 border-t border-line pt-4">
+    <div class="field"><%= form.label :webrtc_url %><%= form.text_field :webrtc_url, class: "input", placeholder: "wss://radio.example.com:8089/ws" %></div>
+    <div class="field"><%= form.label :archive_path %><%= form.text_field :archive_path, class: "input" %></div>
+    <label class="flex items-center gap-2"><%= form.check_box :active, class: "checkbox" %><span><%= Server.human_attribute_name(:active) %></span></label>
+  </fieldset>
+
+  <%= render "shared/form_actions", form: form, cancel_path: admin_servers_path %>
+<% end %>

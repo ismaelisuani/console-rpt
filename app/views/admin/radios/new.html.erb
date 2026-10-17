@@ -1,0 +1,4 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: t("actions.new_resource", resource: Radio.model_name.human) %>
+  <%= render "form", radio: @radio %>
+<% end %>

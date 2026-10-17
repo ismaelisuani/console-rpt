@@ -1,0 +1,11 @@
+administrator:
+  name: Administrator
+  permissions: <%= Role::PERMISSIONS.inspect.tr('"', "'") %>
+
+dispatcher:
+  name: Dispatcher
+  permissions: ['view_dispatch', 'listen', 'transmit', 'connect']
+
+listener:
+  name: Listener
+  permissions: ['view_dispatch', 'listen']

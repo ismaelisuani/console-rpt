@@ -1,0 +1,17 @@
+base:
+  server: local
+  node: "1999"
+  name: Base
+  position: 1
+
+mobile:
+  server: local
+  node: "2000"
+  name: Mobile
+  position: 2
+
+other:
+  server: local
+  node: "2010"
+  name: Other
+  position: 3

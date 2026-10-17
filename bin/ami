@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# Listens to the AMI events of every active server and keeps the radio state
+# (and the dispatch screens) up to date
+require_relative "../config/environment"
+
+$stdout.sync = true
+Rails.logger = ActiveSupport::Logger.new($stdout) if Rails.env.development?
+Ami::Supervisor.new.run

@@ -1,0 +1,36 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: Unit.model_name.human(count: 2), new_path: new_unit_path do %>
+    <%= form_with url: units_path, method: :get, class: "flex gap-2", data: { turbo_frame: "_top" } do |form| %>
+      <%= form.search_field :q, value: @query, placeholder: t("units.index.search"), class: "input w-56 py-1.5" %>
+    <% end %>
+    <%= link_to t("units.index.import"), import_units_path, class: "btn" %>
+  <% end %>
+  <p class="mb-4 max-w-3xl text-muted"><%= t("units.index.intro") %></p>
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead><tr>
+        <th><%= Unit.human_attribute_name(:identifier) %></th>
+        <th><%= Unit.human_attribute_name(:decoder) %></th>
+        <th><%= Unit.human_attribute_name(:name) %></th>
+        <th><%= Unit.human_attribute_name(:person) %></th>
+        <th><%= Unit.human_attribute_name(:fleet) %></th>
+        <th><%= Unit.human_attribute_name(:active) %></th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        <% @units.each do |unit| %>
+          <tr class="<%= "opacity-50" unless unit.active? %>">
+            <td class="tabular-nums text-ink-strong"><%= unit.identifier %></td>
+            <td><%= decoder_label(unit.decoder) %></td>
+            <td class="font-medium text-ink-strong"><%= unit.name %></td>
+            <td><%= unit.person.presence || "—" %></td>
+            <td class="text-muted"><%= unit.fleet.presence || "—" %></td>
+            <td><%= unit.active? ? tag.span("✓", class: "text-rx-ink") : "" %></td>
+            <td><%= render "shared/row_actions", record: unit, edit_path: edit_unit_path(unit), destroy_path: unit_path(unit) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @units.empty? %><p class="p-6 text-center text-muted"><%= t("units.index.empty") %></p><% end %>
+  </div>
+<% end %>

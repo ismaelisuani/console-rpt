@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* Dispatch console palette (dark) */
+@theme {
+  --color-canvas: #10161e;
+  --color-panel: #141c27;
+  --color-surface: #172130;
+  --color-raised: #1f2b3a;
+  --color-line: #2b3746;
+  --color-line-strong: #3a495b;
+  --color-ink: #dbe4ee;
+  --color-ink-strong: #ffffff;
+  --color-muted: #9fb1c5;
+  --color-faint: #5c6b7c;
+  --color-accent: #2f8cff;
+  --color-accent-soft: #1d3a5c;
+  --color-accent-ink: #9cc8ff;
+  --color-rx: #14c38e;
+  --color-rx-soft: #0f3b2f;
+  --color-rx-ink: #34e0a6;
+  --color-tx: #ff4d57;
+  --color-tx-strong: #d6404a;
+  --color-tx-soft: #4a161c;
+  --color-tx-ink: #ff8088;
+  --color-warn-soft: #33301c;
+  --color-warn-ink: #e6cf6a;
+}
+
+/* Button base, composable with @apply */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-1.5 rounded-md border border-line-strong px-3 py-1.5 font-medium text-ink hover:bg-raised cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed;
+}
+
+@layer base {
+  body { @apply bg-canvas text-ink text-sm antialiased; }
+}
+
+@layer components {
+  .btn-primary { @apply btn border-accent bg-accent text-white hover:bg-accent/85; }
+  .btn-danger { @apply btn border-tx-strong text-tx-ink hover:bg-tx-soft; }
+  .btn-sm { @apply px-2 py-1 text-xs; }
+  .card { @apply rounded-lg border border-line bg-surface; }
+  .page-title { @apply text-lg font-semibold text-ink-strong; }
+  .field { @apply flex flex-col gap-1; }
+  .field label, .label { @apply text-xs font-medium text-muted; }
+  .input { @apply w-full rounded-md border border-line-strong bg-canvas px-3 py-2 text-ink placeholder:text-faint focus:border-accent focus:outline-none; }
+  .checkbox { @apply size-4 rounded border-line-strong bg-canvas accent-accent; }
+  .table { @apply w-full text-left; }
+  .table th { @apply border-b border-line px-3 py-2 text-xs font-medium uppercase tracking-wide text-muted; }
+  .table td { @apply border-b border-line/60 px-3 py-2 align-middle; }
+  .badge { @apply inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs; }
+  .flash-notice { @apply rounded-md border border-rx/40 bg-rx-soft px-3 py-2 text-rx-ink; }
+  .flash-alert { @apply rounded-md border border-tx/40 bg-tx-soft px-3 py-2 text-tx-ink; }
+  .errors { @apply rounded-md border border-tx/40 bg-tx-soft px-3 py-2 text-tx-ink; }
+  .nav-link { @apply border-b-2 border-transparent py-3 text-muted hover:text-ink-strong; }
+  .nav-link.active { @apply border-accent text-ink-strong; }
+}
+
+/* Level meter of a radio that is receiving or transmitting */
+@keyframes meter {
+  0%, 100% { height: 0.25rem; }
+  50% { height: 0.9rem; }
+}
+.meter-bar { animation: meter 0.7s ease-in-out infinite; }

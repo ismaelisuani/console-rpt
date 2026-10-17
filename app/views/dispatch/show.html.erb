@@ -1,0 +1,52 @@
+<% content_for :title, t("nav.dispatch") %>
+<script type="application/json" id="dispatch-strings"><%= json_escape({
+  muted: t("dispatch.radio.muted"), connected: t("dispatch.radio.connected"), disconnected: t("dispatch.radio.disconnected"),
+  pttHold: t("dispatch.radio.ptt_hold"), connectFirst: t("dispatch.radio.connect_first")
+}.to_json).html_safe %></script>
+<div class="flex min-h-0 flex-1" data-controller="dispatch" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup">
+  <%= render "dispatch/phone" %>
+
+  <main class="flex min-w-0 flex-1 flex-col gap-3 p-3">
+    <div class="flex flex-wrap items-center gap-3">
+      <h1 class="text-base font-semibold text-ink-strong"><%= Radio.model_name.human(count: 2) %></h1>
+      <% if @groups.any? %>
+        <nav class="flex flex-wrap gap-1">
+          <% @groups.each do |group| %>
+            <%= link_to group.name, dispatch_path(group_id: group.id), class: class_names("btn btn-sm", "bg-raised text-ink-strong": group == @group) %>
+          <% end %>
+        </nav>
+      <% end %>
+      <span class="text-muted"><%= t(".count", count: @radios.size, online: @radios.count(&:online?)) %></span>
+      <div class="ml-auto flex items-center gap-2">
+        <button type="button" class="btn btn-sm" data-action="dispatch#connectAll"><%= t(".listen_all") %></button>
+        <button type="button" class="btn btn-sm" data-action="dispatch#muteAll"><%= t(".mute_all") %></button>
+        <div class="flex gap-1" title="<%= t(".layout") %>">
+          <% DispatchController::LAYOUTS.each do |layout| %>
+            <%= link_to layout, dispatch_path(group_id: @group&.id, layout: layout), class: class_names("btn btn-sm", "bg-raised text-ink-strong": layout == @layout) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <% if @radios.empty? %>
+      <div class="card flex flex-1 items-center justify-center p-10 text-muted"><%= t(".empty") %></div>
+    <% else %>
+      <% columns, rows = { "4" => [ 2, 2 ], "6" => [ 3, 2 ], "9" => [ 3, 3 ] }.fetch(@layout) %>
+      <div class="grid min-h-0 flex-1 gap-3 overflow-y-auto"
+           style="grid-template-columns: repeat(<%= columns %>, minmax(0, 1fr)); grid-auto-rows: calc((100% - <%= rows - 1 %> * 0.75rem) / <%= rows %>)">
+        <% @radios.each do |radio| %>
+          <%= render "dispatch/radio", radio: radio %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <section class="card h-28 shrink-0 overflow-y-auto px-3 py-2">
+      <h2 class="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-strong"><%= t(".activity") %></h2>
+      <ol id="activity" class="space-y-0.5 text-xs text-muted">
+        <% @events.each do |event| %>
+          <%= render "dispatch/activity_entry", event: event %>
+        <% end %>
+      </ol>
+    </section>
+  </main>
+</div>

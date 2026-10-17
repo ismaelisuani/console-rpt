@@ -1,0 +1,7 @@
+local:
+  name: Local
+  host: 127.0.0.1
+  local: true
+  online: true
+  ami_username: console
+  ami_password: secret

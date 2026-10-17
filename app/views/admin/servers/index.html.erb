@@ -1,0 +1,38 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: Server.model_name.human(count: 2), new_path: new_admin_server_path %>
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead><tr>
+        <th><%= Server.human_attribute_name(:name) %></th>
+        <th><%= Server.human_attribute_name(:host) %></th>
+        <th><%= Server.human_attribute_name(:online) %></th>
+        <th><%= Radio.model_name.human(count: 2) %></th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        <% @servers.each do |server| %>
+          <tr class="<%= "opacity-50" unless server.active? %>">
+            <td class="font-medium text-ink-strong">
+              <%= server.name %>
+              <% if server.local? %><span class="badge bg-accent-soft text-accent-ink"><%= Server.human_attribute_name(:local) %></span><% end %>
+            </td>
+            <td class="text-muted"><%= server.host %>:<%= server.ami_port %></td>
+            <td>
+              <span class="badge <%= server.online? ? "bg-rx-soft text-rx-ink" : "bg-tx-soft text-tx-ink" %>">
+                <%= t(server.online? ? "servers.status.online" : "servers.status.offline") %>
+              </span>
+            </td>
+            <td><%= server.radios.size %></td>
+            <td>
+              <div class="flex justify-end gap-2">
+                <%= button_to t("admin.servers.index.check"), check_admin_server_path(server), class: "btn btn-sm" %>
+                <%= render "shared/row_actions", record: server, edit_path: edit_admin_server_path(server), destroy_path: admin_server_path(server) %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @servers.empty? %><p class="p-6 text-center text-muted"><%= t("admin.servers.index.empty") %></p><% end %>
+  </div>
+<% end %>

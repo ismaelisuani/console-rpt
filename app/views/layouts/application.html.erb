@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>" class="h-full">
+  <head>
+    <title><%= content_for?(:title) ? "#{yield(:title)} · #{t("app_name")}" : t("app_name") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="application-name" content="<%= t("app_name") %>">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="h-full">
+    <% if authenticated? %>
+      <div class="flex h-full flex-col">
+        <%= render "layouts/top_bar" %>
+        <%= render "layouts/flash" %>
+        <%= yield %>
+      </div>
+    <% else %>
+      <main class="flex min-h-full items-center justify-center p-6">
+        <div class="w-full max-w-sm">
+          <%= render "layouts/flash" %>
+          <%= yield %>
+        </div>
+      </main>
+    <% end %>
+  </body>
+</html>

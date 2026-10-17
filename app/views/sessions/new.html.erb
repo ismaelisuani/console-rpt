@@ -1,0 +1,25 @@
+<% content_for :title, t("sessions.sign_in") %>
+<div class="card p-6">
+  <div class="mb-5 flex items-center gap-2 text-lg font-semibold text-ink-strong">
+    <span class="size-6 rounded bg-gradient-to-br from-accent to-rx"></span>
+    <%= t("app_name") %>
+  </div>
+
+  <%= form_with url: session_path, class: "space-y-4" do |form| %>
+    <div class="field">
+      <%= form.label :email_address, User.human_attribute_name(:email_address) %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "input" %>
+    </div>
+    <div class="field">
+      <%= form.label :password, User.human_attribute_name(:password) %>
+      <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72, class: "input" %>
+    </div>
+    <%= form.submit t("sessions.sign_in"), class: "btn-primary w-full" %>
+  <% end %>
+
+  <div class="mt-5 flex justify-center gap-3 text-xs text-muted">
+    <% I18n.available_locales.each do |locale| %>
+      <%= link_to t("locales.#{locale}"), new_session_path(locale: locale), class: class_names("hover:text-ink-strong", "text-ink-strong font-semibold": locale == I18n.locale) %>
+    <% end %>
+  </div>
+</div>
