@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  include User::Authentication, User::Permissions, User::RadioAccess, User::SelfProtection
+  include User::Authentication, User::Permissions, User::RadioAccess, User::SelfProtection, User::DispatchLayouts
 
   has_many :sessions, dependent: :destroy
   belongs_to :role

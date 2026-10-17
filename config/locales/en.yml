@@ -170,6 +170,7 @@ en:
         listen: Listen only
         operate: Operation
       monitor: Monitor
+      move: Drag to move
       mute: Mute
       muted: muted
       no_audio: No audio
@@ -181,6 +182,7 @@ en:
       ptt_hint: Hold to talk (space bar on the selected radios)
       ptt_hold: hold · space
       register_unit: Register this ID
+      resize: Drag to resize
       server_down: No connection with the server
       talking: Talking
       transceive: Transceive
@@ -199,6 +201,7 @@ en:
       layout: Radios per screen
       listen_all: Listen to all
       mute_all: Mute all
+      reset_layout: Reset layout
   flash:
     created: "%{resource} created."
     destroyed: "%{resource} deleted."

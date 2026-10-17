@@ -13,7 +13,7 @@ module DispatchHelper
   end
 
   def radio_tile_classes(radio)
-    class_names("card flex min-w-0 flex-col gap-2 p-3 transition-colors",
+    class_names("card relative flex min-w-0 flex-col gap-2 p-3 transition-colors",
       "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-rx",
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-tx",
       "has-[[data-offline]]:opacity-55 data-[selected]:outline data-[selected]:outline-2 data-[selected]:outline-accent",
@@ -112,7 +112,22 @@ module DispatchHelper
 
   def dispatch_grid_style(layout)
     columns, rows = GRIDS.fetch(layout)
-    "grid-template-columns: repeat(#{columns}, minmax(0, 1fr)); grid-auto-rows: calc((100% - #{rows - 1} * 0.75rem) / #{rows})"
+    "grid-template-columns: repeat(#{columns}, minmax(0, 1fr)); grid-auto-rows: calc((100% - #{rows - 1} * 0.75rem) / #{rows}); grid-auto-flow: dense"
+  end
+
+  def dispatch_grid_columns(layout)
+    GRIDS.fetch(layout).first
+  end
+
+  # The tile's size in grid cells, as the user left it
+  def radio_tile_style(dispatch_layout, radio)
+    width, height = dispatch_layout.tile_size(radio)
+    "grid-column: span #{[ width, dispatch_grid_columns(@layout) ].min}; grid-row: span #{height}"
+  end
+
+  def radio_tile_size_data(dispatch_layout, radio)
+    width, height = dispatch_layout.tile_size(radio)
+    tag.attributes(data: { w: width, h: height })
   end
 
   # Texts for the Stimulus controllers

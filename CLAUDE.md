@@ -85,6 +85,9 @@ per screen, by group) with an activity log below. Each tile shows:
 - Who is talking (from Unit) and the decoded ID; active links (monitor-only
   links marked differently), click to disconnect one.
 - Per-radio volume slider and mute, plus listen all / mute all.
+- Tiles can be moved (drag the grip) and resized (drag the corner, in grid
+  cells); each user's arrangement is saved per radio group (`DispatchLayout`)
+  and can be reset.
 - Connect / disconnect, link to another radio, and a hold-to-talk PTT (mouse or
   space bar; several selected radios transmit together). PTT is disabled when
   not connected and shown locked ("no permission") when the user cannot

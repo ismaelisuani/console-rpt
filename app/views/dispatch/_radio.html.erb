@@ -2,6 +2,8 @@
 <% access = radio_tile_access(radio) %>
 <article id="<%= dom_id(radio) %>"
          class="<%= radio_tile_classes(radio) %>"
+         style="<%= radio_tile_style(@dispatch_layout, radio) %>"
+         data-arrange-target="tile" data-radio-id="<%= radio.id %>" <%= radio_tile_size_data(@dispatch_layout, radio) %>
          data-controller="radio" data-dispatch-target="radio"
          data-radio-id-value="<%= radio.id %>" data-radio-node-value="<%= radio.node %>"
          data-radio-call-url-value="<%= radio_call_path(radio) %>"
@@ -11,6 +13,8 @@
   <%= turbo_stream_from radio.broadcast_stream %>
   <audio data-radio-target="audio" autoplay hidden></audio>
   <header class="flex min-w-0 items-center gap-2">
+    <span class="-ml-1 cursor-grab select-none px-0.5 text-faint hover:text-ink active:cursor-grabbing" title="<%= t("dispatch.radio.move") %>"
+          data-action="pointerdown->arrange#arm">⠿</span>
     <h2 class="truncate text-base font-semibold text-ink-strong"><%= radio.name %></h2>
     <span class="shrink-0 text-faint tabular-nums"><%= radio.node %></span>
     <span class="ml-auto shrink-0 text-faint"><%= radio.server.name %></span>
@@ -56,6 +60,9 @@
       </button>
     <% end %>
   </div>
+
+  <span class="absolute right-0.5 bottom-0.5 size-3 cursor-se-resize rounded-br border-r-2 border-b-2 border-line-strong hover:border-accent"
+        title="<%= t("dispatch.radio.resize") %>" data-action="pointerdown->arrange#resizeStart"></span>
 
   <% if access[:link] %>
     <dialog class="m-auto w-80 rounded-lg border border-line bg-surface p-4 text-ink backdrop:bg-black/60" data-radio-target="linkDialog">

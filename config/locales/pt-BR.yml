@@ -170,6 +170,7 @@ pt-BR:
         listen: Só escuta
         operate: Operação
       monitor: Monitor
+      move: Arraste para mover
       mute: Silenciar
       muted: silêncio
       no_audio: Sem áudio
@@ -181,6 +182,7 @@ pt-BR:
       ptt_hint: Segure para falar (barra de espaço nos rádios selecionados)
       ptt_hold: segure · espaço
       register_unit: Cadastrar este ID
+      resize: Arraste para redimensionar
       server_down: Sem conexão com o servidor
       talking: Falando
       transceive: Transceptor
@@ -199,6 +201,7 @@ pt-BR:
       layout: Rádios por tela
       listen_all: Escutar todos
       mute_all: Silenciar todos
+      reset_layout: Restaurar disposição
   flash:
     created: "%{resource}: criado."
     destroyed: "%{resource}: excluído."

@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_220100) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_230000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "dispatch_layouts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "radio_group_id"
+    t.jsonb "tiles", default: [], null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["radio_group_id"], name: "index_dispatch_layouts_on_radio_group_id"
+    t.index ["user_id", "radio_group_id"], name: "index_dispatch_layouts_on_user_id_and_radio_group_id", unique: true, nulls_not_distinct: true
+    t.index ["user_id"], name: "index_dispatch_layouts_on_user_id"
+  end
 
   create_table "link_requests", force: :cascade do |t|
     t.bigint "radio_id", null: false
@@ -190,6 +201,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_220100) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "dispatch_layouts", "radio_groups"
+  add_foreign_key "dispatch_layouts", "users"
   add_foreign_key "link_requests", "radios"
   add_foreign_key "link_requests", "users"
   add_foreign_key "radio_events", "radios"
