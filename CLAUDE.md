@@ -19,6 +19,23 @@ certified 22.8 with the RLink app_rpt. Local checkout of that repo:
   (missing and unused keys) must pass.
 - Each user picks their locale; the default is `es`.
 
+## Code conventions
+
+- **Models use concerns.** A model file declares associations, validations,
+  scopes and its `include`s; its behavior lives in concerns under
+  `app/models/<model>/` (`User::RadioAccess`, `Radio::LiveState`, ...). Shared
+  concerns go in `app/models/concerns/`. Processes that involve several models
+  are concerns of the model that owns them; plain classes only for
+  infrastructure (the AMI connection).
+- **Controllers only have CRUD actions**: `index`, `show`, `new`, `create`,
+  `edit`, `update`, `destroy`. Anything else is a resource of its own with its
+  own controller (`Radios::LinksController#create`, not
+  `RadiosController#link`). Controllers stay thin: params, authorization, one
+  call to the model, the response.
+- **Views use helpers.** Logic that decides what to show (labels, states,
+  CSS classes, permissions of a tile) goes in helpers; views and partials hold
+  markup and helper calls.
+
 ## Domain
 
 - **Server**: an asterisk-rpt host (name, address, AMI port and credentials,
@@ -86,9 +103,10 @@ disk).
   base roles and `admin@example.com` / `change-me-now`).
 - `bin/dev` runs the web server on port 3100, the Tailwind watcher and
   `bin/ami` (the AMI listener: one connection per active server, applies the
-  `RptEvent` events through `RadioState` and broadcasts with
-  `DispatchBroadcast`). `bin/ami` does not reload code: restart it after
-  changing `app/models/ami` or `RadioState`.
+  `RptEvent` events with `Radio::LiveState` / `Radio::Links`, which log
+  `RadioEvent`s and broadcast through `Radio::Broadcasting` and
+  `RadioEvent::Broadcasting`). `bin/ami` does not reload code: restart it
+  after changing `app/models/ami` or the radio concerns.
 - Live updates are Turbo Streams, one stream per radio and locale (the HTML is
   translated). Action Cable uses PostgreSQL in development because the
   broadcasts come from the `bin/ami` process.
@@ -103,7 +121,7 @@ Done: users, roles and permissions, radio groups and access levels, servers,
 radios, units (with CSV import), the dispatch screen with live state, unit
 names, links (link and unlink from the console), the activity log, and WebRTC
 audio: the browser calls `sip:<node>@<server>` through the server's
-`webconsole` endpoint with a signed `X-Console-Token` (`ConsoleCall`), lands in
+`webconsole` endpoint with a signed `X-Console-Token` (`Radio::ConsoleCalls`), lands in
 `Rpt(node|P)` (operate, PTT = `*99` / `#` as RFC 4733 DTMF) or `Rpt(node|Pm)`
 (listen only). Server side: `web-console/` in asterisk-rpt; the package needs
 SRTP (asterisk-rlink rlink2). JsSIP is vendored as one module

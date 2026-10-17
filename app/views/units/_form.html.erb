@@ -2,7 +2,7 @@
   <%= render "shared/errors", record: unit %>
   <div class="grid grid-cols-2 gap-4">
     <div class="field"><%= form.label :identifier %><%= form.text_field :identifier, class: "input", required: true %></div>
-    <div class="field"><%= form.label :decoder %><%= form.select :decoder, Unit::DECODERS.map { |decoder| [ decoder_label(decoder), decoder ] }, {}, class: "input" %></div>
+    <div class="field"><%= form.label :decoder %><%= form.select :decoder, Unit::Decoders::DECODERS.map { |decoder| [ decoder_label(decoder), decoder ] }, {}, class: "input" %></div>
     <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
     <div class="field"><%= form.label :person %><%= form.text_field :person, class: "input" %></div>
     <div class="field"><%= form.label :fleet %><%= form.text_field :fleet, class: "input", list: "fleets" %></div>

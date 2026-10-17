@@ -1,18 +1,3 @@
-<% unit = event.unit %>
 <li id="<%= dom_id(event) %>" class="truncate">
-  <%= local_time_tag(event.occurred_at, format: "seconds") %>
-  <% case event.kind %>
-  <% when "receive_start", "unit_identified" %>
-    <span class="font-semibold text-rx-ink"><%= t("dispatch.activity.rx") %></span> <%= event.radio.name %>
-    <% if unit %>· <b class="text-ink-strong"><%= unit_name(unit) %></b> (<%= event.unit_identifier %>)
-    <% elsif event.unit_identifier.present? %>· <span class="text-warn-ink"><%= unit_identifier_label(event.decoder, event.unit_identifier) %> <%= t("dispatch.radio.unregistered") %></span>
-    <% end %>
-  <% when "transmit_start" %>
-    <span class="font-semibold text-tx-ink"><%= t("dispatch.activity.tx") %></span> <%= event.radio.name %> · <%= transmitter_label(event.radio, event.other_node, event.user) %>
-  <% when "linked", "unlinked" %>
-    <%= t("dispatch.activity.#{event.kind}", radio: event.radio.name, other: link_source_label(event.radio, event.other_node)) %>
-    <% if event.user %><%= t("dispatch.activity.by", user: event.user.name) %><% end %>
-  <% else %>
-    <%= t("dispatch.activity.#{event.kind}", radio: event.radio.name, server: event.server&.name) %>
-  <% end %>
+  <%= local_time_tag(event.occurred_at, format: "seconds") %> <%= activity_description(event) %>
 </li>

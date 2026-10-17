@@ -12,7 +12,7 @@
       </tr></thead>
       <tbody>
         <% @users.each do |user| %>
-          <tr class="<%= "opacity-50" unless user.active? %>">
+          <tr class="<%= inactive_row_class(user) %>">
             <td class="font-medium text-ink-strong"><%= user.name %></td>
             <td class="text-muted"><%= user.email_address %></td>
             <td><%= user.role.name %></td>
@@ -20,9 +20,7 @@
               <% if user.all_radios? %>
                 <span class="text-muted"><%= t("admin.users.index.all_radios") %></span>
               <% else %>
-                <% user.radio_group_accesses.each do |access| %>
-                  <span class="badge mr-1 <%= access.level == "operate" ? "bg-accent-soft text-accent-ink" : "bg-warn-soft text-warn-ink" %>"><%= access.radio_group.name %></span>
-                <% end %>
+                <% user.radio_group_accesses.each do |access| %><%= radio_group_access_badge(access) %><% end %>
               <% end %>
             </td>
             <td class="text-muted"><%= t("locales.#{user.locale}") %></td>

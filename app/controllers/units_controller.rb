@@ -41,22 +41,6 @@ class UnitsController < ApplicationController
     redirect_to units_path, notice: t("flash.destroyed", resource: Unit.model_name.human)
   end
 
-  def new_import
-  end
-
-  def import
-    result = Unit::Import.new(params.expect(:file)).run
-    if result.errors.any?
-      flash.now[:alert] = result.errors.first(10).join(" · ")
-      @result = result
-      render :new_import, status: :unprocessable_entity
-    else
-      redirect_to units_path, notice: t(".done", created: result.created, updated: result.updated)
-    end
-  rescue ActionController::ParameterMissing
-    redirect_to import_units_path, alert: t(".no_file")
-  end
-
   private
     def set_unit
       @unit = Unit.find(params.expect(:id))

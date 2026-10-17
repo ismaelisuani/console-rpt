@@ -1,7 +1,7 @@
 # The four base roles and a first administrator (change the password)
 # Role names are data: created in the default language
 roles = {
-  administrator: Role::PERMISSIONS,
+  administrator: Role::Permissions::ALL,
   supervisor: %w[view_dispatch listen transmit connect view_recordings manage_units],
   dispatcher: %w[view_dispatch listen transmit connect],
   listener: %w[view_dispatch listen]

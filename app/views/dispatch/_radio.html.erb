@@ -1,21 +1,14 @@
 <%# Per user: permissions decide the controls. The live part is dispatch/radio_state. %>
-<% can_listen = Current.user.can_listen_to?(radio) %>
-<% can_transmit = Current.user.can_transmit_on?(radio) %>
-<% can_link = Current.user.can_connect?(radio) %>
-<% webrtc = radio.server.webrtc? %>
+<% access = radio_tile_access(radio) %>
 <article id="<%= dom_id(radio) %>"
-         class="<%= class_names("card flex min-w-0 flex-col gap-2 p-3 transition-colors",
-               "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-rx",
-               "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-tx",
-               "has-[[data-offline]]:opacity-55 data-[selected]:outline data-[selected]:outline-2 data-[selected]:outline-accent",
-               "can-link": can_link) %>"
+         class="<%= radio_tile_classes(radio) %>"
          data-controller="radio" data-dispatch-target="radio"
          data-radio-id-value="<%= radio.id %>" data-radio-node-value="<%= radio.node %>"
          data-radio-call-url-value="<%= radio_call_path(radio) %>"
          data-radio-ptt-url-value="<%= radio_ptt_path(radio) %>"
-         data-radio-can-transmit-value="<%= can_transmit %>"
+         data-radio-can-transmit-value="<%= access[:transmit] %>"
          data-action="click->radio#select">
-  <%= turbo_stream_from DispatchBroadcast.stream(radio) %>
+  <%= turbo_stream_from radio.broadcast_stream %>
   <audio data-radio-target="audio" autoplay hidden></audio>
   <header class="flex min-w-0 items-center gap-2">
     <h2 class="truncate text-base font-semibold text-ink-strong"><%= radio.name %></h2>
@@ -24,11 +17,7 @@
   </header>
 
   <div class="flex items-center gap-1.5 text-xs">
-    <% if can_transmit %>
-      <span class="badge bg-accent-soft text-accent-ink"><%= icon(:mic) %><%= t("dispatch.radio.mode.operate") %></span>
-    <% elsif can_listen %>
-      <span class="badge bg-warn-soft text-warn-ink"><%= icon(:headphones) %><%= t("dispatch.radio.mode.listen") %></span>
-    <% end %>
+    <%= radio_mode_badge(radio) %>
     <span class="badge bg-raised text-muted" data-radio-target="connectionBadge"><%= t("dispatch.radio.disconnected") %></span>
   </div>
 
@@ -47,13 +36,13 @@
 
   <div class="flex items-stretch gap-2">
     <button type="button" class="btn flex-1" data-radio-target="connectButton" data-action="radio#toggleConnection"
-            <%= "disabled" unless can_listen && webrtc %>
-            title="<%= t("dispatch.radio.no_webrtc") unless webrtc %>"
+            <%= "disabled" unless access[:listen] && access[:webrtc] %>
+            title="<%= t("dispatch.radio.no_webrtc") unless access[:webrtc] %>"
             data-connect-label="<%= t("dispatch.radio.connect") %>" data-disconnect-label="<%= t("dispatch.radio.disconnect") %>">
       <%= t("dispatch.radio.connect") %>
     </button>
-    <button type="button" class="btn flex-1" data-action="radio#openLink" <%= "disabled" unless can_link %>>⇄ <%= t("dispatch.radio.link") %></button>
-    <% if can_transmit %>
+    <button type="button" class="btn flex-1" data-action="radio#openLink" <%= "disabled" unless access[:link] %>>⇄ <%= t("dispatch.radio.link") %></button>
+    <% if access[:transmit] %>
       <button type="button" class="btn flex-[1.4] flex-col gap-0 py-1 font-bold data-[pressed]:border-tx data-[pressed]:bg-tx-strong" data-radio-target="ptt"
               data-action="pointerdown->radio#pttDown pointerup->radio#pttUp pointerleave->radio#pttUp" disabled
               title="<%= t("dispatch.radio.ptt_hint") %>">
@@ -68,11 +57,11 @@
     <% end %>
   </div>
 
-  <% if can_link %>
+  <% if access[:link] %>
     <dialog class="m-auto w-80 rounded-lg border border-line bg-surface p-4 text-ink backdrop:bg-black/60" data-radio-target="linkDialog">
-      <%= form_with url: link_radio_path(radio), class: "space-y-3" do |form| %>
+      <%= form_with url: radio_links_path(radio), class: "space-y-3" do |form| %>
         <h3 class="font-semibold text-ink-strong"><%= t("dispatch.radio.link_title", radio: radio.name) %></h3>
-        <%= form.select :other_radio_id, Current.user.radios.active.where.not(id: radio.id).ordered.map { |other| [ "#{other.name} (#{other.node})", other.id ] }, {}, class: "input" %>
+        <%= form.select :other_radio_id, radio_link_options(radio), {}, class: "input" %>
         <div class="flex gap-4">
           <label class="flex items-center gap-2"><%= form.radio_button :mode, "transceive", checked: true, class: "accent-accent" %><%= t("dispatch.radio.transceive") %></label>
           <label class="flex items-center gap-2"><%= form.radio_button :mode, "monitor", class: "accent-accent" %><%= t("dispatch.radio.monitor") %></label>

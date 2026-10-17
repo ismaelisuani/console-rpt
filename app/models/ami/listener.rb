@@ -60,8 +60,7 @@ module Ami
         return unless event["Event"] == "RptEvent"
 
         app do
-          radio = server.radios.find_by(node: event["Node"])
-          RadioState.new(radio).apply(event) if radio
+          server.radios.find_by(node: event["Node"])&.apply_rpt_event(event)
         end
       end
 
@@ -74,19 +73,14 @@ module Ami
       def sync_links(connection)
         app { server.radios.active.to_a }.each do |radio|
           output = connection.command("rpt nodes #{radio.node}")
-          app { RadioState.new(radio).links_from_node_list(output) }
+          app { radio.links_from_node_list(output) }
         rescue Error => e
           @logger.warn("[ami] #{server.name}: rpt nodes #{radio.node}: #{e.message}")
         end
       end
 
       def set_online(online)
-        app do
-          next unless server && server.reload.online? != online
-
-          server.update!(online: online, status_changed_at: Time.current)
-          RadioState.server_changed(server)
-        end
+        app { server&.reload&.mark_online!(online) }
       end
   end
 end

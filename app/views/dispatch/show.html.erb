@@ -1,10 +1,5 @@
 <% content_for :title, t("nav.dispatch") %>
-<script type="application/json" id="dispatch-strings"><%= json_escape({
-  muted: t("dispatch.radio.muted"), connected: t("dispatch.radio.connected"), disconnected: t("dispatch.radio.disconnected"),
-  pttHold: t("dispatch.radio.ptt_hold"), connectFirst: t("dispatch.radio.connect_first"),
-  connecting: t("dispatch.radio.connecting"), callFailed: t("dispatch.radio.call_failed"),
-  callEnded: t("dispatch.radio.call_ended"), microphoneDenied: t("dispatch.radio.microphone_denied")
-}.to_json).html_safe %></script>
+<%= dispatch_strings_tag %>
 <div class="flex min-h-0 flex-1" data-controller="dispatch" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup">
   <%= render "dispatch/phone" %>
 
@@ -33,9 +28,7 @@
     <% if @radios.empty? %>
       <div class="card flex flex-1 items-center justify-center p-10 text-muted"><%= t(".empty") %></div>
     <% else %>
-      <% columns, rows = { "4" => [ 2, 2 ], "6" => [ 3, 2 ], "9" => [ 3, 3 ] }.fetch(@layout) %>
-      <div class="grid min-h-0 flex-1 gap-3 overflow-y-auto"
-           style="grid-template-columns: repeat(<%= columns %>, minmax(0, 1fr)); grid-auto-rows: calc((100% - <%= rows - 1 %> * 0.75rem) / <%= rows %>)">
+      <div class="grid min-h-0 flex-1 gap-3 overflow-y-auto" style="<%= dispatch_grid_style(@layout) %>">
         <% @radios.each do |radio| %>
           <%= render "dispatch/radio", radio: radio %>
         <% end %>

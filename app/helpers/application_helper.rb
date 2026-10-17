@@ -20,6 +20,17 @@ module ApplicationHelper
     t("decoders.#{decoder}", default: decoder.to_s)
   end
 
+  # The servers in the top bar: how many are online, and each one's state as a tooltip
+  def servers_status
+    servers = Server.active.to_a
+    online = servers.count(&:online?)
+    {
+      summary: t("servers.status.summary", online: online, count: servers.size),
+      all_online: online == servers.size,
+      details: servers.map { |server| "#{server.name}: #{t(server.online? ? "servers.status.online" : "servers.status.offline")}" }.join("\n")
+    }
+  end
+
   def locale_options
     I18n.available_locales.map { |locale| [ t("locales.#{locale}"), locale ] }
   end

@@ -13,7 +13,7 @@
       </tr></thead>
       <tbody>
         <% @radios.each do |radio| %>
-          <tr class="<%= "opacity-50" unless radio.active? %>">
+          <tr class="<%= inactive_row_class(radio) %>">
             <td class="font-medium text-ink-strong"><%= radio.name %></td>
             <td class="tabular-nums"><%= radio.node %></td>
             <td class="text-muted"><%= radio.server.name %></td>

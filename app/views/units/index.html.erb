@@ -3,7 +3,7 @@
     <%= form_with url: units_path, method: :get, class: "flex gap-2", data: { turbo_frame: "_top" } do |form| %>
       <%= form.search_field :q, value: @query, placeholder: t("units.index.search"), class: "input w-56 py-1.5" %>
     <% end %>
-    <%= link_to t("units.index.import"), import_units_path, class: "btn" %>
+    <%= link_to t("units.index.import"), new_units_import_path, class: "btn" %>
   <% end %>
   <p class="mb-4 max-w-3xl text-muted"><%= t("units.index.intro") %></p>
   <div class="card overflow-x-auto">
@@ -19,7 +19,7 @@
       </tr></thead>
       <tbody>
         <% @units.each do |unit| %>
-          <tr class="<%= "opacity-50" unless unit.active? %>">
+          <tr class="<%= inactive_row_class(unit) %>">
             <td class="tabular-nums text-ink-strong"><%= unit.identifier %></td>
             <td><%= decoder_label(unit.decoder) %></td>
             <td class="font-medium text-ink-strong"><%= unit.name %></td>

@@ -5,10 +5,7 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    attributes = params.expect(user: %i[locale password password_confirmation])
-    attributes = attributes.except(:password, :password_confirmation) if attributes[:password].blank?
-
-    if @user.update(attributes)
+    if @user.update(params.expect(user: %i[locale password password_confirmation]))
       redirect_to profile_path, notice: t(".updated", locale: @user.locale)
     else
       render :show, status: :unprocessable_entity

@@ -24,14 +24,7 @@ module Admin
     end
 
     def update
-      attributes = user_params
-      attributes = attributes.except(:password, :password_confirmation) if attributes[:password].blank?
-      if @user == Current.user && attributes[:active] == "0"
-        @user.errors.add(:active, :self)
-        return render :edit, status: :unprocessable_entity
-      end
-
-      if @user.update(attributes)
+      if @user.update(user_params)
         redirect_saved(admin_users_path, @user, :updated)
       else
         render :edit, status: :unprocessable_entity
@@ -39,8 +32,6 @@ module Admin
     end
 
     def destroy
-      return redirect_to admin_users_path, alert: t(".self") if @user == Current.user
-
       destroy_record(@user, admin_users_path)
     end
 

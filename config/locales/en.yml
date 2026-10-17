@@ -49,6 +49,7 @@ en:
         person: Person
       user:
         active: Active
+        base: User
         email_address: Email
         locale: Language
         name: Name
@@ -66,6 +67,7 @@ en:
           attributes:
             active:
               self: can't be turned off for your own user
+          destroy_self: You can't delete your own user.
     models:
       radio:
         one: Radio
@@ -93,9 +95,10 @@ en:
       index:
         empty: No radios yet.
     servers:
-      check:
-        failed: "%{server}: no AMI connection (%{error})"
-        ok: "%{server}: AMI connection OK (%{version})"
+      connection_checks:
+        create:
+          failed: "%{server}: no AMI connection (%{error})"
+          ok: "%{server}: AMI connection OK (%{version})"
       form:
         ami: Manager interface (AMI)
         generated: Generated automatically
@@ -108,8 +111,6 @@ en:
         check: Test
         empty: No servers yet.
     users:
-      destroy:
-        self: You can't delete your own user.
       form:
         keep_password: Leave empty to keep it
         radio_access: Radios
@@ -247,11 +248,12 @@ en:
     none: No access
     operate: Operate
   radios:
-    command_failed: "%{server} did not take the command: %{error}"
-    link:
-      sent: Linking %{radio} with %{other}…
-    unlink:
-      sent: Unlinking %{node} from %{radio}…
+    links:
+      command_failed: "%{server} did not take the command: %{error}"
+      create:
+        sent: Linking %{radio} with %{other}…
+      destroy:
+        sent: Unlinking %{node} from %{radio}…
   roles:
     defaults:
       administrator: Administrator
@@ -271,22 +273,23 @@ en:
     sign_in: Sign in
     sign_out: Sign out
   units:
-    import:
-      done: 'Import done: %{created} created, %{updated} updated.'
-      no_file: Choose a CSV file.
+    imports:
+      create:
+        done: 'Import done: %{created} created, %{updated} updated.'
+        no_file: Choose a CSV file.
+      new:
+        decoders: 'Decoders: %{decoders}.'
+        example:
+          fleet: North
+          name: Vehicle 12
+          name_2: Ambulance 3
+          person: John Smith
+        intro: A CSV file (comma or semicolon separated) with these columns in the first row. Existing units (same ID and decoder) are updated. Nothing is saved if a line has errors.
+        submit: Import
+        title: Import units
       row_error: 'Line %{line}: %{errors}'
     index:
       empty: No units yet.
       import: Import
       intro: Each ID that app_rpt decodes is looked up here, so the console shows who is talking instead of the number. The same number can exist under two decoders.
       search: Search
-    new_import:
-      decoders: 'Decoders: %{decoders}.'
-      example:
-        fleet: North
-        name: Vehicle 12
-        name_2: Ambulance 3
-        person: John Smith
-      intro: A CSV file (comma or semicolon separated) with these columns in the first row. Existing units (same ID and decoder) are updated. Nothing is saved if a line has errors.
-      submit: Import
-      title: Import units

@@ -27,7 +27,7 @@ class RadioAudioTest < ActionDispatch::IntegrationTest
     post radio_ptt_path(radios(:base))
     assert_response :no_content
 
-    RadioState.new(radios(:base).reload).apply("Type" => "RPTKEY", "Who" => "", "Value" => "KEY", "Direction" => "TX")
+    radios(:base).reload.apply_rpt_event("Type" => "RPTKEY", "Who" => "", "Value" => "KEY", "Direction" => "TX")
     assert_equal users(:dispatcher), radios(:base).reload.transmitted_by_user
     assert_equal users(:dispatcher), radios(:base).radio_events.find_by!(kind: "transmit_start").user
   end

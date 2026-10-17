@@ -1,6 +1,6 @@
 administrator:
   name: Administrator
-  permissions: <%= Role::PERMISSIONS.inspect.tr('"', "'") %>
+  permissions: <%= Role::Permissions::ALL.inspect.tr('"', "'") %>
 
 dispatcher:
   name: Dispatcher

@@ -49,6 +49,7 @@ pt-BR:
         person: Pessoa
       user:
         active: Ativo
+        base: Usuário
         email_address: E-mail
         locale: Idioma
         name: Nome
@@ -66,6 +67,7 @@ pt-BR:
           attributes:
             active:
               self: não pode ser desativado no seu próprio usuário
+          destroy_self: Você não pode excluir seu próprio usuário.
     models:
       radio:
         one: Rádio
@@ -93,9 +95,10 @@ pt-BR:
       index:
         empty: Ainda não há rádios.
     servers:
-      check:
-        failed: "%{server}: sem conexão AMI (%{error})"
-        ok: "%{server}: conexão AMI OK (%{version})"
+      connection_checks:
+        create:
+          failed: "%{server}: sem conexão AMI (%{error})"
+          ok: "%{server}: conexão AMI OK (%{version})"
       form:
         ami: Interface de gerenciamento (AMI)
         generated: Gerada automaticamente
@@ -108,8 +111,6 @@ pt-BR:
         check: Testar
         empty: Ainda não há servidores.
     users:
-      destroy:
-        self: Você não pode excluir seu próprio usuário.
       form:
         keep_password: Deixe vazio para manter
         radio_access: Rádios
@@ -247,11 +248,12 @@ pt-BR:
     none: Sem acesso
     operate: Operar
   radios:
-    command_failed: "%{server} não aceitou o comando: %{error}"
-    link:
-      sent: Interligando %{radio} com %{other}…
-    unlink:
-      sent: Desfazendo a interligação de %{radio} com %{node}…
+    links:
+      command_failed: "%{server} não aceitou o comando: %{error}"
+      create:
+        sent: Interligando %{radio} com %{other}…
+      destroy:
+        sent: Desfazendo a interligação de %{radio} com %{node}…
   roles:
     defaults:
       administrator: Administrador
@@ -271,22 +273,23 @@ pt-BR:
     sign_in: Entrar
     sign_out: Sair
   units:
-    import:
-      done: 'Importação concluída: %{created} criadas, %{updated} atualizadas.'
-      no_file: Escolha um arquivo CSV.
+    imports:
+      create:
+        done: 'Importação concluída: %{created} criadas, %{updated} atualizadas.'
+        no_file: Escolha um arquivo CSV.
+      new:
+        decoders: 'Decodificadores: %{decoders}.'
+        example:
+          fleet: Norte
+          name: Viatura 12
+          name_2: Ambulância 3
+          person: João Silva
+        intro: Um arquivo CSV (separado por vírgula ou ponto e vírgula) com estas colunas na primeira linha. As unidades que já existem (mesmo ID e decodificador) são atualizadas. Se uma linha tiver erros, nada é salvo.
+        submit: Importar
+        title: Importar unidades
       row_error: 'Linha %{line}: %{errors}'
     index:
       empty: Ainda não há unidades.
       import: Importar
       intro: Cada ID decodificado pelo app_rpt é procurado aqui, para que o console mostre quem está falando em vez do número. O mesmo número pode existir em dois decodificadores.
       search: Buscar
-    new_import:
-      decoders: 'Decodificadores: %{decoders}.'
-      example:
-        fleet: Norte
-        name: Viatura 12
-        name_2: Ambulância 3
-        person: João Silva
-      intro: Um arquivo CSV (separado por vírgula ou ponto e vírgula) com estas colunas na primeira linha. As unidades que já existem (mesmo ID e decodificador) são atualizadas. Se uma linha tiver erros, nada é salvo.
-      submit: Importar
-      title: Importar unidades

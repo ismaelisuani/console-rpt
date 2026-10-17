@@ -31,10 +31,7 @@ module Ami
           thread = Thread.new { listener.run }
           @listeners[id] = { listener: listener, thread: thread }
         end
-        Server.where.not(id: active).where(online: true).find_each do |server|
-          server.update!(online: false, status_changed_at: Time.current)
-          RadioState.server_changed(server)
-        end
+        Server.where.not(id: active).where(online: true).find_each { |server| server.mark_online!(false) }
       end
 
       def trap_signals

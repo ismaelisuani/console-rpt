@@ -24,12 +24,6 @@ module Admin
     end
 
     def update
-      if locks_out_current_user?
-        @role.assign_attributes(role_params)
-        @role.errors.add(:permissions, :keeps_admin)
-        return render :edit, status: :unprocessable_entity
-      end
-
       if @role.update(role_params)
         redirect_saved(admin_roles_path, @role, :updated)
       else
@@ -48,11 +42,6 @@ module Admin
 
       def role_params
         params.expect(role: [ :name, permissions: [] ])
-      end
-
-      # Nobody can take away their own user administration
-      def locks_out_current_user?
-        @role == Current.user.role && !Array(role_params[:permissions]).include?("manage_users")
       end
   end
 end

@@ -7,26 +7,23 @@ Rails.application.routes.draw do
 
   # Dispatch actions on a radio
   resources :radios, only: [] do
-    member do
-      post :link
-      post :unlink
-    end
     scope module: :radios do
+      resources :links, only: %i[create destroy], param: :node
       resource :call, only: :create
       resource :ptt, only: :create
     end
   end
 
-  resources :units, except: :show do
-    collection do
-      get :import, action: :new_import
-      post :import
-    end
+  namespace :units do
+    resource :import, only: %i[new create]
   end
+  resources :units, except: :show
 
   namespace :admin do
     resources :servers, except: :show do
-      member { post :check }
+      scope module: :servers do
+        resource :connection_check, only: :create
+      end
     end
     resources :radios, except: :show
     resources :radio_groups, except: :show

@@ -5,7 +5,7 @@
     <span class="label"><%= Role.human_attribute_name(:permissions) %></span>
     <%= hidden_field_tag "role[permissions][]", "" %>
     <div class="space-y-2">
-      <% Role::PERMISSIONS.each do |permission| %>
+      <% Role::Permissions::ALL.each do |permission| %>
         <label class="flex items-start gap-2">
           <%= check_box_tag "role[permissions][]", permission, role.grants?(permission), id: "permission_#{permission}", class: "checkbox mt-0.5" %>
           <span><span class="text-ink-strong"><%= t("permissions.#{permission}") %></span><br><span class="text-xs text-muted"><%= t("permissions.hints.#{permission}") %></span></span>

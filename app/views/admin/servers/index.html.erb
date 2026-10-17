@@ -11,21 +11,19 @@
       </tr></thead>
       <tbody>
         <% @servers.each do |server| %>
-          <tr class="<%= "opacity-50" unless server.active? %>">
+          <tr class="<%= inactive_row_class(server) %>">
             <td class="font-medium text-ink-strong">
               <%= server.name %>
               <% if server.local? %><span class="badge bg-accent-soft text-accent-ink"><%= Server.human_attribute_name(:local) %></span><% end %>
             </td>
             <td class="text-muted"><%= server.host %>:<%= server.ami_port %></td>
             <td>
-              <span class="badge <%= server.online? ? "bg-rx-soft text-rx-ink" : "bg-tx-soft text-tx-ink" %>">
-                <%= t(server.online? ? "servers.status.online" : "servers.status.offline") %>
-              </span>
+              <%= server_status_badge(server) %>
             </td>
             <td><%= server.radios.size %></td>
             <td>
               <div class="flex justify-end gap-2">
-                <%= button_to t("admin.servers.index.check"), check_admin_server_path(server), class: "btn btn-sm" %>
+                <%= button_to t("admin.servers.index.check"), admin_server_connection_check_path(server), class: "btn btn-sm" %>
                 <%= render "shared/row_actions", record: server, edit_path: edit_admin_server_path(server), destroy_path: admin_server_path(server) %>
               </div>
             </td>

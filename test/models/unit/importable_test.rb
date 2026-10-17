@@ -1,8 +1,8 @@
 require "test_helper"
 
-class Unit::ImportTest < ActiveSupport::TestCase
+class Unit::ImportableTest < ActiveSupport::TestCase
   def import(csv)
-    Unit::Import.new(StringIO.new(csv)).run
+    Unit.import(StringIO.new(csv))
   end
 
   test "creates and updates units, with either separator" do

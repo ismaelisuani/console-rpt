@@ -22,7 +22,7 @@
         <label class="flex items-center justify-between gap-3 rounded-md border border-line px-3 py-2">
           <span><%= group.name %></span>
           <%= select_tag "user[group_levels][#{group.id}]",
-                options_for_select([ [ t("radio_access.none"), "" ] ] + RadioGroupAccess::LEVELS.map { |level| [ t("radio_access.#{level}"), level ] }, levels[group.id]),
+                radio_group_level_options(levels[group.id]),
                 class: "input w-40 py-1" %>
         </label>
       <% end %>

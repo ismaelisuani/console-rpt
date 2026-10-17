@@ -1,7 +1,7 @@
 module Admin
   class ServersController < BaseController
     require_permission :manage_radios
-    before_action :set_server, only: %i[edit update destroy check]
+    before_action :set_server, only: %i[edit update destroy]
 
     def index
       @servers = Server.ordered.includes(:radios)
@@ -24,11 +24,7 @@ module Admin
     end
 
     def update
-      # An empty password field keeps the stored one
-      attributes = server_params
-      attributes = attributes.except(:ami_password) if attributes[:ami_password].blank?
-      attributes = attributes.except(:sip_password) if attributes[:sip_password].blank?
-      if @server.update(attributes)
+      if @server.update(server_params)
         redirect_saved(admin_servers_path, @server, :updated)
       else
         render :edit, status: :unprocessable_entity
@@ -37,14 +33,6 @@ module Admin
 
     def destroy
       destroy_record(@server, admin_servers_path)
-    end
-
-    # Logs in to AMI with the stored credentials
-    def check
-      version = Ami::Client.new(@server).command("core show version").to_s.lines.first.to_s.strip
-      redirect_to admin_servers_path, notice: t(".ok", server: @server.name, version: version)
-    rescue Ami::Error, SystemCallError, IOError, SocketError, Timeout::Error => e
-      redirect_to admin_servers_path, alert: t(".failed", server: @server.name, error: e.message)
     end
 
     private

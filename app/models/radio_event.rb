@@ -1,8 +1,9 @@
 class RadioEvent < ApplicationRecord
+  include RadioEvent::Broadcasting
+
   KINDS = %w[
-    receive_start receive_end transmit_start transmit_end unit_identified
-    links_changed server_online server_offline
-    connected disconnected linked unlinked
+    receive_start unit_identified transmit_start
+    linked unlinked server_online server_offline
   ].freeze
 
   belongs_to :radio, optional: true

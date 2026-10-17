@@ -49,6 +49,7 @@ es:
         person: Persona
       user:
         active: Activo
+        base: Usuario
         email_address: Correo
         locale: Idioma
         name: Nombre
@@ -66,6 +67,7 @@ es:
           attributes:
             active:
               self: no se puede desactivar en tu propio usuario
+          destroy_self: No podés eliminar tu propio usuario.
     models:
       radio:
         one: Radio
@@ -93,9 +95,10 @@ es:
       index:
         empty: Todavía no hay radios.
     servers:
-      check:
-        failed: "%{server}: sin conexión AMI (%{error})"
-        ok: "%{server}: conexión AMI correcta (%{version})"
+      connection_checks:
+        create:
+          failed: "%{server}: sin conexión AMI (%{error})"
+          ok: "%{server}: conexión AMI correcta (%{version})"
       form:
         ami: Interfaz de administración (AMI)
         generated: Se genera automáticamente
@@ -108,8 +111,6 @@ es:
         check: Probar
         empty: Todavía no hay servidores.
     users:
-      destroy:
-        self: No podés eliminar tu propio usuario.
       form:
         keep_password: Dejala vacía para mantenerla
         radio_access: Radios
@@ -247,11 +248,12 @@ es:
     none: Sin acceso
     operate: Operar
   radios:
-    command_failed: "%{server} no tomó el comando: %{error}"
-    link:
-      sent: Enlazando %{radio} con %{other}…
-    unlink:
-      sent: Desenlazando %{node} de %{radio}…
+    links:
+      command_failed: "%{server} no tomó el comando: %{error}"
+      create:
+        sent: Enlazando %{radio} con %{other}…
+      destroy:
+        sent: Desenlazando %{node} de %{radio}…
   roles:
     defaults:
       administrator: Administrador
@@ -271,22 +273,23 @@ es:
     sign_in: Ingresar
     sign_out: Salir
   units:
-    import:
-      done: 'Importación lista: %{created} creadas, %{updated} actualizadas.'
-      no_file: Elegí un archivo CSV.
+    imports:
+      create:
+        done: 'Importación lista: %{created} creadas, %{updated} actualizadas.'
+        no_file: Elegí un archivo CSV.
+      new:
+        decoders: 'Decodificadores: %{decoders}.'
+        example:
+          fleet: Norte
+          name: Móvil 12
+          name_2: Ambulancia 3
+          person: Juan Pérez
+        intro: Un archivo CSV (separado por coma o punto y coma) con estas columnas en la primera fila. Las unidades que ya existen (mismo ID y decodificador) se actualizan. Si una línea tiene errores, no se guarda nada.
+        submit: Importar
+        title: Importar unidades
       row_error: 'Línea %{line}: %{errors}'
     index:
       empty: Todavía no hay unidades.
       import: Importar
       intro: Cada ID que decodifica app_rpt se busca acá, para que la consola muestre quién habla en vez del número. El mismo número puede existir en dos decodificadores.
       search: Buscar
-    new_import:
-      decoders: 'Decodificadores: %{decoders}.'
-      example:
-        fleet: Norte
-        name: Móvil 12
-        name_2: Ambulancia 3
-        person: Juan Pérez
-      intro: Un archivo CSV (separado por coma o punto y coma) con estas columnas en la primera fila. Las unidades que ya existen (mismo ID y decodificador) se actualizan. Si una línea tiene errores, no se guarda nada.
-      submit: Importar
-      title: Importar unidades
