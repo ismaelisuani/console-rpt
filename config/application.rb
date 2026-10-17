@@ -28,6 +28,11 @@ module ConsoleRpt
     config.i18n.default_locale = :es
     config.i18n.fallbacks = [ :en ]
     config.i18n.raise_on_missing_translations = :strict if Rails.env.local?
+
+    # Copies of the remote servers' air archives, and the recordings
+    # converted for the browser
+    config.x.archives_dir = Rails.root.join("storage/archives")
+    config.x.playable_audio_dir = Rails.root.join("storage/playable")
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

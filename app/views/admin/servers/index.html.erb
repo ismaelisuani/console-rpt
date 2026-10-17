@@ -7,6 +7,7 @@
         <th><%= Server.human_attribute_name(:host) %></th>
         <th><%= Server.human_attribute_name(:online) %></th>
         <th><%= Radio.model_name.human(count: 2) %></th>
+        <th><%= t("admin.servers.index.recordings") %></th>
         <th></th>
       </tr></thead>
       <tbody>
@@ -21,6 +22,7 @@
               <%= server_status_badge(server) %>
             </td>
             <td><%= server.radios.size %></td>
+            <td><%= recordings_sync_status(server) %></td>
             <td>
               <div class="flex justify-end gap-2">
                 <%= button_to t("admin.servers.index.check"), admin_server_connection_check_path(server), class: "btn btn-sm" %>

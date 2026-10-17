@@ -1,0 +1,15 @@
+Fecha=20261017
+Hora=103403
+Cate=01
+Nodo=001
+Canal=1999
+Segundos=4
+Milisegundos=3.58
+EntraSale=E
+NroLinea=1999
+LinkId=0100120261017103403397
+NroRemoto=
+Dato8=7301
+Dato9=2000
+Dato10=Mototrbo
+WavPathname=/var/spool/asterisk/archive/1999/0100120261017103403397.WAV

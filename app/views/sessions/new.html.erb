@@ -12,7 +12,7 @@
     </div>
     <div class="field">
       <%= form.label :password, User.human_attribute_name(:password) %>
-      <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72, class: "input" %>
+      <%= password_field_with_toggle(form, :password, required: true, autocomplete: "current-password", maxlength: 72, class: "input") %>
     </div>
     <%= form.submit t("sessions.sign_in"), class: "btn-primary w-full" %>
   <% end %>

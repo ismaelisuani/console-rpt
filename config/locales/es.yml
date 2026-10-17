@@ -38,7 +38,9 @@ es:
         sip_password: Clave SIP
         sip_username: Usuario SIP
         ssh_port: Puerto SSH
+        ssh_sudo: Leer el archivo con sudo
         ssh_username: Usuario SSH
+        time_zone: Zona horaria del servidor
         webrtc_url: Dirección WebRTC
       unit:
         active: Activa
@@ -106,11 +108,15 @@ es:
         keep_password: Dejala vacía para mantenerla
         local_hint: El servidor donde corre esta consola. Su configuración y su archivo de aire se leen del disco; a los otros se entra por SSH.
         remote: Acceso remoto (SSH)
+        ssh_hint: 'Para los servidores que no son el local: la consola copia su archivo de aire con rsync por SSH (clave sin frase). Si el usuario SSH no puede leer el archivo, marcá sudo (sudo sin contraseña para rsync).'
         webrtc: Audio (WebRTC)
         webrtc_hint: La consola llama a las radios desde el navegador. El Asterisk del servidor necesita la configuración web-console de asterisk-rpt con estos valores.
       index:
         check: Probar
         empty: Todavía no hay servidores.
+        recordings: Grabaciones
+        sync_failed: Falló la sincronización
+        synced: Sincronizado
     users:
       form:
         keep_password: Dejala vacía para mantenerla
@@ -207,10 +213,14 @@ es:
   nav:
     dispatch: Despacho
     radios: Radios
+    recordings: Grabaciones
     roles: Roles
     servers: Servidores
     units: Unidades
     users: Usuarios
+  password:
+    hide: Ocultar contraseña
+    show: Mostrar contraseña
   permissions:
     connect: Enlazar radios
     hints:
@@ -256,6 +266,26 @@ es:
         sent: Enlazando %{radio} con %{other}…
       destroy:
         sent: Desenlazando %{node} de %{radio}…
+  recordings:
+    index:
+      all_radios: Todas las radios
+      audio: Audio
+      both: RX y TX
+      clear: Limpiar
+      direction: Sentido
+      download: Descargar
+      duration: Duración
+      empty: No hay grabaciones con estos filtros.
+      filter: Filtrar
+      from: Desde
+      newer: "← Más nuevas"
+      older: Más viejas →
+      rx: Recepciones (RX)
+      source: Quién
+      time: Fecha y hora
+      to: Hasta
+      tx: Transmisiones (TX)
+      unit_hint: ID, unidad o persona
   roles:
     defaults:
       administrator: Administrador
@@ -263,6 +293,8 @@ es:
       listener: Oyente
       supervisor: Supervisor
   servers:
+    recordings:
+      no_ssh_user: El servidor no tiene usuario SSH
     status:
       offline: Sin conexión
       online: En línea

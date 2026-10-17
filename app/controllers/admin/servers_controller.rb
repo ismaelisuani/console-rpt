@@ -41,7 +41,7 @@ module Admin
       end
 
       def server_params
-        params.expect(server: %i[name host local ami_port ami_username ami_password ssh_port ssh_username sip_username sip_password webrtc_url archive_path active])
+        params.expect(server: %i[name host local ami_port ami_username ami_password ssh_port ssh_username ssh_sudo time_zone sip_username sip_password webrtc_url archive_path active])
       end
   end
 end

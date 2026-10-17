@@ -1,0 +1,50 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: t("nav.recordings") %>
+
+  <%= form_with url: recordings_path, method: :get, class: "card mb-4 flex flex-wrap items-end gap-3 p-3" do |form| %>
+    <div class="field"><%= form.label :radio_id, Radio.model_name.human %><%= form.select :radio_id, options_for_select(recording_radio_options, @filters[:radio_id]), {}, class: "input py-1.5" %></div>
+    <div class="field"><%= form.label :direction, t("recordings.index.direction") %><%= form.select :direction, options_for_select(recording_direction_options, @filters[:direction]), {}, class: "input py-1.5" %></div>
+    <div class="field"><%= form.label :from, t("recordings.index.from") %><%= form.date_field :from, value: @filters[:from], class: "input py-1.5" %></div>
+    <div class="field"><%= form.label :to, t("recordings.index.to") %><%= form.date_field :to, value: @filters[:to], class: "input py-1.5" %></div>
+    <div class="field"><%= form.label :unit, Unit.model_name.human %><%= form.search_field :unit, value: @filters[:unit], placeholder: t("recordings.index.unit_hint"), class: "input py-1.5" %></div>
+    <%= form.submit t("recordings.index.filter"), name: nil, class: "btn-primary" %>
+    <%= link_to t("recordings.index.clear"), recordings_path, class: "btn" %>
+  <% end %>
+
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead><tr>
+        <th><%= t("recordings.index.time") %></th>
+        <th><%= Radio.model_name.human %></th>
+        <th></th>
+        <th><%= t("recordings.index.source") %></th>
+        <th><%= t("recordings.index.duration") %></th>
+        <th><%= t("recordings.index.audio") %></th>
+      </tr></thead>
+      <tbody>
+        <% @recordings.first(Recording::PER_PAGE).each do |recording| %>
+          <tr>
+            <td class="whitespace-nowrap"><%= local_time_tag(recording.started_at, format: "seconds") %></td>
+            <td class="font-medium text-ink-strong"><%= recording_radio_name(recording) %></td>
+            <td><%= recording_direction_badge(recording) %></td>
+            <td><%= recording_source(recording) %></td>
+            <td class="tabular-nums text-muted"><%= recording_duration(recording) %></td>
+            <td>
+              <div class="flex items-center gap-2">
+                <audio controls preload="none" class="h-8 w-64" src="<%= recording_audio_path(recording) %>"></audio>
+                <%= link_to "⤓", recording_audio_path(recording, download: 1), class: "btn btn-sm", title: t("recordings.index.download"), data: { turbo: false } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @recordings.empty? %><p class="p-6 text-center text-muted"><%= t("recordings.index.empty") %></p><% end %>
+  </div>
+
+  <div class="mt-3 flex justify-end gap-2">
+    <% page = [ @filters[:page].to_i, 1 ].max %>
+    <% if page > 1 %><%= recordings_page_link(@filters, page - 1, t("recordings.index.newer")) %><% end %>
+    <% if @recordings.size > Recording::PER_PAGE %><%= recordings_page_link(@filters, page + 1, t("recordings.index.older")) %><% end %>
+  </div>
+<% end %>

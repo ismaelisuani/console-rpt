@@ -6,6 +6,8 @@
 Rails.application.configure do
   # Encrypted attributes (Server#ami_password) in fixtures
   config.active_record.encryption.encrypt_fixtures = true
+  config.x.archives_dir = Rails.root.join("tmp/test/archives")
+  config.x.playable_audio_dir = Rails.root.join("tmp/test/playable")
 
   # Settings specified here will take precedence over those in config/application.rb.
 

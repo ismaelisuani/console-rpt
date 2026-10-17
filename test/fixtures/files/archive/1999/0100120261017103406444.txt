@@ -1,0 +1,15 @@
+Fecha=20261017
+Hora=103406
+Cate=01
+Nodo=001
+Canal=1999
+Segundos=3
+Milisegundos=2.10
+EntraSale=S
+NroLinea=1999
+LinkId=0100120261017103406444
+NroRemoto=
+Dato8=2000
+Dato9=
+Dato10=
+WavPathname=/var/spool/asterisk/archive/1999/0100120261017103406444.WAV

@@ -1,0 +1,12 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "fingerprint": "c356aed5f197941ba19795d81a54253ca9752214a51cf7058821f7cff848c2d9",
+      "check_name": "SendFile",
+      "file": "app/controllers/recordings/audios_controller.rb",
+      "note": "The audio path comes from the archive LinkId and file name, which Recording::ArchiveFile limits to [0-9A-Za-z_.-]; the user only picks a recording they may hear (Recording.visible_to)."
+    }
+  ],
+  "brakeman_version": "8.1.0"
+}

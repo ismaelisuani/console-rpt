@@ -38,7 +38,9 @@ en:
         sip_password: SIP password
         sip_username: SIP user
         ssh_port: SSH port
+        ssh_sudo: Read the archive with sudo
         ssh_username: SSH user
+        time_zone: Server time zone
         webrtc_url: WebRTC address
       unit:
         active: Active
@@ -106,11 +108,15 @@ en:
         keep_password: Leave empty to keep it
         local_hint: The server where this console runs. Its configuration and air archive are read from disk; the others are reached over SSH.
         remote: Remote access (SSH)
+        ssh_hint: 'For servers other than the local one: the console copies their air archive with rsync over SSH (key without passphrase). If the SSH user can''t read the archive, tick sudo (passwordless sudo for rsync).'
         webrtc: Audio (WebRTC)
         webrtc_hint: The console calls the radios from the browser. The server's Asterisk needs the web-console configuration of asterisk-rpt with these values.
       index:
         check: Test
         empty: No servers yet.
+        recordings: Recordings
+        sync_failed: Sync failed
+        synced: Synced
     users:
       form:
         keep_password: Leave empty to keep it
@@ -207,10 +213,14 @@ en:
   nav:
     dispatch: Dispatch
     radios: Radios
+    recordings: Recordings
     roles: Roles
     servers: Servers
     units: Units
     users: Users
+  password:
+    hide: Hide password
+    show: Show password
   permissions:
     connect: Link radios
     hints:
@@ -256,6 +266,26 @@ en:
         sent: Linking %{radio} with %{other}…
       destroy:
         sent: Unlinking %{node} from %{radio}…
+  recordings:
+    index:
+      all_radios: All radios
+      audio: Audio
+      both: RX and TX
+      clear: Clear
+      direction: Direction
+      download: Download
+      duration: Duration
+      empty: No recordings for these filters.
+      filter: Filter
+      from: From
+      newer: "← Newer"
+      older: Older →
+      rx: Receptions (RX)
+      source: Who
+      time: Date and time
+      to: To
+      tx: Transmissions (TX)
+      unit_hint: ID, unit or person
   roles:
     defaults:
       administrator: Administrator
@@ -263,6 +293,8 @@ en:
       listener: Listener
       supervisor: Supervisor
   servers:
+    recordings:
+      no_ssh_user: The server has no SSH user
     status:
       offline: Offline
       online: Online

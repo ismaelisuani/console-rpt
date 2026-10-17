@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :recordings, only: :index do
+    resource :audio, only: :show, module: :recordings
+  end
+
   namespace :units do
     resource :import, only: %i[new create]
   end

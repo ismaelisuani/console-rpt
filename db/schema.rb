@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_210000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_220100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -98,6 +98,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_210000) do
     t.index ["transmitted_by_user_id"], name: "index_radios_on_transmitted_by_user_id"
   end
 
+  create_table "recordings", force: :cascade do |t|
+    t.bigint "server_id", null: false
+    t.bigint "radio_id"
+    t.string "node", null: false
+    t.string "link_id", null: false
+    t.string "direction", null: false
+    t.datetime "started_at", null: false
+    t.decimal "duration", precision: 8, scale: 2, default: "0.0", null: false
+    t.string "unit_identifier"
+    t.string "other_node"
+    t.string "decoder"
+    t.string "remote_node"
+    t.string "audio_path", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decoder", "unit_identifier"], name: "index_recordings_on_decoder_and_unit_identifier"
+    t.index ["radio_id"], name: "index_recordings_on_radio_id"
+    t.index ["server_id", "link_id"], name: "index_recordings_on_server_id_and_link_id", unique: true
+    t.index ["server_id"], name: "index_recordings_on_server_id"
+    t.index ["started_at"], name: "index_recordings_on_started_at"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
     t.string "permissions", default: [], null: false, array: true
@@ -125,6 +147,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_210000) do
     t.string "sip_username", default: "webconsole", null: false
     t.string "sip_password"
     t.string "console_secret"
+    t.string "time_zone", default: "America/Argentina/Buenos_Aires", null: false
+    t.boolean "ssh_sudo", default: false, null: false
+    t.datetime "recordings_synced_at"
+    t.string "recordings_sync_error"
     t.index ["name"], name: "index_servers_on_name", unique: true
   end
 
@@ -176,6 +202,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_210000) do
   add_foreign_key "radios", "servers"
   add_foreign_key "radios", "users", column: "ptt_user_id"
   add_foreign_key "radios", "users", column: "transmitted_by_user_id"
+  add_foreign_key "recordings", "radios"
+  add_foreign_key "recordings", "servers"
   add_foreign_key "sessions", "users"
   add_foreign_key "users", "roles"
 end
