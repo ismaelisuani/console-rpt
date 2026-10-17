@@ -8,15 +8,21 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "create with valid credentials" do
-    post session_path, params: { email_address: @user.email_address, password: "password" }
+  test "create with the username" do
+    post session_path, params: { login: " Dispatcher ", password: "password" }
 
     assert_redirected_to root_path
     assert cookies[:session_id]
   end
 
+  test "create with the email address" do
+    post session_path, params: { login: @user.email_address, password: "password" }
+
+    assert_redirected_to root_path
+  end
+
   test "create with invalid credentials" do
-    post session_path, params: { email_address: @user.email_address, password: "wrong" }
+    post session_path, params: { login: @user.username, password: "wrong" }
 
     assert_redirected_to new_session_path
     assert_nil cookies[:session_id]
@@ -24,7 +30,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "inactive users can't sign in" do
     @user.update!(active: false)
-    post session_path, params: { email_address: @user.email_address, password: "password" }
+    post session_path, params: { login: @user.username, password: "password" }
 
     assert_redirected_to new_session_path
   end

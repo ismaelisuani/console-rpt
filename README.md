@@ -9,7 +9,7 @@ Hotwire. User interface in Spanish, English and Portuguese.
 
 ```sh
 bin/dev-db             # PostgreSQL in Docker on 127.0.0.1:5433
-bin/rails db:prepare   # schema and seeds (admin@example.com / change-me-now)
+bin/rails db:prepare   # schema and seeds (user admin / change-me-now)
 bin/dev                # http://127.0.0.1:3100, CSS watcher and the AMI listener
 ```
 

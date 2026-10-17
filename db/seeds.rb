@@ -10,7 +10,7 @@ roles.each do |key, permissions|
   Role.find_or_create_by!(name: I18n.t("roles.defaults.#{key}")) { |role| role.permissions = permissions }
 end
 
-User.find_or_create_by!(email_address: "admin@example.com") do |user|
+User.find_or_create_by!(username: "admin") do |user|
   user.name = I18n.t("roles.defaults.administrator")
   user.password = ENV.fetch("ADMIN_PASSWORD", "change-me-now")
   user.role = Role.find_by!(name: I18n.t("roles.defaults.administrator"))

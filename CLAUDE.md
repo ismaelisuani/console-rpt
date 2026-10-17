@@ -43,7 +43,9 @@ certified 22.8 with the RLink app_rpt. Local checkout of that repo:
   different addresses.
 - **Radio**: an app_rpt node on a server (node number, name, ...). Dispatch
   works on radios: live status, listen, PTT, connect and disconnect.
-- **User** with **roles and permissions**: what each user can see and do, and on
+- **User** with **roles and permissions**: users sign in with their username or
+  their email address; the email address is optional (`User::Authentication`).
+  Also what each user can see and do, and on
   which radios.
 - **Unit**: maps a unit ID decoded by app_rpt (ID + decoder: MOTOTRBO, P25,
   MDC1200, DTMF, selcall) to a vehicle or person, so the UI shows who is
@@ -100,7 +102,7 @@ disk).
 
 - `bin/dev-db` starts the development PostgreSQL (Docker, 127.0.0.1:5433,
   see `config/database.yml`); then `bin/rails db:prepare` (seeds create the
-  base roles and `admin@example.com` / `change-me-now`).
+  base roles and the user `admin` / `change-me-now`).
 - `bin/dev` runs the web server on port 3100, the Tailwind watcher and
   `bin/ami` (the AMI listener: one connection per active server, applies the
   `RptEvent` events with `Radio::LiveState` / `Radio::Links`, which log

@@ -2,7 +2,8 @@
   <%= render "shared/errors", record: user %>
   <div class="grid grid-cols-2 gap-4">
     <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
-    <div class="field"><%= form.label :email_address %><%= form.email_field :email_address, class: "input", required: true %></div>
+    <div class="field"><%= form.label :username %><%= form.text_field :username, class: "input", required: true, autocapitalize: "none", autocomplete: "off" %></div>
+    <div class="field"><%= form.label :email_address %><%= form.email_field :email_address, class: "input", placeholder: t(".optional") %></div>
     <div class="field"><%= form.label :role_id %><%= form.collection_select :role_id, Role.order(:name), :id, :name, {}, class: "input" %></div>
     <div class="field"><%= form.label :locale %><%= form.select :locale, locale_options, {}, class: "input" %></div>
     <div class="field">

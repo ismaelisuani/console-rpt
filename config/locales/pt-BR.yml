@@ -57,6 +57,7 @@ pt-BR:
         password_confirmation: Confirmar senha
         role: Perfil
         role_id: Perfil
+        username: Usuário
     errors:
       models:
         role:
@@ -113,6 +114,7 @@ pt-BR:
     users:
       form:
         keep_password: Deixe vazio para manter
+        optional: Opcional
         radio_access: Rádios
         radio_access_hint: Os grupos de rádios que este usuário vê, e se pode operá-los ou só escutá-los. Usuários cujo perfil administra rádios veem todos.
       index:
@@ -269,6 +271,7 @@ pt-BR:
         other: "%{online} de %{count} servidores online"
   sessions:
     invalid: E-mail ou senha incorretos.
+    login: Usuário ou e-mail
     rate_limited: Muitas tentativas; tente de novo em alguns minutos.
     sign_in: Entrar
     sign_out: Sair

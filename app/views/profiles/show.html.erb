@@ -4,7 +4,8 @@
   <div class="card p-5">
     <dl class="mb-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
       <dt class="text-muted"><%= User.human_attribute_name(:name) %></dt><dd><%= @user.name %></dd>
-      <dt class="text-muted"><%= User.human_attribute_name(:email_address) %></dt><dd><%= @user.email_address %></dd>
+      <dt class="text-muted"><%= User.human_attribute_name(:username) %></dt><dd><%= @user.username %></dd>
+      <dt class="text-muted"><%= User.human_attribute_name(:email_address) %></dt><dd><%= @user.email_address.presence || "—" %></dd>
       <dt class="text-muted"><%= User.human_attribute_name(:role) %></dt><dd><%= @user.role.name %></dd>
     </dl>
     <%= form_with model: @user, url: profile_path, method: :patch, class: "space-y-4" do |form| %>

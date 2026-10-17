@@ -57,6 +57,7 @@ en:
         password_confirmation: Confirm password
         role: Role
         role_id: Role
+        username: Username
     errors:
       models:
         role:
@@ -113,6 +114,7 @@ en:
     users:
       form:
         keep_password: Leave empty to keep it
+        optional: Optional
         radio_access: Radios
         radio_access_hint: Groups of radios this user sees, and whether they can operate them or only listen. Users whose role manages radios see all of them.
       index:
@@ -269,6 +271,7 @@ en:
         other: "%{online} of %{count} servers online"
   sessions:
     invalid: Wrong email or password.
+    login: Username or email
     rate_limited: Too many attempts, try again in a few minutes.
     sign_in: Sign in
     sign_out: Sign out
