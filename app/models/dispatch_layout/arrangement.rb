@@ -1,11 +1,10 @@
-# Where each radio tile goes and its size, in grid cells:
-# [{ "radio_id" => 1, "x" => 1, "y" => 2, "w" => 2, "h" => 1 }, ...]
-# x (column) and y (row) are optional: tiles without them fill the free cells
+# Where each radio tile goes on the board, a column and a row:
+# [{ "radio_id" => 1, "x" => 1, "y" => 2 }, ...]
+# Tiles without a place fill the free cells
 module DispatchLayout::Arrangement
   extend ActiveSupport::Concern
 
-  MAX_WIDTH = 3
-  MAX_HEIGHT = 3
+  MAX_COLUMN = 3
   MAX_ROW = 50
 
   included do
@@ -14,9 +13,8 @@ module DispatchLayout::Arrangement
         tile = tile.to_h.stringify_keys
         next if tile["radio_id"].to_i <= 0
 
-        position = { "x" => tile["x"].to_i.clamp(1, MAX_WIDTH), "y" => tile["y"].to_i.clamp(1, MAX_ROW) } if tile["x"].present? && tile["y"].present?
-        { "radio_id" => tile["radio_id"].to_i, "w" => tile["w"].to_i.clamp(1, MAX_WIDTH), "h" => tile["h"].to_i.clamp(1, MAX_HEIGHT) }
-          .merge(position.to_h)
+        position = { "x" => tile["x"].to_i.clamp(1, MAX_COLUMN), "y" => tile["y"].to_i.clamp(1, MAX_ROW) } if tile["x"].present? && tile["y"].present?
+        { "radio_id" => tile["radio_id"].to_i }.merge(position.to_h)
       end.uniq { |tile| tile["radio_id"] }
     }
   end
@@ -32,10 +30,5 @@ module DispatchLayout::Arrangement
   def tile_position(radio)
     tile = tiles.find { |t| t["radio_id"] == radio.id }
     [ tile["x"], tile["y"] ] if tile&.key?("x")
-  end
-
-  def tile_size(radio)
-    tile = tiles.find { |t| t["radio_id"] == radio.id }
-    tile ? [ tile["w"], tile["h"] ] : [ 1, 1 ]
   end
 end

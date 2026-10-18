@@ -100,10 +100,10 @@ user's radios, or one group) with an activity log below. Each tile shows:
   links marked differently), click to disconnect one.
 - Per-radio volume slider and mute, plus listen all / mute all.
 - The board (wide screens): three columns, three rows per screen (scrolls
-  when there are more), rows of equal height; each tile has a column, a
-  row and a size in cells. Drag a tile by its header to any cell (another
-  radio's side swaps them, its middle links them); resize from the corner.
-  Each user's board is saved per radio group (`DispatchLayout`). On small screens tiles follow row/column order.
+  when there are more), tiles of one fixed size. Drag a tile by its header to
+  any cell (another radio's side swaps them, its middle links them). Each
+  user's board is saved per radio group (`DispatchLayout`). On small screens
+  tiles follow row/column order.
 - Links on screen (`links_controller.js`): linked tiles are framed and joined
   by an animated seam (neighbours) or line (far apart) with a chain button
   that unlinks them; dropping a tile in the middle of another links them.
@@ -112,8 +112,8 @@ user's radios, or one group) with an activity log below. Each tile shows:
   the focused tile has a thick frame and a "Space" tag. Space, while held, is PTT on the focused radio;
   Shift + Space (or the big button) is the group PTT on the included radios
   (each tile has a toggle). Space never scrolls.
-- The phone (width) and the activity log (height) are resized with the same
-  corner mark as the tiles; their sizes are remembered in the browser.
+- The phone (width) and the activity log (height) are resized with a corner
+  mark; their sizes are remembered in the browser.
 - Connect / disconnect, link to another radio, and a hold-to-talk PTT (mouse or
   space bar; several selected radios transmit together). PTT is disabled when
   not connected and shown locked ("no permission") when the user cannot

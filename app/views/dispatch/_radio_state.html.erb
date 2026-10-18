@@ -1,16 +1,19 @@
 <%# Same for every user: broadcast to all the screens that show the radio %>
-<%= tag.div id: dom_id(radio, :state), class: "flex flex-col gap-2", data: radio_state_data(radio) do %>
+<%= tag.div id: dom_id(radio, :state), class: "flex flex-col gap-1.5", data: radio_state_data(radio) do %>
   <%= radio_status_bar(radio) %>
 
   <dl class="grid grid-cols-[auto_1fr] items-baseline gap-x-3 gap-y-0.5 text-xs">
     <% if radio_status(radio) == :transmitting %>
       <dt class="text-muted"><%= t("dispatch.radio.transmits") %></dt>
-      <dd class="truncate text-sm font-semibold text-ink-strong"><%= transmitter_label(radio, radio.transmitted_by, radio.transmitted_by_user) %></dd>
-    <% end %>
-    <% if radio.last_unit_identifier.present? %>
+      <dd class="truncate font-semibold text-ink-strong"><%= transmitter_label(radio, radio.transmitted_by, radio.transmitted_by_user) %></dd>
+    <%# Always two rows, so that every tile keeps its controls in line %>
+    <% elsif radio.last_unit_identifier.blank? %>
+      <dt class="text-muted"><%= t("dispatch.radio.last") %></dt>
+      <dd class="text-faint">—</dd>
+    <% else %>
       <% talking = radio_talking?(radio) %>
       <dt class="text-muted"><%= talking ? t("dispatch.radio.talking") : t("dispatch.radio.last") %></dt>
-      <dd class="truncate <%= "text-sm font-semibold text-ink-strong" if talking %>">
+      <dd class="truncate <%= "font-semibold text-ink-strong" if talking %>">
         <% if (unit = radio.last_unit) %>
           <%= unit_name(unit) %> <span class="font-normal text-muted">(<%= unit_identifier_label(radio.last_decoder, radio.last_unit_identifier) %>)</span>
         <% else %>
@@ -21,7 +24,7 @@
       </dd>
     <% end %>
     <dt class="text-muted"><%= t("dispatch.radio.links") %></dt>
-    <dd class="flex flex-wrap gap-1">
+    <dd class="flex min-w-0 gap-1 overflow-hidden">
       <% linked = radio.linked_radios %>
       <% radio.links.each do |link| %>
         <span class="<%= link_badge_classes(link) %>">

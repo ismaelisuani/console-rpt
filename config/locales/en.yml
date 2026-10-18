@@ -208,7 +208,6 @@ en:
       ptt_hint: Hold to talk (space bar on the selected radios)
       ptt_hold: hold · space
       register_unit: Register this ID
-      resize: Drag to resize
       server_down: No connection with the server
       space_here: "⌨ Space"
       stop_listening: Stop listening

@@ -1,9 +1,9 @@
-# The arrangement of the radio tiles, saved as the user moves or resizes them
+# The arrangement of the radio tiles, saved as the user moves them
 class DispatchLayoutsController < ApplicationController
   before_action :set_dispatch_layout
 
   def update
-    @dispatch_layout.update!(tiles: params.expect(tiles: [ [ :radio_id, :x, :y, :w, :h ] ]))
+    @dispatch_layout.update!(tiles: params.expect(tiles: [ [ :radio_id, :x, :y ] ]))
     head :no_content
   end
 

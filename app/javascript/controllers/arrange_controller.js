@@ -1,11 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 // The dispatch board: drag a tile by its header and drop it in any cell
-// (another radio's side swaps them; its middle links them); drag a tile's
-// corner to resize it. Places and sizes are grid cells, saved on every change.
+// (another radio's side swaps them; its middle links them). The places are
+// grid cells, saved on every change.
 export default class extends Controller {
   static targets = [ "tile" ]
-  static values = { url: String, columns: Number, maxHeight: { type: Number, default: 3 } }
+  static values = { url: String, columns: Number }
 
   // Moving
   arm(event) {
@@ -70,8 +70,6 @@ export default class extends Controller {
   }
 
   moveTo(cell) {
-    const width = parseInt(this.dragged.dataset.w) || 1
-    cell.x = Math.min(cell.x, this.columnsValue - width + 1)
     const mine = this.cellOf(this.dragged)
     if (cell.x === mine.x && cell.y === mine.y) return
     if (this.occupied(cell, this.dragged)) return
@@ -79,17 +77,12 @@ export default class extends Controller {
     this.moved = true
   }
 
-  // Is any part of the dragged tile's area at cell taken by another tile?
+  // Is the cell taken by another tile?
   occupied(cell, except) {
-    const width = parseInt(except.dataset.w) || 1
-    const height = parseInt(except.dataset.h) || 1
     return this.tileTargets.some(tile => {
       if (tile === except) return false
       const other = this.cellOf(tile)
-      const otherWidth = parseInt(tile.dataset.w) || 1
-      const otherHeight = parseInt(tile.dataset.h) || 1
-      return cell.x < other.x + otherWidth && other.x < cell.x + width &&
-        cell.y < other.y + otherHeight && other.y < cell.y + height
+      return other.x === cell.x && other.y === cell.y
     })
   }
 
@@ -135,16 +128,13 @@ export default class extends Controller {
     const left = box.left + parseFloat(style.paddingLeft || 0) - this.element.scrollLeft
     const top = box.top + parseFloat(style.paddingTop || 0) - this.element.scrollTop
     const cellWidth = (this.element.clientWidth - gap * (this.columnsValue - 1)) / this.columnsValue
-    return { left, top, gap, cellWidth, cellHeight: this.rowHeight(gap) }
+    return { left, top, gap, cellWidth, cellHeight: this.rowHeight() }
   }
 
-  // The height of one grid row, measured on a tile one row tall (rows grow to
-  // fit their content, so it isn't a fixed fraction of the board)
-  rowHeight(gap) {
-    const tile = this.tileTargets.find(t => (parseInt(t.dataset.h) || 1) === 1) || this.tileTargets[0]
-    if (!tile) return 200
-    const height = parseInt(tile.dataset.h) || 1
-    return (tile.getBoundingClientRect().height - gap * (height - 1)) / height
+  // The height of one grid row, measured on a tile (rows grow to fit their
+  // content, so it isn't a fixed fraction of the board)
+  rowHeight() {
+    return this.tileTargets[0]?.getBoundingClientRect().height || 200
   }
 
   setLinkTarget(tile) {
@@ -164,43 +154,10 @@ export default class extends Controller {
     })
   }
 
-  // Resizing
-  resizeStart(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    const tile = event.currentTarget.closest("[data-arrange-target=tile]")
-    const grid = this.metrics()
-    const box = tile.getBoundingClientRect()
-
-    const move = moveEvent => {
-      const width = this.clamp(Math.round((moveEvent.clientX - box.left + grid.gap) / (grid.cellWidth + grid.gap)), this.columnsValue)
-      const height = this.clamp(Math.round((moveEvent.clientY - box.top + grid.gap) / (grid.cellHeight + grid.gap)), this.maxHeightValue)
-      this.setSize(tile, width, height)
-    }
-    const up = () => {
-      window.removeEventListener("pointermove", move)
-      window.removeEventListener("pointerup", up)
-      this.save()
-    }
-    window.addEventListener("pointermove", move)
-    window.addEventListener("pointerup", up)
-  }
-
-  setSize(tile, width, height) {
-    tile.dataset.w = width
-    tile.dataset.h = height
-    tile.style.setProperty("--w", width)
-    tile.style.setProperty("--h", height)
-  }
-
-  clamp(value, max) {
-    return Math.min(Math.max(value, 1), max)
-  }
-
   save() {
     const tiles = this.tileTargets.map(tile => {
       const cell = tile.dataset.x ? { x: tile.dataset.x, y: tile.dataset.y } : {}
-      return { radio_id: tile.dataset.radioId, w: tile.dataset.w || 1, h: tile.dataset.h || 1, ...cell }
+      return { radio_id: tile.dataset.radioId, ...cell }
     })
     fetch(this.urlValue, {
       method: "PATCH",

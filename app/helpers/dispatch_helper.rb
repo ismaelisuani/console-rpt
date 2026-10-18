@@ -16,7 +16,7 @@ module DispatchHelper
 
   def radio_tile_classes(radio)
     class_names("card group relative flex min-w-0 flex-col gap-1.5 overflow-hidden p-3 pt-3.5 transition-colors",
-      "lg:[grid-column:var(--x,auto)/span_var(--w)] lg:[grid-row:var(--y,auto)/span_var(--h)]",
+      "lg:[grid-column-start:var(--x,auto)] lg:[grid-row-start:var(--y,auto)]",
       "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-inset has-[[data-receiving]]:ring-rx",
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-inset has-[[data-transmitting]]:ring-tx",
       "data-[console-ptt]:border-tx data-[console-ptt]:ring-2 data-[console-ptt]:ring-inset data-[console-ptt]:ring-tx",
@@ -129,21 +129,15 @@ module DispatchHelper
   end
 
   # The tile's size in grid cells, as the user left it
-  # Place and size only apply on wide screens (see radio_tile_classes)
+  # The tile's cell on wide screens (see radio_tile_classes); none: the next free one
   def radio_tile_style(dispatch_layout, radio)
-    width, height = dispatch_layout.tile_size(radio)
-    columns = GRID_COLUMNS
-    style = "--w: #{[ width, columns ].min}; --h: #{height}"
-    if (position = dispatch_layout.tile_position(radio))
-      style += "; --x: #{[ position[0], columns - [ width, columns ].min + 1 ].min}; --y: #{position[1]}"
-    end
-    style
+    x, y = dispatch_layout.tile_position(radio)
+    "--x: #{[ x, GRID_COLUMNS ].min}; --y: #{y}" if x
   end
 
-  def radio_tile_size_data(dispatch_layout, radio)
-    width, height = dispatch_layout.tile_size(radio)
+  def radio_tile_position_data(dispatch_layout, radio)
     x, y = dispatch_layout.tile_position(radio)
-    tag.attributes(data: { w: width, h: height, x: x, y: y }.compact)
+    tag.attributes(data: { x: x, y: y }.compact)
   end
 
   RESIZE_GRIPS = {
@@ -151,7 +145,7 @@ module DispatchHelper
     top_right: "right-0.5 top-0.5 cursor-ne-resize rounded-tr border-r-2 border-t-2"
   }.freeze
 
-  # The same corner mark on everything that can be resized (tiles, phone, activity)
+  # The corner mark of the panels that can be resized (phone, activity)
   def resize_grip(title, action, corner:)
     tag.span(class: "absolute z-10 size-3 border-line-strong hover:border-accent #{RESIZE_GRIPS.fetch(corner)}",
       title: title, data: { action: "pointerdown->#{action}" })

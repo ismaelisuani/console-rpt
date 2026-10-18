@@ -6,15 +6,13 @@
          tabindex="0" aria-label="<%= radio.name %>" data-node="<%= radio.node %>" data-name="<%= radio.name %>"
          data-unlink-url="<%= radio_links_path(radio) %>" data-link-url="<%= radio_links_path(radio) %>"
          data-link-drop-label="<%= t("dispatch.radio.drop_to_link", radio: radio.name) %>"
-         data-arrange-target="tile" data-radio-id="<%= radio.id %>" <%= radio_tile_size_data(@dispatch_layout, radio) %>
+         data-arrange-target="tile" data-radio-id="<%= radio.id %>" <%= radio_tile_position_data(@dispatch_layout, radio) %>
          data-controller="radio" data-dispatch-target="radio"
          data-radio-id-value="<%= radio.id %>"
          data-radio-call-url-value="<%= radio_call_path(radio) %>"
          data-radio-ptt-url-value="<%= radio_ptt_path(radio) %>"
          data-action="click->radio#focus">
   <%= turbo_stream_from radio.broadcast_stream %>
-  <%# The state at a glance: a strip on top of the tile %>
-  <span class="absolute inset-x-0 top-0 h-1 bg-line-strong/60 transition-colors group-has-[[data-receiving]]:bg-rx group-has-[[data-transmitting]]:bg-tx group-has-[[data-offline]]:bg-faint group-data-[console-ptt]:bg-tx" aria-hidden="true"></span>
   <audio data-radio-target="audio" autoplay hidden></audio>
   <%# The whole header is the handle to move the tile (wide screens) %>
   <header class="-mx-3 -mt-4 flex min-w-0 items-center gap-2 px-3 pt-4 pb-1 select-none lg:cursor-move lg:hover:bg-raised/60"
@@ -51,33 +49,35 @@
     <span class="w-14 text-right text-xs tabular-nums text-ink" data-radio-target="volumeLabel"></span>
   </div>
 
-  <div class="flex items-stretch gap-2">
-    <button type="button" class="btn flex-1" data-radio-target="connectButton" data-action="radio#toggleConnection"
+  <%# The three main controls, same size %>
+  <div class="grid grid-cols-3 gap-2">
+    <button type="button" class="btn h-11 rounded-xl" data-radio-target="connectButton" data-action="radio#toggleConnection"
             <%= "disabled" unless access[:listen] && access[:webrtc] %>
             title="<%= t("dispatch.radio.no_webrtc") unless access[:webrtc] %>"
             data-connect-label="<%= t("dispatch.radio.connect") %>" data-disconnect-label="<%= t("dispatch.radio.disconnect") %>"
             data-connect-title="<%= t("dispatch.radio.no_webrtc") unless access[:webrtc] %>" data-disconnect-title="<%= t("dispatch.radio.stop_listening") %>"
             aria-pressed="false">
-      <%= icon(:headphones) %>
+      <%= icon(:headphones, size: "size-4") %>
       <%= t("dispatch.radio.connect") %>
     </button>
-    <button type="button" class="btn flex-1" data-action="radio#openLink" <%= "disabled" unless access[:link] %>>⇄ <%= t("dispatch.radio.link") %></button>
+    <button type="button" class="btn h-11 rounded-xl" data-action="radio#openLink" <%= "disabled" unless access[:link] %>>
+      <%= icon(:chain, size: "size-4") %><%= t("dispatch.radio.link") %>
+    </button>
     <% if access[:transmit] %>
-      <button type="button" class="btn flex-[1.4] flex-col gap-0 rounded-xl py-1.5 font-bold enabled:border-accent/60 enabled:text-accent-ink data-[pressed]:border-tx data-[pressed]:bg-tx-strong data-[pressed]:text-white data-[pressed]:shadow-[0_0_0_4px] data-[pressed]:shadow-tx/25" data-radio-target="ptt"
+      <button type="button" class="btn h-11 flex-col gap-0 rounded-xl py-0 font-bold enabled:border-accent enabled:bg-accent enabled:text-white enabled:shadow-sm enabled:hover:bg-accent/90 data-[pressed]:border-tx-strong data-[pressed]:bg-tx-strong data-[pressed]:shadow-[0_0_0_4px] data-[pressed]:shadow-tx/25" data-radio-target="ptt"
               data-action="pointerdown->radio#pttDown pointerup->radio#pttUp pointerleave->radio#pttUp" disabled
               title="<%= t("dispatch.radio.ptt_hint") %>">
-        <span class="text-base"><%= t("dispatch.radio.ptt") %></span>
-        <span class="text-[10px] font-normal text-muted" data-radio-target="pttHint"><%= t("dispatch.radio.connect_first") %></span>
+        <span class="text-base leading-tight"><%= t("dispatch.radio.ptt") %></span>
+        <span class="text-[10px] font-normal leading-tight opacity-75" data-radio-target="pttHint"><%= t("dispatch.radio.connect_first") %></span>
       </button>
     <% else %>
-      <button type="button" class="btn flex-[1.4] flex-col gap-0 border-dashed py-1 font-bold text-warn-ink/60" disabled>
-        <span class="flex items-center gap-1 text-base"><%= icon(:lock) %><%= t("dispatch.radio.ptt") %></span>
-        <span class="text-[10px] font-normal"><%= t("dispatch.radio.no_permission") %></span>
+      <button type="button" class="btn h-11 flex-col gap-0 rounded-xl border-dashed py-0 font-bold text-warn-ink/70" disabled>
+        <span class="flex items-center gap-1 text-base leading-tight"><%= icon(:lock) %><%= t("dispatch.radio.ptt") %></span>
+        <span class="text-[10px] font-normal leading-tight"><%= t("dispatch.radio.no_permission") %></span>
       </button>
     <% end %>
   </div>
 
-  <div class="hidden lg:block"><%= resize_grip(t("dispatch.radio.resize"), "arrange#resizeStart", corner: :bottom_right) %></div>
 
   <% if access[:link] %>
     <dialog class="m-auto w-80 rounded-lg border border-line bg-surface p-4 text-ink backdrop:bg-canvas/70" data-radio-target="linkDialog">
