@@ -25,6 +25,9 @@
   --color-tx-ink: var(--tx-ink);
   --color-warn-soft: var(--warn-soft);
   --color-warn-ink: var(--warn-ink);
+  --color-topbar: var(--topbar);
+  --color-topbar-line: var(--topbar-line);
+  --color-topbar-muted: var(--topbar-muted);
   --shadow-card: var(--card-shadow);
   --shadow-raised: var(--raised-shadow);
 }
@@ -54,6 +57,9 @@
   --tx-ink: #ff8088;
   --warn-soft: #33301c;
   --warn-ink: #e6cf6a;
+  --topbar: #15376e;
+  --topbar-line: #22498a;
+  --topbar-muted: #c3d4ef;
   --card-shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px -12px rgb(0 0 0 / 0.6);
   --raised-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.7);
   --page-glow: radial-gradient(1200px 500px at 10% -10%, rgb(59 123 220 / 0.12), transparent 60%);
@@ -83,6 +89,9 @@
   --tx-ink: #b3262c;
   --warn-soft: #fdf3d3;
   --warn-ink: #876300;
+  --topbar: #1d50a0;
+  --topbar-line: #163f80;
+  --topbar-muted: #d4e1f5;
   --card-shadow: 0 1px 2px rgb(16 32 64 / 0.10), 0 6px 18px -8px rgb(16 32 64 / 0.22);
   --raised-shadow: 0 12px 32px -12px rgb(16 32 64 / 0.25);
   --page-glow: radial-gradient(1200px 500px at 10% -10%, rgb(29 80 160 / 0.08), transparent 60%), radial-gradient(900px 400px at 100% 0%, rgb(98 185 44 / 0.07), transparent 60%);
@@ -119,12 +128,17 @@
   .flash-notice { @apply rounded-lg border border-rx/40 bg-rx-soft px-3 py-2 text-rx-ink shadow-card; }
   .flash-alert { @apply rounded-lg border border-tx/40 bg-tx-soft px-3 py-2 text-tx-ink shadow-card; }
   .errors { @apply rounded-lg border border-tx/40 bg-tx-soft px-3 py-2 text-tx-ink; }
-  .nav-link { @apply rounded-lg px-3 py-1.5 font-medium text-muted transition-colors hover:bg-raised hover:text-ink-strong; }
-  .nav-link.active { @apply bg-accent-soft text-accent-ink; }
   /* The logo that fits the theme */
   .logo-light { @apply [[data-theme=dark]_&]:hidden; }
   .logo-dark { @apply hidden [[data-theme=dark]_&]:block; }
 }
+
+/* The top bar, in brand blue on both themes: white text and controls.
+   Outside the layers, so its buttons win over the btn utility */
+.topbar { @apply border-topbar-line bg-topbar text-topbar-muted; }
+.topbar .btn { @apply border-white/40 bg-transparent text-white hover:border-white/70 hover:bg-white/10; }
+.topbar-link { @apply rounded-lg px-3 py-1.5 font-medium text-topbar-muted transition-colors hover:bg-white/10 hover:text-white; }
+.topbar-link.active { @apply bg-white/20 text-white; }
 
 /* Level meter of a radio that is receiving or transmitting */
 @keyframes meter {

@@ -1,7 +1,10 @@
 module ApplicationHelper
-  # The RLink logo (or its "r" mark), in the version that fits the theme
-  def brand_logo(css_class, mark: false)
+  # The RLink logo (or its "r" mark), in the version that fits the theme;
+  # on_color: always the white one, for the blue top bar
+  def brand_logo(css_class, mark: false, on_color: false)
     name = mark ? "rlink-mark" : "rlink-logo"
+    return image_tag("#{name}-dark.png", alt: "RLink", class: css_class) if on_color
+
     image_tag("#{name}.png", alt: "RLink", class: "logo-light #{css_class}") +
       image_tag("#{name}-dark.png", alt: "RLink", class: "logo-dark #{css_class}")
   end
