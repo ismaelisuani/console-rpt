@@ -329,5 +329,4 @@ en:
     index:
       empty: No units yet.
       import: Import
-      intro: Each ID that app_rpt decodes is looked up here, so the console shows who is talking instead of the number. The same number can exist under two decoders.
       search: Search

@@ -329,5 +329,4 @@ es:
     index:
       empty: Todavía no hay unidades.
       import: Importar
-      intro: Cada ID que decodifica app_rpt se busca acá, para que la consola muestre quién habla en vez del número. El mismo número puede existir en dos decodificadores.
       search: Buscar
