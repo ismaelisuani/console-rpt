@@ -109,7 +109,7 @@ user's radios, or one group) with an activity log below. Each tile shows:
   that unlinks them; dropping a tile in the middle of another links them.
   The link data comes from each tile's live state (`data-links`).
 - Focus: a click or the arrows (a control inside a tile keeps it focused);
-  the focused tile has a thick frame and a "Space" tag. Space, while held, is PTT on the focused radio;
+  the focused tile has a thick frame. Space, while held, is PTT on the focused radio;
   Shift + Space (or the big button) is the group PTT on the included radios
   (each tile has a toggle). Space never scrolls.
 - The phone (width) and the activity log (height) are resized with a corner

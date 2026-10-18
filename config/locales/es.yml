@@ -205,11 +205,9 @@ es:
       not_listening: no escuchando
       open_server: abrir el servidor
       ptt: PTT
-      ptt_hint: Mantener apretado para hablar (barra espaciadora en las radios seleccionadas)
-      ptt_hold: mantener · espacio
+      ptt_hint: Mantener apretado para hablar (o la barra espaciadora, en la radio enfocada)
       register_unit: Registrar este ID
       server_down: Sin conexión con el servidor
-      space_here: "⌨ Espacio"
       stop_listening: Dejar de escuchar
       talking: Habla
       transceive: Transceptor

@@ -6,7 +6,7 @@ import { RadioCall } from "lib/radio_audio"
 // console's WebRTC call to the radio and PTT.
 export default class extends Controller {
   static targets = [ "volume", "volumeLabel", "muteButton", "speakerIcon", "mutedIcon", "connectButton",
-    "connectionBadge", "ptt", "pttHint", "linkDialog", "audio", "problem", "groupButton" ]
+    "connectionBadge", "ptt", "linkDialog", "audio", "problem", "groupButton" ]
   static values = { id: Number, callUrl: String, pttUrl: String }
 
   disconnect() {
@@ -177,7 +177,7 @@ export default class extends Controller {
     this.dispatch("group", { bubbles: true })
     if (this.hasPttTarget) {
       this.pttTarget.disabled = !this.connected
-      this.pttHintTarget.textContent = this.t(this.connected ? "pttHold" : "connectFirst")
+      this.pttTarget.title = this.connected ? this.t("pttHint") : this.t("connectFirst")
     }
   }
 

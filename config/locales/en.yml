@@ -205,11 +205,9 @@ en:
       not_listening: not listening
       open_server: open the server
       ptt: PTT
-      ptt_hint: Hold to talk (space bar on the selected radios)
-      ptt_hold: hold · space
+      ptt_hint: Hold to talk (or the space bar, on the focused radio)
       register_unit: Register this ID
       server_down: No connection with the server
-      space_here: "⌨ Space"
       stop_listening: Stop listening
       talking: Talking
       transceive: Transceive
