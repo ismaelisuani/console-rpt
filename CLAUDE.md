@@ -108,10 +108,11 @@ per screen, by group) with an activity log below. Each tile shows:
   by an animated seam (neighbours) or line (far apart) with a chain button
   that unlinks them; dropping a tile in the middle of another links them.
   The link data comes from each tile's live state (`data-links`).
-- Focus: a click or the arrows (by screen position). Space, while held, is PTT
-  on the radios included in the group PTT (each tile has a toggle; the bar
-  above the board lists them), or on the focused radio when none is
-  included. Space never scrolls.
+- Focus: a click or the arrows (a control inside a tile keeps it focused);
+  the focused tile has a thick frame and a "Space" tag, and the bar says
+  "Space → <radio>". Space, while held, is PTT on the focused radio;
+  Shift + Space (or the big button) is the group PTT on the included radios
+  (each tile has a toggle). Space never scrolls.
 - The phone (width) and the activity log (height) are resized with the same
   corner mark as the tiles; their sizes are remembered in the browser.
 - Connect / disconnect, link to another radio, and a hold-to-talk PTT (mouse or

@@ -20,7 +20,7 @@ module DispatchHelper
       "data-[console-ptt]:border-tx data-[console-ptt]:ring-2 data-[console-ptt]:ring-inset data-[console-ptt]:ring-tx",
       "has-[[data-offline]]:opacity-55",
       "data-[selected]:bg-accent-soft/40",
-      "focus:outline-2 focus:outline-solid focus:-outline-offset-4 focus:outline-accent",
+      "focus-within:outline-3 focus-within:outline-solid focus-within:-outline-offset-3 focus-within:outline-accent focus-within:shadow-raised",
       "can-link": radio_tile_access(radio)[:link])
   end
 
@@ -186,7 +186,7 @@ module DispatchHelper
   # Texts for the Stimulus controllers
   def dispatch_strings_tag
     strings = %w[muted connected disconnected ptt_hold connect_first connecting call_failed call_ended microphone_denied
-      microphone_hint audio_unreachable certificate_hint open_server unlink not_listening space_general]
+      microphone_hint audio_unreachable certificate_hint open_server unlink not_listening space_general no_focus]
       .to_h { |key| [ key.camelize(:lower), t("dispatch.radio.#{key}") ] }
       .merge(unlinkPair: t("dispatch.radio.unlink_pair", a: "{a}", b: "{b}"),
         unlinkPairConfirm: t("dispatch.radio.unlink_pair_confirm", a: "{a}", b: "{b}"))

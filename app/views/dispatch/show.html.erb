@@ -32,10 +32,17 @@
 
     <% if @radios.any? { |radio| radio_tile_access(radio)[:transmit] } %>
       <div class="card flex flex-wrap items-center gap-3 px-3 py-2">
-        <button type="button" class="btn flex-col gap-0 rounded-xl border-accent/60 px-5 py-1.5 font-bold text-accent-ink active:border-tx active:bg-tx-strong active:text-white"
+        <%# Where Space talks: the focused radio %>
+        <div class="flex items-center gap-2 rounded-lg border border-accent/40 bg-accent-soft/50 px-3 py-1.5">
+          <kbd class="rounded border border-line-strong bg-surface px-1.5 text-xs font-semibold text-ink"><%= t(".space_key") %></kbd>
+          <span class="text-muted">→</span>
+          <span class="font-semibold text-accent-ink" data-dispatch-target="focusedName"></span>
+        </div>
+        <button type="button" class="btn flex-col gap-0 rounded-xl border-accent/60 px-5 py-1 font-bold text-accent-ink active:border-tx active:bg-tx-strong active:text-white"
                 data-dispatch-target="generalButton" disabled
                 data-action="pointerdown->dispatch#generalDown pointerup->dispatch#generalUp pointerleave->dispatch#generalUp">
           <span class="text-base"><%= t(".general_ptt") %></span>
+          <span class="text-[10px] font-normal text-muted"><%= t(".shift_space") %></span>
         </button>
         <div class="flex min-w-0 flex-1 flex-col gap-1">
           <span class="text-xs text-muted" data-dispatch-target="spaceHint"></span>

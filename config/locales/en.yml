@@ -197,6 +197,7 @@ en:
       mute: Mute
       muted: muted
       no_audio: No audio
+      no_focus: pick a radio (click or arrows)
       no_links: none
       no_permission: no permission
       no_webrtc: The server has no WebRTC address configured
@@ -209,7 +210,8 @@ en:
       register_unit: Register this ID
       resize: Drag to resize
       server_down: No connection with the server
-      space_general: 'Space (or this button) talks on:'
+      space_general: 'Group PTT (button or Shift + Space) talks on:'
+      space_here: "⌨ Space"
       stop_listening: Stop listening
       talking: Talking
       transceive: Transceive
@@ -234,6 +236,8 @@ en:
       mute_all: Mute all
       reset_layout: Reset layout
       resize_activity: Drag to resize
+      shift_space: Shift + Space
+      space_key: Space
   flash:
     created: "%{resource} created."
     destroyed: "%{resource} deleted."

@@ -197,6 +197,7 @@ es:
       mute: Silenciar
       muted: silencio
       no_audio: Sin audio
+      no_focus: elegí una radio (clic o flechas)
       no_links: ninguno
       no_permission: sin permiso
       no_webrtc: El servidor no tiene configurada la dirección WebRTC
@@ -209,7 +210,8 @@ es:
       register_unit: Registrar este ID
       resize: Arrastrar para cambiar el tamaño
       server_down: Sin conexión con el servidor
-      space_general: 'El espacio (o este botón) transmite por:'
+      space_general: 'El PTT grupal (botón o Shift + espacio) transmite por:'
+      space_here: "⌨ Espacio"
       stop_listening: Dejar de escuchar
       talking: Habla
       transceive: Transceptor
@@ -234,6 +236,8 @@ es:
       mute_all: Silenciar todas
       reset_layout: Restablecer disposición
       resize_activity: Arrastrar para cambiar el tamaño
+      shift_space: Shift + espacio
+      space_key: Espacio
   flash:
     created: "%{resource}: creado."
     destroyed: "%{resource}: eliminado."

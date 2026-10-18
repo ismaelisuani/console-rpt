@@ -1,18 +1,42 @@
 import { Controller } from "@hotwired/stimulus"
 
-// The dispatch screen's keyboard and general PTT.
-// - Arrows (or a click) focus a radio tile.
-// - Space, while held: PTT on the radios included in the general PTT, or on
-//   the focused radio when none is included. It never scrolls the page.
-// - The general PTT bar shows which radios Space (or its button) talks on.
+// The dispatch screen's keyboard and group PTT.
+// - Arrows (or a click) focus a radio tile; a control inside it counts too.
+// - Space, while held: PTT on the focused radio. Shift + Space (or the big
+//   button): PTT on the radios included in the group PTT. Space never scrolls.
+// - The bar shows where Space talks and which radios the group PTT includes.
 export default class extends Controller {
-  static targets = [ "radio", "generalList", "generalButton", "spaceHint" ]
+  static targets = [ "radio", "generalList", "generalButton", "spaceHint", "focusedName" ]
 
   connect() {
+    this.focusChanged = () => this.showFocused()
+    document.addEventListener("focusin", this.focusChanged)
+    document.addEventListener("focusout", this.focusChanged)
     // after the radio tiles' own controllers connect
     requestAnimationFrame(() => {
       this.restoreGeneral()
       this.updateGeneral()
+      this.showFocused()
+    })
+  }
+
+  disconnect() {
+    document.removeEventListener("focusin", this.focusChanged)
+    document.removeEventListener("focusout", this.focusChanged)
+  }
+
+  get focusedRadio() {
+    const element = this.radioTargets.find(tile => tile.contains(document.activeElement))
+    return element && this.controllerFor(element)
+  }
+
+  // "Space → <radio>" in the bar (after focus moves, so on the next frame)
+  showFocused() {
+    requestAnimationFrame(() => {
+      if (!this.hasFocusedNameTarget) return
+      const radio = this.focusedRadio
+      this.focusedNameTarget.textContent = radio ? radio.name : this.t("noFocus")
+      this.focusedNameTarget.classList.toggle("text-faint", !radio)
     })
   }
 
@@ -35,7 +59,7 @@ export default class extends Controller {
     // held Space repeats: none of it may scroll, nor press a focused button
     event.preventDefault()
     if (event.repeat) return
-    this.pttRadios().forEach(radio => radio.pttDown())
+    this.pttRadios(event).forEach(radio => radio.pttDown())
   }
 
   keyup(event) {
@@ -49,10 +73,10 @@ export default class extends Controller {
     this.radios.forEach(radio => radio.pttUp())
   }
 
-  pttRadios() {
-    if (this.included.length) return this.included
-    const focused = this.radioTargets.find(element => element.contains(document.activeElement))
-    return focused ? [ this.controllerFor(focused) ].filter(Boolean) : []
+  pttRadios(event) {
+    if (event.shiftKey) return this.included
+    const radio = this.focusedRadio
+    return radio ? [ radio ] : []
   }
 
   // General PTT button
