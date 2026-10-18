@@ -1,10 +1,11 @@
 <% content_for :title, t("nav.dispatch") %>
 <%= dispatch_strings_tag %>
-<div class="flex min-h-0 flex-1" data-controller="dispatch" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup blur@window->dispatch#releaseAll">
+<div class="flex min-h-0 flex-1 flex-col md:flex-row" data-controller="dispatch toggle" data-toggle-class-value="max-md:hidden" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup blur@window->dispatch#releaseAll">
   <%= render "dispatch/phone" %>
 
   <main class="flex min-w-0 flex-1 flex-col gap-3 p-3">
     <div class="flex flex-wrap items-center gap-3">
+      <button type="button" class="btn btn-sm md:hidden" data-action="toggle#toggle" data-toggle-target="button" aria-expanded="false"><%= t("phone.title") %></button>
       <h1 class="text-base font-semibold text-ink-strong"><%= Radio.model_name.human(count: 2) %></h1>
       <% if @groups.any? %>
         <nav class="flex flex-wrap gap-1">
@@ -14,13 +15,13 @@
         </nav>
       <% end %>
       <span class="text-muted"><%= t(".count", count: @radios.size, online: @radios.count(&:online?)) %></span>
-      <div class="ml-auto flex items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2 lg:ml-auto">
         <button type="button" class="btn btn-sm" data-action="dispatch#connectAll"><%= t(".listen_all") %></button>
         <button type="button" class="btn btn-sm" data-action="dispatch#muteAll"><%= t(".mute_all") %></button>
         <% if @dispatch_layout.persisted? %>
           <%= button_to t(".reset_layout"), dispatch_layout_path(group_id: @group&.id), method: :delete, class: "btn btn-sm" %>
         <% end %>
-        <div class="flex gap-1" title="<%= t(".layout") %>">
+        <div class="hidden gap-1 lg:flex" title="<%= t(".layout") %>">
           <% DispatchController::LAYOUTS.each do |layout| %>
             <%= link_to layout, dispatch_path(group_id: @group&.id, layout: layout), class: class_names("btn btn-sm", "bg-raised text-ink-strong": layout == @layout) %>
           <% end %>
@@ -31,7 +32,7 @@
     <% if @radios.empty? %>
       <div class="card flex flex-1 items-center justify-center p-10 text-muted"><%= t(".empty") %></div>
     <% else %>
-      <div class="grid min-h-0 flex-1 gap-3 overflow-y-auto" style="<%= dispatch_grid_style(@layout) %>"
+      <div class="<%= dispatch_grid_classes %>" style="<%= dispatch_grid_style(@layout) %>"
            data-controller="arrange" data-arrange-url-value="<%= dispatch_layout_path(group_id: @group&.id) %>"
            data-arrange-columns-value="<%= dispatch_grid_columns(@layout) %>"
            data-action="dragstart->arrange#dragStart dragover->arrange#dragOver drop->arrange#drop dragend->arrange#dragEnd">
@@ -41,7 +42,7 @@
       </div>
     <% end %>
 
-    <section class="card relative flex h-28 shrink-0 flex-col" data-controller="resizable-panel" data-resizable-panel-key-value="dispatch-activity-height">
+    <section class="card relative flex h-40 shrink-0 flex-col md:h-28" data-controller="resizable-panel" data-resizable-panel-key-value="dispatch-activity-height">
       <div class="absolute inset-x-0 -top-1.5 h-3 cursor-row-resize" data-action="pointerdown->resizable-panel#dragStart"></div>
       <%= resize_grip(t(".resize_activity"), "resizable-panel#dragStart", corner: :top_right) %>
       <div class="flex items-center gap-2 px-3 pt-2">

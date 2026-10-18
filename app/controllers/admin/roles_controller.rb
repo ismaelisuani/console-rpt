@@ -4,7 +4,7 @@ module Admin
     before_action :set_role, only: %i[edit update destroy]
 
     def index
-      @roles = Role.order(:name).includes(:users)
+      @page = Role.order(:name).includes(:users).paginate(params[:page])
     end
 
     def new

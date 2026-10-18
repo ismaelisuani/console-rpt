@@ -4,7 +4,7 @@ module Admin
     before_action :set_server, only: %i[edit update destroy]
 
     def index
-      @servers = Server.ordered.includes(:radios)
+      @page = Server.ordered.includes(:radios).paginate(params[:page])
     end
 
     def new

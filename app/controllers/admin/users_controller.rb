@@ -4,7 +4,7 @@ module Admin
     before_action :set_user, only: %i[edit update destroy]
 
     def index
-      @users = User.ordered.includes(:role, :radio_groups)
+      @page = User.ordered.includes(:role, radio_group_accesses: :radio_group).paginate(params[:page])
     end
 
     def new

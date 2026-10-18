@@ -1,6 +1,6 @@
-<%= form_with model: [ :admin, radio ], class: "card max-w-2xl space-y-4 p-5" do |form| %>
+<%= form_with model: [ :admin, radio ], class: "card w-full space-y-4 p-4 md:p-5" do |form| %>
   <%= render "shared/errors", record: radio %>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
     <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
     <div class="field"><%= form.label :node %><%= form.text_field :node, class: "input", required: true, inputmode: "numeric" %></div>
     <div class="field"><%= form.label :server_id %><%= form.collection_select :server_id, Server.ordered, :id, :name, {}, class: "input" %></div>

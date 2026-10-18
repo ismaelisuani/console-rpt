@@ -1,15 +1,15 @@
 <%# locals: (title:, new_path: nil, tabs: nil) %>
 <% content_for :title, title %>
-<div class="mb-4 flex items-center gap-4">
+<div class="mb-4 flex flex-wrap items-center gap-3 md:gap-4">
   <h1 class="page-title"><%= title %></h1>
   <% if tabs %>
-    <nav class="flex gap-1">
+    <nav class="flex flex-wrap gap-1">
       <% tabs.each do |label, path| %>
         <%= link_to label, path, class: class_names("btn btn-sm", "bg-raised text-ink-strong": current_page?(path)) %>
       <% end %>
     </nav>
   <% end %>
-  <div class="ml-auto flex gap-2">
+  <div class="ml-auto flex flex-wrap gap-2">
     <%= yield %>
     <% if new_path %><%= link_to t("actions.new"), new_path, class: "btn-primary" %><% end %>
   </div>

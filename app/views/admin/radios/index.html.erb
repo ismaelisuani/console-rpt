@@ -12,7 +12,7 @@
         <th></th>
       </tr></thead>
       <tbody>
-        <% @radios.each do |radio| %>
+        <% @page.records.each do |radio| %>
           <tr class="<%= inactive_row_class(radio) %>">
             <td class="font-medium text-ink-strong"><%= radio.name %></td>
             <td class="tabular-nums"><%= radio.node %></td>
@@ -24,6 +24,7 @@
         <% end %>
       </tbody>
     </table>
-    <% if @radios.empty? %><p class="p-6 text-center text-muted"><%= t("admin.radios.index.empty") %></p><% end %>
+    <% if @page.records.empty? %><p class="p-6 text-center text-muted"><%= t("admin.radios.index.empty") %></p><% end %>
   </div>
+  <%= pagination_nav(@page) %>
 <% end %>

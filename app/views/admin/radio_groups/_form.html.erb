@@ -1,12 +1,12 @@
-<%= form_with model: [ :admin, radio_group ], class: "card max-w-2xl space-y-4 p-5" do |form| %>
+<%= form_with model: [ :admin, radio_group ], class: "card w-full space-y-4 p-4 md:p-5" do |form| %>
   <%= render "shared/errors", record: radio_group %>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
     <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
     <div class="field"><%= form.label :position %><%= form.number_field :position, class: "input" %></div>
   </div>
   <div class="field">
     <span class="label"><%= Radio.model_name.human(count: 2) %></span>
-    <div class="grid grid-cols-2 gap-2">
+    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4">
       <%= form.collection_check_boxes :radio_ids, Radio.includes(:server).ordered, :id, ->(radio) { "#{radio.name} (#{radio.node}, #{radio.server.name})" } do |box| %>
         <label class="flex items-center gap-2"><%= box.check_box(class: "checkbox") %><%= box.text %></label>
       <% end %>

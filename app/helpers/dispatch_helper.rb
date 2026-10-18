@@ -13,7 +13,7 @@ module DispatchHelper
   end
 
   def radio_tile_classes(radio)
-    class_names("card relative flex min-w-0 flex-col gap-2 p-3 transition-colors",
+    class_names("card relative flex min-w-0 flex-col gap-2 p-3 transition-colors lg:col-span-(--w) lg:row-span-(--h)",
       "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-rx",
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-tx",
       "has-[[data-offline]]:opacity-55 data-[selected]:outline data-[selected]:outline-2 data-[selected]:outline-accent",
@@ -111,9 +111,16 @@ module DispatchHelper
     end
   end
 
+  # One column on phones, two on tablets, the chosen layout on wide screens
+  def dispatch_grid_classes
+    "grid min-h-0 flex-1 grid-flow-row-dense gap-3 overflow-y-auto grid-cols-1 sm:grid-cols-2 auto-rows-[minmax(min-content,auto)] " \
+      "lg:grid-cols-[repeat(var(--columns),minmax(0,1fr))] " \
+      "lg:auto-rows-[minmax(min-content,calc((100%_-_(var(--rows)_-_1)_*_0.75rem)_/_var(--rows)))]"
+  end
+
   def dispatch_grid_style(layout)
     columns, rows = GRIDS.fetch(layout)
-    "grid-template-columns: repeat(#{columns}, minmax(0, 1fr)); grid-auto-rows: minmax(min-content, calc((100% - #{rows - 1} * 0.75rem) / #{rows})); grid-auto-flow: dense"
+    "--columns: #{columns}; --rows: #{rows}"
   end
 
   def dispatch_grid_columns(layout)
@@ -121,9 +128,10 @@ module DispatchHelper
   end
 
   # The tile's size in grid cells, as the user left it
+  # The sizes only apply on wide screens (lg:col-span-(--w) in the tile classes)
   def radio_tile_style(dispatch_layout, radio)
     width, height = dispatch_layout.tile_size(radio)
-    "grid-column: span #{[ width, dispatch_grid_columns(@layout) ].min}; grid-row: span #{height}"
+    "--w: #{[ width, dispatch_grid_columns(@layout) ].min}; --h: #{height}"
   end
 
   def radio_tile_size_data(dispatch_layout, radio)

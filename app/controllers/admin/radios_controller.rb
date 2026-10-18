@@ -4,7 +4,7 @@ module Admin
     before_action :set_radio, only: %i[edit update destroy]
 
     def index
-      @radios = Radio.includes(:server, :radio_groups).order("servers.name", :position, :name).references(:server)
+      @page = Radio.includes(:server, :radio_groups).order("servers.name", :position, :name).references(:server).paginate(params[:page])
     end
 
     def new

@@ -1,5 +1,5 @@
 <% status = servers_status %>
 <span id="servers_status" class="flex items-center gap-1.5" title="<%= status[:details] %>">
   <span class="size-2 rounded-full <%= status[:all_online] ? "bg-rx" : "bg-tx" %>"></span>
-  <%= status[:summary] %>
+  <span class="hidden md:inline"><%= status[:summary] %></span>
 </span>

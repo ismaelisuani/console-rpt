@@ -39,6 +39,13 @@ certified 22.8 with the RLink app_rpt. Local checkout of that repo:
   CSS classes, permissions of a tile) goes in helpers; views and partials hold
   markup and helper calls.
 
+- **Every list is paginated**: `Model...paginate(params[:page])` (the
+  `Paginatable` concern of `ApplicationRecord`) and `pagination_nav(@page)` in
+  the view.
+- **Full width and responsive**: pages use the whole width; every screen works
+  on phones (one column, menu button), tablets and desktops. Check the three
+  sizes when changing a screen.
+
 ## Domain
 
 - **Server**: an asterisk-rpt host (name, address, AMI port and credentials,

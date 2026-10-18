@@ -4,11 +4,7 @@ class UnitsController < ApplicationController
 
   def index
     @query = params[:q].to_s.strip
-    @units = Unit.ordered
-    if @query.present?
-      pattern = "%#{Unit.sanitize_sql_like(@query)}%"
-      @units = @units.where("identifier ILIKE :q OR name ILIKE :q OR person ILIKE :q OR fleet ILIKE :q", q: pattern)
-    end
+    @page = Unit.search(@query).ordered.paginate(params[:page])
   end
 
   # Also the quick add from the dispatch screen, with decoder and identifier filled in

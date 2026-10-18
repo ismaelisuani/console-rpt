@@ -2,8 +2,6 @@
 module Recording::Filtering
   extend ActiveSupport::Concern
 
-  PER_PAGE = 50
-
   included do
     # Recordings of radios not registered in the console: radio administrators only
     scope :visible_to, ->(user) { user.all_radios? ? all : where(radio_id: user.radios.select(:id)) }
@@ -32,12 +30,6 @@ module Recording::Filtering
           AND units.identifier = recordings.unit_identifier
           AND (units.name ILIKE :pattern OR units.person ILIKE :pattern))
       SQL
-    end
-
-    # One page, plus one record to know whether there is a next page
-    def page(number)
-      number = [ number.to_i, 1 ].max
-      limit(PER_PAGE + 1).offset((number - 1) * PER_PAGE)
     end
 
     private

@@ -4,7 +4,7 @@ module Admin
     before_action :set_radio_group, only: %i[edit update destroy]
 
     def index
-      @radio_groups = RadioGroup.ordered.includes(:radios)
+      @page = RadioGroup.ordered.includes(:radios).paginate(params[:page])
     end
 
     def new

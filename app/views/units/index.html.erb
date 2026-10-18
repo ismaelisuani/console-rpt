@@ -1,7 +1,7 @@
 <%= render layout: "shared/admin_page" do %>
   <%= render "shared/page_header", title: Unit.model_name.human(count: 2), new_path: new_unit_path do %>
     <%= form_with url: units_path, method: :get, class: "flex gap-2", data: { turbo_frame: "_top" } do |form| %>
-      <%= form.search_field :q, value: @query, placeholder: t("units.index.search"), class: "input w-56 py-1.5" %>
+      <%= form.search_field :q, value: @query, placeholder: t("units.index.search"), class: "input w-full py-1.5 sm:w-56" %>
     <% end %>
     <%= link_to t("units.index.import"), new_units_import_path, class: "btn" %>
   <% end %>
@@ -17,7 +17,7 @@
         <th></th>
       </tr></thead>
       <tbody>
-        <% @units.each do |unit| %>
+        <% @page.records.each do |unit| %>
           <tr class="<%= inactive_row_class(unit) %>">
             <td class="tabular-nums text-ink-strong"><%= unit.identifier %></td>
             <td><%= decoder_label(unit.decoder) %></td>
@@ -30,6 +30,7 @@
         <% end %>
       </tbody>
     </table>
-    <% if @units.empty? %><p class="p-6 text-center text-muted"><%= t("units.index.empty") %></p><% end %>
+    <% if @page.records.empty? %><p class="p-6 text-center text-muted"><%= t("units.index.empty") %></p><% end %>
   </div>
+  <%= pagination_nav(@page) %>
 <% end %>

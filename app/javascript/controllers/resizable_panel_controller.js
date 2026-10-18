@@ -57,7 +57,8 @@ export default class extends Controller {
   setSize(size) {
     const max = (this.horizontal ? window.innerWidth : window.innerHeight) * this.maxValue
     const value = `${Math.round(Math.min(Math.max(size, this.minValue), max))}px`
-    if (this.horizontal) this.element.style.width = value
+    // the width only applies on wide screens (CSS: md:w-(--panel-width))
+    if (this.horizontal) this.element.style.setProperty("--panel-width", value)
     else this.element.style.height = value
   }
 

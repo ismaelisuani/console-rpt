@@ -1,8 +1,9 @@
-<aside class="relative flex w-60 shrink-0 flex-col gap-2 border-r border-line bg-panel p-3"
+<aside class="relative flex w-full shrink-0 flex-col gap-2 border-b border-line bg-panel p-3 max-md:hidden md:w-(--panel-width) md:border-r md:border-b-0 [--panel-width:15rem]"
+       data-toggle-target="panel"
        data-controller="phone resizable-panel" data-resizable-panel-key-value="dispatch-phone-width"
        data-resizable-panel-axis-value="x" data-resizable-panel-min-value="200" data-resizable-panel-max-value="0.4" data-resizable-panel-step-value="60">
-  <div class="absolute inset-y-0 -right-1.5 z-10 w-3 cursor-col-resize" data-action="pointerdown->resizable-panel#dragStart"></div>
-  <%= resize_grip(t("phone.resize"), "resizable-panel#dragStart", corner: :bottom_right) %>
+  <div class="absolute inset-y-0 -right-1.5 z-10 hidden w-3 cursor-col-resize md:block" data-action="pointerdown->resizable-panel#dragStart"></div>
+  <div class="hidden md:block"><%= resize_grip(t("phone.resize"), "resizable-panel#dragStart", corner: :bottom_right) %></div>
   <div class="flex items-center gap-2">
     <h2 class="font-semibold text-ink-strong"><%= t("phone.title") %></h2>
     <span class="truncate text-xs text-faint" data-phone-target="status"><%= t("phone.not_registered") %></span>
@@ -26,5 +27,5 @@
     <button type="button" class="btn" disabled><%= t("phone.mute") %></button>
     <button type="button" class="btn" disabled><%= t("phone.transfer") %></button>
   </div>
-  <p class="mt-auto text-xs text-faint"><%= t("phone.pending") %></p>
+  <p class="text-xs text-faint md:mt-auto"><%= t("phone.pending") %></p>
 </aside>

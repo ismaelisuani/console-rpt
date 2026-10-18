@@ -11,7 +11,7 @@ class DispatchLayoutsTest < ActionDispatch::IntegrationTest
     get dispatch_path(group_id: radio_groups(:north).id)
     assert_select "article[data-arrange-target=tile]" do |tiles|
       assert_equal [ radios(:mobile).id.to_s, radios(:base).id.to_s ], tiles.map { |t| t["data-radio-id"] }
-      assert_match "span 2", tiles.first["style"]
+      assert_match "--w: 2", tiles.first["style"]
     end
   end
 

@@ -71,8 +71,8 @@ export default class extends Controller {
   setSize(tile, width, height) {
     tile.dataset.w = width
     tile.dataset.h = height
-    tile.style.gridColumn = `span ${width}`
-    tile.style.gridRow = `span ${height}`
+    tile.style.setProperty("--w", width)
+    tile.style.setProperty("--h", height)
   }
 
   clamp(value, max) {

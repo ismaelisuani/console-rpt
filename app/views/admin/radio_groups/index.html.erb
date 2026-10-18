@@ -10,7 +10,7 @@
         <th></th>
       </tr></thead>
       <tbody>
-        <% @radio_groups.each do |group| %>
+        <% @page.records.each do |group| %>
           <tr>
             <td class="font-medium text-ink-strong"><%= group.name %></td>
             <td><% group.radios.each do |radio| %><span class="badge mr-1 bg-raised text-ink"><%= radio.name %></span><% end %></td>
@@ -20,6 +20,7 @@
         <% end %>
       </tbody>
     </table>
-    <% if @radio_groups.empty? %><p class="p-6 text-center text-muted"><%= t("admin.radio_groups.index.empty") %></p><% end %>
+    <% if @page.records.empty? %><p class="p-6 text-center text-muted"><%= t("admin.radio_groups.index.empty") %></p><% end %>
   </div>
+  <%= pagination_nav(@page) %>
 <% end %>

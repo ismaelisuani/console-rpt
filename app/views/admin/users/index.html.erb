@@ -12,7 +12,7 @@
         <th></th>
       </tr></thead>
       <tbody>
-        <% @users.each do |user| %>
+        <% @page.records.each do |user| %>
           <tr class="<%= inactive_row_class(user) %>">
             <td class="font-medium text-ink-strong"><%= user.name %></td>
             <td><%= user.username %></td>
@@ -32,4 +32,5 @@
       </tbody>
     </table>
   </div>
+  <%= pagination_nav(@page) %>
 <% end %>

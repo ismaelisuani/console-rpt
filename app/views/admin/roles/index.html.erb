@@ -9,7 +9,7 @@
         <th></th>
       </tr></thead>
       <tbody>
-        <% @roles.each do |role| %>
+        <% @page.records.each do |role| %>
           <tr>
             <td class="font-medium text-ink-strong"><%= role.name %></td>
             <% Role::Permissions::ALL.each do |permission| %>
@@ -22,4 +22,5 @@
       </tbody>
     </table>
   </div>
+  <%= pagination_nav(@page) %>
 <% end %>

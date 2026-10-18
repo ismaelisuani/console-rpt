@@ -37,8 +37,4 @@ module RecordingsHelper
   def recording_direction_options
     [ [ t("recordings.index.both"), "" ], [ t("recordings.index.rx"), "rx" ], [ t("recordings.index.tx"), "tx" ] ]
   end
-
-  def recordings_page_link(filters, page, label)
-    link_to label, recordings_path(filters.merge(page: page)), class: "btn btn-sm"
-  end
 end

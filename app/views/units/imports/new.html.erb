@@ -1,6 +1,6 @@
 <%= render layout: "shared/admin_page" do %>
   <%= render "shared/page_header", title: t("units.imports.new.title") %>
-  <div class="card max-w-2xl space-y-4 p-5">
+  <div class="card w-full space-y-4 p-4 md:p-5">
     <p><%= t("units.imports.new.intro") %></p>
     <pre class="overflow-x-auto rounded-md bg-canvas p-3 text-xs text-muted"><%= Unit::IMPORT_HEADERS.join(",") %>
 7301,Mototrbo,<%= t("units.imports.new.example.name") %>,<%= t("units.imports.new.example.person") %>,<%= t("units.imports.new.example.fleet") %>,true

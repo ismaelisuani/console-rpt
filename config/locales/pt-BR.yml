@@ -221,12 +221,19 @@ pt-BR:
     pt-BR: Português (Brasil)
   nav:
     dispatch: Despacho
+    menu: Menu
     radios: Rádios
     recordings: Gravações
     roles: Perfis
     servers: Servidores
     units: Unidades
     users: Usuários
+  pagination:
+    label: Páginas
+    next: Próxima página
+    page: Página %{number}
+    previous: Página anterior
+    summary: "%{from}–%{to} de %{count}"
   password:
     hide: Ocultar senha
     show: Mostrar senha
@@ -288,8 +295,6 @@ pt-BR:
       empty: Não há gravações com estes filtros.
       filter: Filtrar
       from: De
-      newer: "← Mais novas"
-      older: Mais antigas →
       rx: Recepções (RX)
       source: Quem
       time: Data e hora

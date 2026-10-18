@@ -63,7 +63,7 @@
     <% end %>
   </div>
 
-  <%= resize_grip(t("dispatch.radio.resize"), "arrange#resizeStart", corner: :bottom_right) %>
+  <div class="hidden lg:block"><%= resize_grip(t("dispatch.radio.resize"), "arrange#resizeStart", corner: :bottom_right) %></div>
 
   <% if access[:link] %>
     <dialog class="m-auto w-80 rounded-lg border border-line bg-surface p-4 text-ink backdrop:bg-canvas/70" data-radio-target="linkDialog">

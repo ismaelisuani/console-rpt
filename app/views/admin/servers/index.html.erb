@@ -11,7 +11,7 @@
         <th></th>
       </tr></thead>
       <tbody>
-        <% @servers.each do |server| %>
+        <% @page.records.each do |server| %>
           <tr class="<%= inactive_row_class(server) %>">
             <td class="font-medium text-ink-strong">
               <%= server.name %>
@@ -33,6 +33,7 @@
         <% end %>
       </tbody>
     </table>
-    <% if @servers.empty? %><p class="p-6 text-center text-muted"><%= t("admin.servers.index.empty") %></p><% end %>
+    <% if @page.records.empty? %><p class="p-6 text-center text-muted"><%= t("admin.servers.index.empty") %></p><% end %>
   </div>
+  <%= pagination_nav(@page) %>
 <% end %>

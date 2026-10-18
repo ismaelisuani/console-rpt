@@ -10,6 +10,14 @@ module Unit::Decoders
   end
 
   class_methods do
+    # By ID, unit name, person or group
+    def search(text)
+      return all if text.blank?
+
+      pattern = "%#{sanitize_sql_like(text.strip)}%"
+      where("identifier ILIKE :q OR name ILIKE :q OR person ILIKE :q OR fleet ILIKE :q", q: pattern)
+    end
+
     def lookup(decoder, identifier)
       active.find_by(decoder: decoder, identifier: identifier)
     end

@@ -1,6 +1,6 @@
-<%= form_with model: [ :admin, user ], class: "card max-w-2xl space-y-4 p-5" do |form| %>
+<%= form_with model: [ :admin, user ], class: "card w-full space-y-4 p-4 md:p-5" do |form| %>
   <%= render "shared/errors", record: user %>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
     <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
     <div class="field"><%= form.label :username %><%= form.text_field :username, class: "input", required: true, autocapitalize: "none", autocomplete: "off" %></div>
     <div class="field"><%= form.label :email_address %><%= form.email_field :email_address, class: "input", placeholder: t(".optional") %></div>
@@ -18,7 +18,7 @@
     <span class="label"><%= t(".radio_access") %></span>
     <p class="text-xs text-muted"><%= t(".radio_access_hint") %></p>
     <% levels = user.group_levels %>
-    <div class="mt-2 grid grid-cols-2 gap-2">
+    <div class="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4">
       <% RadioGroup.ordered.each do |group| %>
         <label class="flex items-center justify-between gap-3 rounded-md border border-line px-3 py-2">
           <span><%= group.name %></span>
