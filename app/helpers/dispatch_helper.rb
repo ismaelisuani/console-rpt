@@ -13,7 +13,8 @@ module DispatchHelper
   end
 
   def radio_tile_classes(radio)
-    class_names("card group relative flex min-w-0 flex-col gap-2 overflow-hidden p-3 pt-4 transition-colors lg:col-span-(--w) lg:row-span-(--h)",
+    class_names("card group relative flex min-w-0 flex-col gap-2 overflow-hidden p-3 pt-4 transition-colors",
+      "lg:[grid-column:var(--x,auto)/span_var(--w)] lg:[grid-row:var(--y,auto)/span_var(--h)]",
       "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-inset has-[[data-receiving]]:ring-rx",
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-inset has-[[data-transmitting]]:ring-tx",
       "has-[[data-offline]]:opacity-55",
@@ -112,11 +113,12 @@ module DispatchHelper
     end
   end
 
-  # One column on phones, two on tablets, the chosen layout on wide screens
+  # One column on phones, two on tablets, the chosen layout on wide screens.
+  # On wide screens every row has the same height (a board of equal cells)
   def dispatch_grid_classes
     "grid min-h-0 flex-1 grid-flow-row-dense gap-3 overflow-y-auto grid-cols-1 sm:grid-cols-2 auto-rows-[minmax(min-content,auto)] " \
       "lg:grid-cols-[repeat(var(--columns),minmax(0,1fr))] " \
-      "lg:auto-rows-[minmax(min-content,calc((100%_-_(var(--rows)_-_1)_*_0.75rem)_/_var(--rows)))]"
+      "lg:auto-rows-[minmax(19rem,calc((100%_-_(var(--rows)_-_1)_*_0.75rem)_/_var(--rows)))]"
   end
 
   def dispatch_grid_style(layout)
@@ -129,15 +131,21 @@ module DispatchHelper
   end
 
   # The tile's size in grid cells, as the user left it
-  # The sizes only apply on wide screens (lg:col-span-(--w) in the tile classes)
+  # Place and size only apply on wide screens (see radio_tile_classes)
   def radio_tile_style(dispatch_layout, radio)
     width, height = dispatch_layout.tile_size(radio)
-    "--w: #{[ width, dispatch_grid_columns(@layout) ].min}; --h: #{height}"
+    columns = dispatch_grid_columns(@layout)
+    style = "--w: #{[ width, columns ].min}; --h: #{height}"
+    if (position = dispatch_layout.tile_position(radio))
+      style += "; --x: #{[ position[0], columns - [ width, columns ].min + 1 ].min}; --y: #{position[1]}"
+    end
+    style
   end
 
   def radio_tile_size_data(dispatch_layout, radio)
     width, height = dispatch_layout.tile_size(radio)
-    tag.attributes(data: { w: width, h: height })
+    x, y = dispatch_layout.tile_position(radio)
+    tag.attributes(data: { w: width, h: height, x: x, y: y }.compact)
   end
 
   RESIZE_GRIPS = {

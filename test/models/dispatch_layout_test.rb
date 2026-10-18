@@ -10,6 +10,13 @@ class DispatchLayoutTest < ActiveSupport::TestCase
     assert_equal [ 1, 1 ], layout.tile_size(radios(:base))
   end
 
+  test "places on the board, by row and column" do
+    layout = DispatchLayout.new(tiles: [ { radio_id: radios(:base).id, x: 2, y: 3 }, { radio_id: radios(:mobile).id, x: 9, y: 1 } ])
+    assert_equal [ 3, 1 ], layout.tile_position(radios(:mobile))
+    assert_equal [ radios(:mobile), radios(:base), radios(:other) ], layout.arrange([ radios(:base), radios(:mobile), radios(:other) ])
+    assert_nil layout.tile_position(radios(:other))
+  end
+
   test "radios that aren't in the layout go last" do
     layout = DispatchLayout.new(tiles: [ { radio_id: radios(:mobile).id } ])
     assert_equal [ radios(:mobile), radios(:base), radios(:other) ], layout.arrange([ radios(:base), radios(:mobile), radios(:other) ])

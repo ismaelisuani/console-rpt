@@ -1,14 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Radio tiles arranged by the user: drag a tile by its grip to move it (or
-// drop it in the middle of another radio to link them), drag its corner to
-// resize it (in grid cells). Every change is saved.
+// The dispatch board: drag a tile by its header and drop it in any cell
+// (another radio's side swaps them; its middle links them); drag a tile's
+// corner to resize it. Places and sizes are grid cells, saved on every change.
 export default class extends Controller {
   static targets = [ "tile" ]
   static values = { url: String, columns: Number, maxHeight: { type: Number, default: 3 } }
 
   // Moving
   arm(event) {
+    if (event.target.closest("button, a, input, select")) return
     event.currentTarget.closest("[data-arrange-target=tile]").draggable = true
   }
 
@@ -17,28 +18,35 @@ export default class extends Controller {
     if (!this.dragged) return
     event.dataTransfer.effectAllowed = "move"
     event.dataTransfer.setData("text/plain", this.dragged.dataset.radioId)
-    this.dragged.classList.add("opacity-40")
+    // every tile gets its current cell, so that moving one leaves the others in place
+    this.freeze()
+    this.origin = this.cellOf(this.dragged)
+    requestAnimationFrame(() => this.dragged?.classList.add("opacity-40"))
   }
 
   dragOver(event) {
     if (!this.dragged) return
     event.preventDefault()
     const tile = event.target.closest("[data-arrange-target=tile]")
-    if (!tile || tile === this.dragged) return this.setLinkTarget(null)
-    const box = tile.getBoundingClientRect()
-    // the middle of another radio: link; its sides: move there
-    const middle = Math.abs(event.clientX - (box.left + box.width / 2)) < box.width / 4 &&
-      Math.abs(event.clientY - (box.top + box.height / 2)) < box.height / 4
-    if (middle && this.dragged.classList.contains("can-link")) return this.setLinkTarget(tile)
+    if (tile && tile !== this.dragged) {
+      const box = tile.getBoundingClientRect()
+      const middle = Math.abs(event.clientX - (box.left + box.width / 2)) < box.width / 4 &&
+        Math.abs(event.clientY - (box.top + box.height / 2)) < box.height / 4
+      if (middle && this.dragged.classList.contains("can-link")) return this.setLinkTarget(tile)
+      this.setLinkTarget(null)
+      return this.swap(tile)
+    }
+    if (tile === this.dragged) return this.setLinkTarget(null)
     this.setLinkTarget(null)
-    const after = event.clientX - box.left > box.width / 2
-    tile.parentNode.insertBefore(this.dragged, after ? tile.nextSibling : tile)
-    this.moved = true
+    this.moveTo(this.cellAt(event.clientX, event.clientY))
   }
 
   drop(event) {
     event.preventDefault()
-    if (this.linkTarget) this.link(this.dragged, this.linkTarget)
+    if (this.linkTarget) {
+      this.place(this.dragged, this.origin)
+      this.link(this.dragged, this.linkTarget)
+    }
   }
 
   dragEnd() {
@@ -49,6 +57,94 @@ export default class extends Controller {
     this.setLinkTarget(null)
     if (this.moved) this.save()
     this.moved = false
+  }
+
+  // The dragged tile takes the other one's cell, and the other one its own
+  swap(tile) {
+    const theirs = this.cellOf(tile)
+    const mine = this.cellOf(this.dragged)
+    if (theirs.x === mine.x && theirs.y === mine.y) return
+    this.place(tile, mine)
+    this.place(this.dragged, theirs)
+    this.moved = true
+  }
+
+  moveTo(cell) {
+    const width = parseInt(this.dragged.dataset.w) || 1
+    cell.x = Math.min(cell.x, this.columnsValue - width + 1)
+    const mine = this.cellOf(this.dragged)
+    if (cell.x === mine.x && cell.y === mine.y) return
+    if (this.occupied(cell, this.dragged)) return
+    this.place(this.dragged, cell)
+    this.moved = true
+  }
+
+  // Is any part of the dragged tile's area at cell taken by another tile?
+  occupied(cell, except) {
+    const width = parseInt(except.dataset.w) || 1
+    const height = parseInt(except.dataset.h) || 1
+    return this.tileTargets.some(tile => {
+      if (tile === except) return false
+      const other = this.cellOf(tile)
+      const otherWidth = parseInt(tile.dataset.w) || 1
+      const otherHeight = parseInt(tile.dataset.h) || 1
+      return cell.x < other.x + otherWidth && other.x < cell.x + width &&
+        cell.y < other.y + otherHeight && other.y < cell.y + height
+    })
+  }
+
+  freeze() {
+    const cells = this.tileTargets.map(tile => [ tile, this.measuredCell(tile) ])
+    cells.forEach(([ tile, cell ]) => this.place(tile, cell))
+  }
+
+  place(tile, cell) {
+    tile.dataset.x = cell.x
+    tile.dataset.y = cell.y
+    tile.style.setProperty("--x", cell.x)
+    tile.style.setProperty("--y", cell.y)
+  }
+
+  cellOf(tile) {
+    return tile.dataset.x ? { x: parseInt(tile.dataset.x), y: parseInt(tile.dataset.y) } : this.measuredCell(tile)
+  }
+
+  // The cell where a tile is now, from its position on the screen
+  measuredCell(tile) {
+    const grid = this.metrics()
+    const box = tile.getBoundingClientRect()
+    return {
+      x: Math.round((box.left - grid.left) / (grid.cellWidth + grid.gap)) + 1,
+      y: Math.round((box.top - grid.top) / (grid.cellHeight + grid.gap)) + 1
+    }
+  }
+
+  cellAt(clientX, clientY) {
+    const grid = this.metrics()
+    return {
+      x: Math.min(Math.max(Math.floor((clientX - grid.left) / (grid.cellWidth + grid.gap)) + 1, 1), this.columnsValue),
+      y: Math.max(Math.floor((clientY - grid.top) / (grid.cellHeight + grid.gap)) + 1, 1)
+    }
+  }
+
+  // Grid geometry: content origin (scrolled), cell sizes and gap
+  metrics() {
+    const style = getComputedStyle(this.element)
+    const box = this.element.getBoundingClientRect()
+    const gap = parseFloat(style.columnGap) || 0
+    const left = box.left + parseFloat(style.paddingLeft || 0) - this.element.scrollLeft
+    const top = box.top + parseFloat(style.paddingTop || 0) - this.element.scrollTop
+    const cellWidth = (this.element.clientWidth - gap * (this.columnsValue - 1)) / this.columnsValue
+    return { left, top, gap, cellWidth, cellHeight: this.rowHeight(gap) }
+  }
+
+  // The height of one grid row, measured on a tile one row tall (rows grow to
+  // fit their content, so it isn't a fixed fraction of the board)
+  rowHeight(gap) {
+    const tile = this.tileTargets.find(t => (parseInt(t.dataset.h) || 1) === 1) || this.tileTargets[0]
+    if (!tile) return 200
+    const height = parseInt(tile.dataset.h) || 1
+    return (tile.getBoundingClientRect().height - gap * (height - 1)) / height
   }
 
   setLinkTarget(tile) {
@@ -73,17 +169,12 @@ export default class extends Controller {
     event.preventDefault()
     event.stopPropagation()
     const tile = event.currentTarget.closest("[data-arrange-target=tile]")
-    const style = getComputedStyle(this.element)
-    const gap = parseFloat(style.columnGap) || 0
-    const cellWidth = (this.element.clientWidth - gap * (this.columnsValue - 1)) / this.columnsValue
-    // the row height of a one-cell-tall tile (rows grow to fit their content)
-    const box0 = tile.getBoundingClientRect()
-    const cellHeight = (box0.height - gap * ((parseInt(tile.dataset.h) || 1) - 1)) / (parseInt(tile.dataset.h) || 1)
+    const grid = this.metrics()
     const box = tile.getBoundingClientRect()
 
     const move = moveEvent => {
-      const width = this.clamp(Math.round((moveEvent.clientX - box.left + gap) / (cellWidth + gap)), this.columnsValue)
-      const height = this.clamp(Math.round((moveEvent.clientY - box.top + gap) / (cellHeight + gap)), this.maxHeightValue)
+      const width = this.clamp(Math.round((moveEvent.clientX - box.left + grid.gap) / (grid.cellWidth + grid.gap)), this.columnsValue)
+      const height = this.clamp(Math.round((moveEvent.clientY - box.top + grid.gap) / (grid.cellHeight + grid.gap)), this.maxHeightValue)
       this.setSize(tile, width, height)
     }
     const up = () => {
@@ -107,7 +198,10 @@ export default class extends Controller {
   }
 
   save() {
-    const tiles = this.tileTargets.map(tile => ({ radio_id: tile.dataset.radioId, w: tile.dataset.w || 1, h: tile.dataset.h || 1 }))
+    const tiles = this.tileTargets.map(tile => {
+      const cell = tile.dataset.x ? { x: tile.dataset.x, y: tile.dataset.y } : {}
+      return { radio_id: tile.dataset.radioId, w: tile.dataset.w || 1, h: tile.dataset.h || 1, ...cell }
+    })
     fetch(this.urlValue, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": document.querySelector("meta[name=csrf-token]")?.content },

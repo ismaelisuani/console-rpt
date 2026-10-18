@@ -99,9 +99,11 @@ per screen, by group) with an activity log below. Each tile shows:
 - Who is talking (from Unit) and the decoded ID; active links (monitor-only
   links marked differently), click to disconnect one.
 - Per-radio volume slider and mute, plus listen all / mute all.
-- Tiles can be moved (drag the grip) and resized (drag the corner, in grid
-  cells); each user's arrangement is saved per radio group (`DispatchLayout`)
-  and can be reset.
+- The board (wide screens): rows of equal height; each tile has a column, a
+  row and a size in cells. Drag a tile by its header to any cell (another
+  radio's side swaps them, its middle links them); resize from the corner.
+  Each user's board is saved per radio group (`DispatchLayout`) and can be
+  reset. On small screens tiles follow row/column order.
 - Links on screen (`links_controller.js`): linked tiles are framed and joined
   by an animated seam (neighbours) or line (far apart) with a chain button
   that unlinks them; dropping a tile in the middle of another links them.

@@ -3,7 +3,7 @@ class DispatchLayoutsController < ApplicationController
   before_action :set_dispatch_layout
 
   def update
-    @dispatch_layout.update!(tiles: params.expect(tiles: [ [ :radio_id, :w, :h ] ]))
+    @dispatch_layout.update!(tiles: params.expect(tiles: [ [ :radio_id, :x, :y, :w, :h ] ]))
     head :no_content
   end
 

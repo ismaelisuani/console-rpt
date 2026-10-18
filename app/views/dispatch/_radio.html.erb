@@ -17,9 +17,9 @@
   <%# The state at a glance: a strip on top of the tile %>
   <span class="absolute inset-x-0 top-0 h-1 bg-line-strong/60 transition-colors group-has-[[data-receiving]]:bg-rx group-has-[[data-transmitting]]:bg-tx group-has-[[data-offline]]:bg-faint" aria-hidden="true"></span>
   <audio data-radio-target="audio" autoplay hidden></audio>
-  <header class="flex min-w-0 items-center gap-2">
-    <span class="-ml-1 cursor-grab select-none px-0.5 text-faint hover:text-ink active:cursor-grabbing" title="<%= t("dispatch.radio.move") %>"
-          data-action="pointerdown->arrange#arm">⠿</span>
+  <%# The whole header is the handle to move the tile (wide screens) %>
+  <header class="-mx-3 -mt-4 flex min-w-0 items-center gap-2 px-3 pt-4 pb-1 select-none lg:cursor-move lg:hover:bg-raised/60"
+          title="<%= t("dispatch.radio.move") %>" data-action="pointerdown->arrange#arm">
     <h2 class="truncate text-base font-semibold text-ink-strong"><%= radio.name %></h2>
     <span class="shrink-0 text-faint tabular-nums"><%= radio.node %></span>
     <span class="ml-auto shrink-0 text-faint"><%= radio.server.name %></span>
