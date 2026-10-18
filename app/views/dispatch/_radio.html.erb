@@ -49,7 +49,7 @@
 
   <%# The three main controls, same size %>
   <div class="grid grid-cols-3 gap-2">
-    <button type="button" class="btn h-11 rounded-xl" data-radio-target="connectButton" data-action="radio#toggleConnection"
+    <button type="button" class="btn h-11 rounded-xl tile-btn" data-radio-target="connectButton" data-action="radio#toggleConnection"
             <%= "disabled" unless access[:listen] && access[:webrtc] %>
             title="<%= t("dispatch.radio.no_webrtc") unless access[:webrtc] %>"
             data-connect-label="<%= t("dispatch.radio.connect") %>" data-disconnect-label="<%= t("dispatch.radio.disconnect") %>"
@@ -58,17 +58,17 @@
       <%= icon(:headphones, size: "size-4") %>
       <%= t("dispatch.radio.connect") %>
     </button>
-    <button type="button" class="btn h-11 rounded-xl" data-action="radio#openLink" <%= "disabled" unless access[:link] %>>
+    <button type="button" class="btn h-11 rounded-xl tile-btn" data-action="radio#openLink" <%= "disabled" unless access[:link] %>>
       <%= icon(:chain, size: "size-4") %><%= t("dispatch.radio.link") %>
     </button>
     <% if access[:transmit] %>
-      <button type="button" class="btn h-11 gap-1.5 rounded-xl py-0 text-lg font-bold tracking-wide enabled:border-accent enabled:bg-accent enabled:text-white enabled:shadow-sm enabled:hover:bg-accent/90 data-[pressed]:border-tx-strong data-[pressed]:bg-tx-strong data-[pressed]:shadow-[0_0_0_4px] data-[pressed]:shadow-tx/25" data-radio-target="ptt"
+      <button type="button" class="btn tile-btn h-11 gap-1.5 rounded-xl py-0 text-lg font-bold tracking-wide enabled:border-accent enabled:bg-accent enabled:text-white enabled:shadow-sm enabled:hover:bg-accent/90 data-[pressed]:border-tx-strong data-[pressed]:bg-tx-strong data-[pressed]:shadow-[0_0_0_4px] data-[pressed]:shadow-tx/25" data-radio-target="ptt"
               data-action="pointerdown->radio#pttDown pointerup->radio#pttUp pointerleave->radio#pttUp" disabled
               title="<%= t("dispatch.radio.connect_first") %>">
         <%= icon(:mic, size: "size-5") %><%= t("dispatch.radio.ptt") %>
       </button>
     <% else %>
-      <button type="button" class="btn h-11 gap-1.5 rounded-xl border-dashed py-0 text-lg font-bold tracking-wide text-warn-ink/70" disabled
+      <button type="button" class="btn tile-btn h-11 gap-1.5 rounded-xl border-dashed py-0 text-lg font-bold tracking-wide text-warn-ink/70!" disabled
               title="<%= t("dispatch.radio.no_permission") %>">
         <%= icon(:lock, size: "size-5") %><%= t("dispatch.radio.ptt") %>
       </button>

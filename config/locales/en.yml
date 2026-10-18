@@ -180,7 +180,6 @@ en:
       drop_to_link: "⇄ Drop to link with %{radio}"
       group_ptt: Group PTT
       group_ptt_hint: Include this radio in the group PTT (Space talks on every included radio)
-      group_ptt_talks_on: 'Group PTT (button or Shift + Space) talks on:'
       incoming_audio: Incoming audio
       last: Last
       last_activity: last activity

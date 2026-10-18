@@ -6,7 +6,7 @@ import { Controller } from "@hotwired/stimulus"
 //   button): PTT on the radios included in the group PTT. Space never scrolls.
 // - The bar shows which radios the group PTT includes.
 export default class extends Controller {
-  static targets = [ "radio", "groupList", "groupButton", "spaceHint" ]
+  static targets = [ "radio", "groupList", "groupButton" ]
 
   connect() {
     // after the radio tiles' own controllers connect
@@ -84,7 +84,6 @@ export default class extends Controller {
     }))
     const ready = included.some(radio => radio.connected)
     this.groupButtonTarget.disabled = !ready
-    this.spaceHintTarget.textContent = included.length ? this.t("groupPttTalksOn") : ""
     this.saveGroup()
   }
 

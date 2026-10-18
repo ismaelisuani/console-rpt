@@ -101,6 +101,9 @@
   .btn-primary { @apply btn border-accent bg-accent text-white shadow-sm hover:border-accent hover:bg-accent/90; }
   .btn-danger { @apply btn border-tx-strong/60 text-tx-ink hover:border-tx-strong hover:bg-tx-soft; }
   .btn-sm { @apply rounded-md px-2 py-1 text-xs; }
+  /* The three controls of a radio tile: disabled they keep their border, so
+     the three read as the same size, and only the content fades */
+  .tile-btn { @apply disabled:opacity-100! disabled:text-faint! disabled:[&>svg]:opacity-60; }
   .card { @apply rounded-xl border border-line bg-surface shadow-card; }
   .page-title { @apply text-xl font-semibold tracking-tight text-ink-strong; }
   .field { @apply flex flex-col gap-1.5; }

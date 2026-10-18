@@ -180,7 +180,6 @@ pt-BR:
       drop_to_link: "⇄ Solte para interligar com %{radio}"
       group_ptt: PTT em grupo
       group_ptt_hint: Incluir este rádio no PTT em grupo (o espaço transmite por todos os incluídos)
-      group_ptt_talks_on: 'O PTT em grupo (botão ou Shift + espaço) transmite por:'
       incoming_audio: Áudio entrando
       last: Último
       last_activity: última atividade
