@@ -66,7 +66,7 @@
   <%= resize_grip(t("dispatch.radio.resize"), "arrange#resizeStart", corner: :bottom_right) %>
 
   <% if access[:link] %>
-    <dialog class="m-auto w-80 rounded-lg border border-line bg-surface p-4 text-ink backdrop:bg-black/60" data-radio-target="linkDialog">
+    <dialog class="m-auto w-80 rounded-lg border border-line bg-surface p-4 text-ink backdrop:bg-canvas/70" data-radio-target="linkDialog">
       <%= form_with url: radio_links_path(radio), class: "space-y-3" do |form| %>
         <h3 class="font-semibold text-ink-strong"><%= t("dispatch.radio.link_title", radio: radio.name) %></h3>
         <%= form.select :other_radio_id, radio_link_options(radio), {}, class: "input" %>

@@ -9,6 +9,8 @@ module ApplicationHelper
     speaker: '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>',
     speaker_muted: '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6"/>',
     lock: '<rect x="5" y="11" width="14" height="9" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" fill="currentColor"/>',
     eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
     eye_off: '<path d="M2 12s3.5-7 10-7c2 0 3.7.7 5.1 1.6M22 12s-3.5 7-10 7c-2 0-3.7-.7-5.1-1.6"/><path d="M3 3l18 18"/>'
   }.freeze
@@ -46,6 +48,23 @@ module ApplicationHelper
       all_online: online == servers.size,
       details: servers.map { |server| "#{server.name}: #{t(server.online? ? "servers.status.online" : "servers.status.offline")}" }.join("\n")
     }
+  end
+
+  # The user's theme; before signing in, the last one picked in this browser
+  def current_theme
+    (Current.user&.theme || cookies[:theme]).presence_in(User::Preferences::THEMES) || "dark"
+  end
+
+  def theme_options
+    User::Preferences::THEMES.map { |theme| [ t("theme.#{theme}"), theme ] }
+  end
+
+  def theme_toggle
+    tag.button(type: "button", class: "btn btn-sm size-7 p-0", data: { controller: "theme", action: "theme#toggle",
+      theme_url_value: (profile_path if authenticated?) },
+      title: t("theme.switch"), aria: { label: t("theme.switch") }) do
+      tag.span(icon(:sun), class: "hidden [[data-theme=dark]_&]:inline") + tag.span(icon(:moon), class: "hidden [[data-theme=light]_&]:inline")
+    end
   end
 
   def locale_options

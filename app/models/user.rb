@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  include User::Authentication, User::Permissions, User::RadioAccess, User::SelfProtection, User::DispatchLayouts
+  include User::Authentication, User::Permissions, User::RadioAccess, User::SelfProtection, User::DispatchLayouts, User::Preferences
 
   has_many :sessions, dependent: :destroy
   belongs_to :role
@@ -7,7 +7,6 @@ class User < ApplicationRecord
   has_many :radio_groups, through: :radio_group_accesses
 
   validates :name, presence: true
-  validates :locale, inclusion: { in: ->(_) { I18n.available_locales.map(&:to_s) } }
 
   scope :active, -> { where(active: true) }
   scope :ordered, -> { order(:name) }

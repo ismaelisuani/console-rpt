@@ -17,7 +17,8 @@
     <%= form.submit t("sessions.sign_in"), class: "btn-primary w-full" %>
   <% end %>
 
-  <div class="mt-5 flex justify-center gap-3 text-xs text-muted">
+  <div class="mt-5 flex items-center justify-center gap-3 text-xs text-muted">
+    <%= theme_toggle %>
     <% I18n.available_locales.each do |locale| %>
       <%= link_to t("locales.#{locale}"), new_session_path(locale: locale), class: class_names("hover:text-ink-strong", "text-ink-strong font-semibold": locale == I18n.locale) %>
     <% end %>

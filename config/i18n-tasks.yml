@@ -162,6 +162,7 @@ ignore_unused:
   - "decoders.*"
   - "locales.*"
   - "radio_access.*"
+  - "theme.*"
   - "roles.defaults.*"
   - "dispatch.activity.*"
   - "dispatch.radio.mode.*"

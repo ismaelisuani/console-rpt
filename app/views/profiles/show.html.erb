@@ -15,6 +15,10 @@
         <%= form.select :locale, locale_options, {}, class: "input" %>
       </div>
       <div class="field">
+        <%= form.label :theme %>
+        <%= form.select :theme, theme_options, {}, class: "input" %>
+      </div>
+      <div class="field">
         <%= form.label :password, t(".new_password") %>
         <%= password_field_with_toggle(form, :password, autocomplete: "new-password", maxlength: 72, class: "input") %>
       </div>

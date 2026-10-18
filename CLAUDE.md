@@ -17,7 +17,10 @@ certified 22.8 with the RLink app_rpt. Local checkout of that repo:
   labels. No hardcoded user-facing text anywhere.
 - A new key is added to the three locale files in the same change. `i18n-tasks`
   (missing and unused keys) must pass.
-- Each user picks their locale; the default is `es`.
+- Each user picks their locale (default `es`) and a dark (default) or light
+  theme, switched from the top bar. Colors are CSS variables: use the palette
+  utilities (`bg-canvas`, `text-ink`, `text-rx-ink`, ...) and define every new
+  color for both themes in `app/assets/tailwind/application.css`.
 
 ## Code conventions
 

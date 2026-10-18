@@ -59,6 +59,7 @@ pt-BR:
         password_confirmation: Confirmar senha
         role: Perfil
         role_id: Perfil
+        theme: Tema
         username: Usuário
     errors:
       models:
@@ -316,6 +317,10 @@ pt-BR:
     rate_limited: Muitas tentativas; tente de novo em alguns minutos.
     sign_in: Entrar
     sign_out: Sair
+  theme:
+    dark: Escuro
+    light: Claro
+    switch: Modo claro ou escuro
   units:
     imports:
       create:

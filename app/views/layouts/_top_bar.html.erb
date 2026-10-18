@@ -16,6 +16,7 @@
       <%= render "layouts/servers_status" %>
     <% end %>
     <span class="tabular-nums" data-controller="clock"></span>
+    <%= theme_toggle %>
     <%= link_to profile_path, class: "flex items-center gap-2 hover:text-ink-strong", title: Current.user.name do %>
       <span class="flex size-7 items-center justify-center rounded-full bg-accent text-xs font-semibold text-white"><%= initials(Current.user.name) %></span>
     <% end %>

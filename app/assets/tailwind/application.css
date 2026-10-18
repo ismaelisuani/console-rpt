@@ -1,29 +1,82 @@
 @import "tailwindcss";
 
-/* Dispatch console palette (dark) */
-@theme {
-  --color-canvas: #10161e;
-  --color-panel: #141c27;
-  --color-surface: #172130;
-  --color-raised: #1f2b3a;
-  --color-line: #2b3746;
-  --color-line-strong: #3a495b;
-  --color-ink: #dbe4ee;
-  --color-ink-strong: #ffffff;
-  --color-muted: #9fb1c5;
-  --color-faint: #5c6b7c;
-  --color-accent: #2f8cff;
-  --color-accent-soft: #1d3a5c;
-  --color-accent-ink: #9cc8ff;
-  --color-rx: #14c38e;
-  --color-rx-soft: #0f3b2f;
-  --color-rx-ink: #34e0a6;
-  --color-tx: #ff4d57;
-  --color-tx-strong: #d6404a;
-  --color-tx-soft: #4a161c;
-  --color-tx-ink: #ff8088;
-  --color-warn-soft: #33301c;
-  --color-warn-ink: #e6cf6a;
+/* Dispatch console palettes: dark (default) and light, picked with
+   data-theme on <html>. Utilities use the variables (bg-canvas, text-ink, ...). */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-strong: var(--ink-strong);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-rx: var(--rx);
+  --color-rx-soft: var(--rx-soft);
+  --color-rx-ink: var(--rx-ink);
+  --color-tx: var(--tx);
+  --color-tx-strong: var(--tx-strong);
+  --color-tx-soft: var(--tx-soft);
+  --color-tx-ink: var(--tx-ink);
+  --color-warn-soft: var(--warn-soft);
+  --color-warn-ink: var(--warn-ink);
+}
+
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #10161e;
+  --panel: #141c27;
+  --surface: #172130;
+  --raised: #1f2b3a;
+  --line: #2b3746;
+  --line-strong: #3a495b;
+  --ink: #dbe4ee;
+  --ink-strong: #ffffff;
+  --muted: #9fb1c5;
+  --faint: #5c6b7c;
+  --accent: #2f8cff;
+  --accent-soft: #1d3a5c;
+  --accent-ink: #9cc8ff;
+  --rx: #14c38e;
+  --rx-soft: #0f3b2f;
+  --rx-ink: #34e0a6;
+  --tx: #ff4d57;
+  --tx-strong: #d6404a;
+  --tx-soft: #4a161c;
+  --tx-ink: #ff8088;
+  --warn-soft: #33301c;
+  --warn-ink: #e6cf6a;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --canvas: #eef2f6;
+  --panel: #e6ebf1;
+  --surface: #ffffff;
+  --raised: #e9eef4;
+  --line: #d3dbe5;
+  --line-strong: #b4c0cd;
+  --ink: #1d2733;
+  --ink-strong: #0b1220;
+  --muted: #52637a;
+  --faint: #8494a6;
+  --accent: #1f6fe0;
+  --accent-soft: #dbe8fb;
+  --accent-ink: #1755b3;
+  --rx: #0e9f6e;
+  --rx-soft: #d5f3e6;
+  --rx-ink: #05754e;
+  --tx: #e5484d;
+  --tx-strong: #d1343b;
+  --tx-soft: #fde1e2;
+  --tx-ink: #b4232a;
+  --warn-soft: #fbefc4;
+  --warn-ink: #7d5f00;
 }
 
 /* Button base, composable with @apply */

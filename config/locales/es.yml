@@ -59,6 +59,7 @@ es:
         password_confirmation: Repetir contraseña
         role: Rol
         role_id: Rol
+        theme: Tema
         username: Usuario
     errors:
       models:
@@ -316,6 +317,10 @@ es:
     rate_limited: Demasiados intentos; probá de nuevo en unos minutos.
     sign_in: Ingresar
     sign_out: Salir
+  theme:
+    dark: Oscuro
+    light: Claro
+    switch: Modo claro u oscuro
   units:
     imports:
       create:

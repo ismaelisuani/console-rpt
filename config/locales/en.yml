@@ -59,6 +59,7 @@ en:
         password_confirmation: Confirm password
         role: Role
         role_id: Role
+        theme: Theme
         username: Username
     errors:
       models:
@@ -316,6 +317,10 @@ en:
     rate_limited: Too many attempts, try again in a few minutes.
     sign_in: Sign in
     sign_out: Sign out
+  theme:
+    dark: Dark
+    light: Light
+    switch: Light or dark mode
   units:
     imports:
       create:

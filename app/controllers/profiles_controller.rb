@@ -5,10 +5,14 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    if @user.update(params.expect(user: %i[locale password password_confirmation]))
-      redirect_to profile_path, notice: t(".updated", locale: @user.locale)
-    else
-      render :show, status: :unprocessable_entity
+    respond_to do |format|
+      if @user.update(params.expect(user: %i[locale theme password password_confirmation]))
+        format.html { redirect_to profile_path, notice: t(".updated", locale: @user.locale) }
+        format.json { head :no_content }
+      else
+        format.html { render :show, status: :unprocessable_entity }
+        format.json { head :unprocessable_entity }
+      end
     end
   end
 end
