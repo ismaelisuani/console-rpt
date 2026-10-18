@@ -154,13 +154,13 @@ en:
       call_ended: Call ended
       call_failed: Could not connect
       certificate_hint: 'The browser couldn''t reach the server''s audio. If its certificate is self-signed: open the server, accept the certificate (the page then shows an error, that''s fine), come back and connect again:'
-      connect: Connect
-      connect_first: connect the audio first
+      connect: Listen
+      connect_first: listen first
       connected: Listening
       connecting: Connecting…
       console_audio: This console's audio for the radio (the radio's own state is the bar below)
       console_user: Console · %{user}
-      disconnect: Disconnect
+      disconnect: Listening
       disconnected: Not listening
       drop_to_link: "⇄ Drop to link with %{radio}"
       incoming_audio: Incoming audio
@@ -191,6 +191,7 @@ en:
       register_unit: Register this ID
       resize: Drag to resize
       server_down: No connection with the server
+      stop_listening: Stop listening
       talking: Talking
       transceive: Transceive
       transmits: Transmits

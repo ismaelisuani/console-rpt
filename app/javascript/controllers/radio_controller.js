@@ -154,7 +154,9 @@ export default class extends Controller {
 
   renderConnection() {
     const button = this.connectButtonTarget
-    button.textContent = this.connected ? button.dataset.disconnectLabel : button.dataset.connectLabel
+    button.lastChild.textContent = ` ${this.connected ? button.dataset.disconnectLabel : button.dataset.connectLabel}`
+    button.title = (this.connected ? button.dataset.disconnectTitle : button.dataset.connectTitle) || ""
+    button.setAttribute("aria-pressed", this.connected)
     button.classList.toggle("border-accent", this.connected)
     button.classList.toggle("bg-accent-soft", this.connected)
     button.classList.toggle("text-accent-ink", this.connected)

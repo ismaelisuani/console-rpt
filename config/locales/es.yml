@@ -154,13 +154,13 @@ es:
       call_ended: Llamada terminada
       call_failed: No se pudo conectar
       certificate_hint: 'El navegador no pudo llegar al audio del servidor. Si su certificado es autofirmado: abrí el servidor, aceptá el certificado (después la página muestra un error, es normal), volvé y conectá de nuevo:'
-      connect: Conectar
-      connect_first: conectá el audio
+      connect: Escuchar
+      connect_first: escuchá primero
       connected: Escuchando
       connecting: Conectando…
       console_audio: El audio de esta consola con la radio (el estado de la radio es la barra de abajo)
       console_user: Consola · %{user}
-      disconnect: Desconectar
+      disconnect: Escuchando
       disconnected: No escuchando
       drop_to_link: "⇄ Soltar para enlazar con %{radio}"
       incoming_audio: Audio entrante
@@ -191,6 +191,7 @@ es:
       register_unit: Registrar este ID
       resize: Arrastrar para cambiar el tamaño
       server_down: Sin conexión con el servidor
+      stop_listening: Dejar de escuchar
       talking: Habla
       transceive: Transceptor
       transmits: Transmite

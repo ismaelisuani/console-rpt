@@ -48,7 +48,10 @@
     <button type="button" class="btn flex-1" data-radio-target="connectButton" data-action="radio#toggleConnection"
             <%= "disabled" unless access[:listen] && access[:webrtc] %>
             title="<%= t("dispatch.radio.no_webrtc") unless access[:webrtc] %>"
-            data-connect-label="<%= t("dispatch.radio.connect") %>" data-disconnect-label="<%= t("dispatch.radio.disconnect") %>">
+            data-connect-label="<%= t("dispatch.radio.connect") %>" data-disconnect-label="<%= t("dispatch.radio.disconnect") %>"
+            data-connect-title="<%= t("dispatch.radio.no_webrtc") unless access[:webrtc] %>" data-disconnect-title="<%= t("dispatch.radio.stop_listening") %>"
+            aria-pressed="false">
+      <%= icon(:headphones) %>
       <%= t("dispatch.radio.connect") %>
     </button>
     <button type="button" class="btn flex-1" data-action="radio#openLink" <%= "disabled" unless access[:link] %>>⇄ <%= t("dispatch.radio.link") %></button>

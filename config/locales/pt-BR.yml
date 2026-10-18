@@ -154,13 +154,13 @@ pt-BR:
       call_ended: Chamada encerrada
       call_failed: Não foi possível conectar
       certificate_hint: 'O navegador não conseguiu chegar ao áudio do servidor. Se o certificado for autoassinado: abra o servidor, aceite o certificado (depois a página mostra um erro, é normal), volte e conecte de novo:'
-      connect: Conectar
-      connect_first: conecte o áudio
+      connect: Escutar
+      connect_first: escute primeiro
       connected: Escutando
       connecting: Conectando…
       console_audio: O áudio deste console com o rádio (o estado do rádio é a barra abaixo)
       console_user: Console · %{user}
-      disconnect: Desconectar
+      disconnect: Escutando
       disconnected: Não escutando
       drop_to_link: "⇄ Solte para interligar com %{radio}"
       incoming_audio: Áudio entrando
@@ -191,6 +191,7 @@ pt-BR:
       register_unit: Cadastrar este ID
       resize: Arraste para redimensionar
       server_down: Sem conexão com o servidor
+      stop_listening: Parar de escutar
       talking: Falando
       transceive: Transceptor
       transmits: Transmite
