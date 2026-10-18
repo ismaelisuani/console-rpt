@@ -3,7 +3,8 @@ module RecordingsHelper
     if recording.rx?
       tag.span(t("dispatch.activity.rx"), class: "badge bg-rx-soft font-semibold text-rx-ink")
     else
-      tag.span(t("dispatch.activity.tx"), class: "badge bg-tx-soft font-semibold text-tx-ink")
+      # blue: red is for errors and for the live transmission on the dispatch screen
+      tag.span(t("dispatch.activity.tx"), class: "badge bg-accent-soft font-semibold text-accent-ink")
     end
   end
 
