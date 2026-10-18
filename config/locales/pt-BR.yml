@@ -209,6 +209,7 @@ pt-BR:
       volume: Volume
     show:
       activity: Atividade
+      all: Todos
       count:
         one: 1 rádio · %{online} online
         other: "%{count} rádios · %{online} online"

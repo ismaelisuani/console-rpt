@@ -9,6 +9,7 @@
       <h1 class="text-base font-semibold text-ink-strong"><%= Radio.model_name.human(count: 2) %></h1>
       <% if @groups.any? %>
         <nav class="flex flex-wrap gap-1">
+          <%= link_to t(".all"), dispatch_path, class: class_names("btn btn-sm", "bg-raised text-ink-strong": @group.nil?) %>
           <% @groups.each do |group| %>
             <%= link_to group.name, dispatch_path(group_id: group.id), class: class_names("btn btn-sm", "bg-raised text-ink-strong": group == @group) %>
           <% end %>

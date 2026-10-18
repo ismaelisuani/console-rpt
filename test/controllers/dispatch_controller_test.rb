@@ -15,6 +15,18 @@ class DispatchControllerTest < ActionDispatch::IntegrationTest
     assert_select "button[data-radio-target=ptt]", 2
   end
 
+  test "all the user's radios by default, a group to filter" do
+    radio_groups(:north).radios.delete(radios(:mobile))
+    sign_in_as users(:admin)
+
+    get dispatch_path
+    assert_select "article[data-controller=radio]", 3
+    assert_select "nav a.bg-raised", "Todas"
+
+    get dispatch_path(group_id: radio_groups(:north).id)
+    assert_select "article[data-controller=radio]", 1
+  end
+
   test "listen-only users get a locked PTT" do
     sign_in_as users(:listener)
     get dispatch_path

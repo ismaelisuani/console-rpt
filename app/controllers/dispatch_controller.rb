@@ -5,7 +5,8 @@ class DispatchController < ApplicationController
 
   def show
     @groups = Current.user.visible_radio_groups.ordered.to_a
-    @group = @groups.find { |group| group.id == params[:group_id].to_i } || @groups.first
+    # No group: all the user's radios
+    @group = @groups.find { |group| group.id == params[:group_id].to_i }
     @dispatch_layout = Current.user.dispatch_layout_for(@group)
     @radios = @dispatch_layout.arrange(radios_to_show)
     @layout = params[:layout].presence_in(LAYOUTS) || cookies[:dispatch_layout].presence_in(LAYOUTS) || "6"

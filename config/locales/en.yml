@@ -209,6 +209,7 @@ en:
       volume: Volume
     show:
       activity: Activity
+      all: All
       count:
         one: 1 radio · %{online} online
         other: "%{count} radios · %{online} online"

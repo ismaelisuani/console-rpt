@@ -209,6 +209,7 @@ es:
       volume: Volumen
     show:
       activity: Actividad
+      all: Todas
       count:
         one: 1 radio · %{online} en línea
         other: "%{count} radios · %{online} en línea"
