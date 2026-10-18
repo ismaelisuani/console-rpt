@@ -11,7 +11,7 @@ module Ami
     def run
       trap_signals
       until @stopping
-        Rails.application.executor.wrap { rescan }
+        Rails.application.reloader.wrap { rescan }
         sleep RESCAN
       end
       @listeners.each_value { |entry| entry[:listener].stop }

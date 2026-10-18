@@ -137,8 +137,8 @@ disk).
   `config/recurring.yml`) and `bin/ami` (the AMI listener: one connection per active server, applies the
   `RptEvent` events with `Radio::LiveState` / `Radio::Links`, which log
   `RadioEvent`s and broadcast through `Radio::Broadcasting` and
-  `RadioEvent::Broadcasting`). `bin/ami` does not reload code: restart it
-  after changing `app/models/ami` or the radio concerns.
+  `RadioEvent::Broadcasting`). `bin/ami` reloads changed code and views for each
+  event (Rails reloader); a change to `Ami::Listener` itself needs a restart.
 - Live updates are Turbo Streams, one stream per radio and locale (the HTML is
   translated). Action Cable uses PostgreSQL in development because the
   broadcasts come from the `bin/ami` process.

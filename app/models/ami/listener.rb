@@ -64,9 +64,11 @@ module Ami
         end
       end
 
-      # Database work runs inside the Rails executor (connections, reloading)
+      # Each event's work runs inside the Rails reloader: database connections,
+      # and in development the changed code and views (the broadcasts render
+      # partials), so the process never shows stale screens
       def app(&)
-        Rails.application.executor.wrap(&)
+        Rails.application.reloader.wrap(&)
       end
 
       # The LINKS event only comes on changes: the current links on connect
