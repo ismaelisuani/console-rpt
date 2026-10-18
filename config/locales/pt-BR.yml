@@ -152,7 +152,7 @@ pt-BR:
       audio_unreachable: Sem conexão de áudio
       call_ended: Chamada encerrada
       call_failed: Não foi possível conectar
-      certificate_hint: 'O navegador não conseguiu chegar ao áudio do servidor. Se o certificado for autoassinado, abra o servidor uma vez e aceite-o:'
+      certificate_hint: 'O navegador não conseguiu chegar ao áudio do servidor. Se o certificado for autoassinado: abra o servidor, aceite o certificado (depois a página mostra um erro, é normal), volte e conecte de novo:'
       connect: Conectar
       connect_first: conecte primeiro
       connected: Conectado
@@ -198,8 +198,6 @@ pt-BR:
       volume: Volume
     show:
       activity: Atividade
-      activity_bigger: Maior
-      activity_smaller: Menor
       count:
         one: 1 rádio · %{online} online
         other: "%{count} rádios · %{online} online"
@@ -257,6 +255,7 @@ pt-BR:
     not_registered: Não registrado
     number: Número
     pending: O telefone conecta quando o servidor tiver WebRTC.
+    resize: Arraste para mudar a largura
     title: Telefone
     transfer: Transferir
   profiles:

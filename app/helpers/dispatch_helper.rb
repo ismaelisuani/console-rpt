@@ -17,6 +17,7 @@ module DispatchHelper
       "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-rx",
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-tx",
       "has-[[data-offline]]:opacity-55 data-[selected]:outline data-[selected]:outline-2 data-[selected]:outline-accent",
+      "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
       "can-link": radio_tile_access(radio)[:link])
   end
 
@@ -128,6 +129,17 @@ module DispatchHelper
   def radio_tile_size_data(dispatch_layout, radio)
     width, height = dispatch_layout.tile_size(radio)
     tag.attributes(data: { w: width, h: height })
+  end
+
+  RESIZE_GRIPS = {
+    bottom_right: "right-0.5 bottom-0.5 cursor-se-resize rounded-br border-r-2 border-b-2",
+    top_right: "right-0.5 top-0.5 cursor-ne-resize rounded-tr border-r-2 border-t-2"
+  }.freeze
+
+  # The same corner mark on everything that can be resized (tiles, phone, activity)
+  def resize_grip(title, action, corner:)
+    tag.span(class: "absolute z-10 size-3 border-line-strong hover:border-accent #{RESIZE_GRIPS.fetch(corner)}",
+      title: title, data: { action: "pointerdown->#{action}" })
   end
 
   # Texts for the Stimulus controllers

@@ -1,6 +1,6 @@
 <% content_for :title, t("nav.dispatch") %>
 <%= dispatch_strings_tag %>
-<div class="flex min-h-0 flex-1" data-controller="dispatch" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup">
+<div class="flex min-h-0 flex-1" data-controller="dispatch" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup blur@window->dispatch#releaseAll">
   <%= render "dispatch/phone" %>
 
   <main class="flex min-w-0 flex-1 flex-col gap-3 p-3">
@@ -42,13 +42,10 @@
     <% end %>
 
     <section class="card relative flex h-28 shrink-0 flex-col" data-controller="resizable-panel" data-resizable-panel-key-value="dispatch-activity-height">
-      <div class="absolute inset-x-0 -top-1.5 h-3 cursor-row-resize" title="<%= t(".resize_activity") %>" data-action="pointerdown->resizable-panel#dragStart"></div>
+      <div class="absolute inset-x-0 -top-1.5 h-3 cursor-row-resize" data-action="pointerdown->resizable-panel#dragStart"></div>
+      <%= resize_grip(t(".resize_activity"), "resizable-panel#dragStart", corner: :top_right) %>
       <div class="flex items-center gap-2 px-3 pt-2">
         <h2 class="text-xs font-semibold uppercase tracking-wide text-ink-strong"><%= t(".activity") %></h2>
-        <div class="ml-auto flex gap-1">
-          <button type="button" class="btn btn-sm px-1.5 py-0" data-action="resizable-panel#grow" title="<%= t(".activity_bigger") %>" aria-label="<%= t(".activity_bigger") %>">▲</button>
-          <button type="button" class="btn btn-sm px-1.5 py-0" data-action="resizable-panel#shrink" title="<%= t(".activity_smaller") %>" aria-label="<%= t(".activity_smaller") %>">▼</button>
-        </div>
       </div>
       <ol id="activity" class="min-h-0 flex-1 space-y-0.5 overflow-y-auto px-3 pb-2 text-xs text-muted">
         <% @events.each do |event| %>

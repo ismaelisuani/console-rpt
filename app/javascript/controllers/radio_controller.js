@@ -30,6 +30,10 @@ export default class extends Controller {
     return this.element.hasAttribute("data-selected")
   }
 
+  get transmitting() {
+    return this.hasPttTarget && this.pttTarget.hasAttribute("data-pressed")
+  }
+
   // Volume
   setVolume() {
     this.muted = false
@@ -165,7 +169,7 @@ export default class extends Controller {
   pttDown(event) {
     if (!this.hasPttTarget || this.pttTarget.disabled) return
     event?.preventDefault()
-    this.pttTarget.setPointerCapture?.(event.pointerId)
+    if (event?.pointerId !== undefined) this.pttTarget.setPointerCapture?.(event.pointerId)
     this.pttTarget.toggleAttribute("data-pressed", true)
     this.call?.ptt(true)
     fetch(this.pttUrlValue, { method: "POST", headers: this.headers }).catch(() => {})

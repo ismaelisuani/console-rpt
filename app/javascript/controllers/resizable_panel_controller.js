@@ -1,20 +1,31 @@
 import { Controller } from "@hotwired/stimulus"
 
-// A panel whose height the user changes: drag its top edge, or the arrows.
-// The height is remembered in this browser.
+// A panel the user resizes: the activity log (height, top edge) or the phone
+// (width, right edge). Drag the edge or use the arrows; the size is
+// remembered in this browser.
 export default class extends Controller {
-  static values = { key: String, min: { type: Number, default: 64 }, step: { type: Number, default: 80 } }
+  static values = {
+    key: String,
+    axis: { type: String, default: "y" },
+    min: { type: Number, default: 64 },
+    max: { type: Number, default: 0.7 },
+    step: { type: Number, default: 80 }
+  }
 
   connect() {
     const saved = this.load()
-    if (saved) this.setHeight(saved)
+    if (saved) this.setSize(saved)
   }
 
   dragStart(event) {
     event.preventDefault()
-    const startY = event.clientY
-    const startHeight = this.element.getBoundingClientRect().height
-    const move = moveEvent => this.setHeight(startHeight + startY - moveEvent.clientY)
+    const start = this.horizontal ? event.clientX : event.clientY
+    const startSize = this.size
+    const move = moveEvent => {
+      const position = this.horizontal ? moveEvent.clientX : moveEvent.clientY
+      // the phone grows to the right; the activity log grows upwards
+      this.setSize(startSize + (this.horizontal ? position - start : start - position))
+    }
     const up = () => {
       window.removeEventListener("pointermove", move)
       window.removeEventListener("pointerup", up)
@@ -25,18 +36,29 @@ export default class extends Controller {
   }
 
   grow() {
-    this.setHeight(this.element.getBoundingClientRect().height + this.stepValue)
+    this.setSize(this.size + this.stepValue)
     this.save()
   }
 
   shrink() {
-    this.setHeight(this.element.getBoundingClientRect().height - this.stepValue)
+    this.setSize(this.size - this.stepValue)
     this.save()
   }
 
-  setHeight(height) {
-    const max = window.innerHeight * 0.7
-    this.element.style.height = `${Math.round(Math.min(Math.max(height, this.minValue), max))}px`
+  get horizontal() {
+    return this.axisValue === "x"
+  }
+
+  get size() {
+    const box = this.element.getBoundingClientRect()
+    return this.horizontal ? box.width : box.height
+  }
+
+  setSize(size) {
+    const max = (this.horizontal ? window.innerWidth : window.innerHeight) * this.maxValue
+    const value = `${Math.round(Math.min(Math.max(size, this.minValue), max))}px`
+    if (this.horizontal) this.element.style.width = value
+    else this.element.style.height = value
   }
 
   load() {
@@ -44,6 +66,6 @@ export default class extends Controller {
   }
 
   save() {
-    try { localStorage.setItem(this.keyValue, parseFloat(this.element.style.height)) } catch {}
+    try { localStorage.setItem(this.keyValue, Math.round(this.size)) } catch {}
   }
 }

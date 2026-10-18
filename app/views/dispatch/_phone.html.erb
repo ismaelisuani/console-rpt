@@ -1,7 +1,11 @@
-<aside class="flex w-60 shrink-0 flex-col gap-2 border-r border-line bg-panel p-3" data-controller="phone">
-  <div class="flex items-center justify-between">
+<aside class="relative flex w-60 shrink-0 flex-col gap-2 border-r border-line bg-panel p-3"
+       data-controller="phone resizable-panel" data-resizable-panel-key-value="dispatch-phone-width"
+       data-resizable-panel-axis-value="x" data-resizable-panel-min-value="200" data-resizable-panel-max-value="0.4" data-resizable-panel-step-value="60">
+  <div class="absolute inset-y-0 -right-1.5 z-10 w-3 cursor-col-resize" data-action="pointerdown->resizable-panel#dragStart"></div>
+  <%= resize_grip(t("phone.resize"), "resizable-panel#dragStart", corner: :bottom_right) %>
+  <div class="flex items-center gap-2">
     <h2 class="font-semibold text-ink-strong"><%= t("phone.title") %></h2>
-    <span class="text-xs text-faint" data-phone-target="status"><%= t("phone.not_registered") %></span>
+    <span class="truncate text-xs text-faint" data-phone-target="status"><%= t("phone.not_registered") %></span>
   </div>
   <div class="rounded-md border border-line bg-canvas p-2">
     <div class="text-xs text-muted" data-phone-target="callState"><%= t("phone.idle") %></div>

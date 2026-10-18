@@ -88,6 +88,10 @@ per screen, by group) with an activity log below. Each tile shows:
 - Tiles can be moved (drag the grip) and resized (drag the corner, in grid
   cells); each user's arrangement is saved per radio group (`DispatchLayout`)
   and can be reset.
+- Keyboard: arrows move the focus between tiles (by screen position); Space
+  is PTT on the focused tile (or the selected ones) while held.
+- The phone (width) and the activity log (height) are resized with the same
+  corner mark as the tiles; their sizes are remembered in the browser.
 - Connect / disconnect, link to another radio, and a hold-to-talk PTT (mouse or
   space bar; several selected radios transmit together). PTT is disabled when
   not connected and shown locked ("no permission") when the user cannot

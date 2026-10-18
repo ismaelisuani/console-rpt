@@ -152,7 +152,7 @@ en:
       audio_unreachable: No audio connection
       call_ended: Call ended
       call_failed: Could not connect
-      certificate_hint: 'The browser couldn''t reach the server''s audio. If its certificate is self-signed, open the server once and accept it:'
+      certificate_hint: 'The browser couldn''t reach the server''s audio. If its certificate is self-signed: open the server, accept the certificate (the page then shows an error, that''s fine), come back and connect again:'
       connect: Connect
       connect_first: connect first
       connected: Connected
@@ -198,8 +198,6 @@ en:
       volume: Volume
     show:
       activity: Activity
-      activity_bigger: Bigger
-      activity_smaller: Smaller
       count:
         one: 1 radio · %{online} online
         other: "%{count} radios · %{online} online"
@@ -257,6 +255,7 @@ en:
     not_registered: Not registered
     number: Number
     pending: The phone connects once the server has WebRTC.
+    resize: Drag to resize
     title: Phone
     transfer: Transfer
   profiles:
