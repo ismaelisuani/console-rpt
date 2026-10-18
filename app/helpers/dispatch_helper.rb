@@ -1,5 +1,7 @@
 module DispatchHelper
-  GRIDS = { "4" => [ 2, 2 ], "6" => [ 3, 2 ], "9" => [ 3, 3 ] }.freeze
+  # The board on wide screens: three columns, three rows per screen
+  GRID_COLUMNS = 3
+  GRID_ROWS = 3
 
   # What the current user can do on a radio tile
   def radio_tile_access(radio)
@@ -122,20 +124,15 @@ module DispatchHelper
       "lg:auto-rows-[minmax(15.5rem,calc((100%_-_(var(--rows)_-_1)_*_0.75rem)_/_var(--rows)))]"
   end
 
-  def dispatch_grid_style(layout)
-    columns, rows = GRIDS.fetch(layout)
-    "--columns: #{columns}; --rows: #{rows}"
-  end
-
-  def dispatch_grid_columns(layout)
-    GRIDS.fetch(layout).first
+  def dispatch_grid_style
+    "--columns: #{GRID_COLUMNS}; --rows: #{GRID_ROWS}"
   end
 
   # The tile's size in grid cells, as the user left it
   # Place and size only apply on wide screens (see radio_tile_classes)
   def radio_tile_style(dispatch_layout, radio)
     width, height = dispatch_layout.tile_size(radio)
-    columns = dispatch_grid_columns(@layout)
+    columns = GRID_COLUMNS
     style = "--w: #{[ width, columns ].min}; --h: #{height}"
     if (position = dispatch_layout.tile_position(radio))
       style += "; --x: #{[ position[0], columns - [ width, columns ].min + 1 ].min}; --y: #{position[1]}"
@@ -186,7 +183,7 @@ module DispatchHelper
   # Texts for the Stimulus controllers
   def dispatch_strings_tag
     strings = %w[muted connected disconnected ptt_hold connect_first connecting call_failed call_ended microphone_denied
-      microphone_hint audio_unreachable certificate_hint open_server unlink not_listening space_general]
+      microphone_hint audio_unreachable certificate_hint open_server unlink not_listening group_ptt_talks_on]
       .to_h { |key| [ key.camelize(:lower), t("dispatch.radio.#{key}") ] }
       .merge(unlinkPair: t("dispatch.radio.unlink_pair", a: "{a}", b: "{b}"),
         unlinkPairConfirm: t("dispatch.radio.unlink_pair_confirm", a: "{a}", b: "{b}"))

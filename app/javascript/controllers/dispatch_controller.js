@@ -6,13 +6,13 @@ import { Controller } from "@hotwired/stimulus"
 //   button): PTT on the radios included in the group PTT. Space never scrolls.
 // - The bar shows which radios the group PTT includes.
 export default class extends Controller {
-  static targets = [ "radio", "generalList", "generalButton", "spaceHint" ]
+  static targets = [ "radio", "groupList", "groupButton", "spaceHint" ]
 
   connect() {
     // after the radio tiles' own controllers connect
     requestAnimationFrame(() => {
-      this.restoreGeneral()
-      this.updateGeneral()
+      this.restoreGroup()
+      this.updateGroup()
     })
   }
 
@@ -61,45 +61,45 @@ export default class extends Controller {
     return radio ? [ radio ] : []
   }
 
-  // General PTT button
-  generalDown(event) {
+  // Group PTT button
+  groupDown(event) {
     event.preventDefault()
-    this.generalButtonTarget.setPointerCapture?.(event.pointerId)
+    this.groupButtonTarget.setPointerCapture?.(event.pointerId)
     this.included.forEach(radio => radio.pttDown())
   }
 
-  generalUp() {
+  groupUp() {
     this.included.forEach(radio => radio.pttUp())
   }
 
-  // Which radios the general PTT talks on; kept per group in this browser
-  updateGeneral() {
-    if (!this.hasGeneralListTarget) return
+  // Which radios the group PTT talks on; kept per group in this browser
+  updateGroup() {
+    if (!this.hasGroupListTarget) return
     const included = this.included
-    this.generalListTarget.replaceChildren(...included.map(radio => {
+    this.groupListTarget.replaceChildren(...included.map(radio => {
       const chip = document.createElement("span")
       chip.className = radio.connected ? "badge bg-accent text-white" : "badge bg-warn-soft text-warn-ink"
       chip.textContent = radio.connected ? radio.name : `${radio.name} · ${this.t("notListening")}`
       return chip
     }))
     const ready = included.some(radio => radio.connected)
-    this.generalButtonTarget.disabled = !ready
-    this.spaceHintTarget.textContent = included.length ? this.t("spaceGeneral") : ""
-    this.saveGeneral()
+    this.groupButtonTarget.disabled = !ready
+    this.spaceHintTarget.textContent = included.length ? this.t("groupPttTalksOn") : ""
+    this.saveGroup()
   }
 
-  restoreGeneral() {
+  restoreGroup() {
     let ids = []
     try { ids = JSON.parse(localStorage.getItem(this.storageKey)) || [] } catch {}
-    this.radios.forEach(radio => { if (ids.includes(radio.idValue)) radio.setGeneral(true) })
+    this.radios.forEach(radio => { if (ids.includes(radio.idValue)) radio.setGroup(true) })
   }
 
-  saveGeneral() {
+  saveGroup() {
     try { localStorage.setItem(this.storageKey, JSON.stringify(this.included.map(radio => radio.idValue))) } catch {}
   }
 
   get storageKey() {
-    return `dispatch-general-${this.element.dataset.group || "all"}`
+    return `dispatch-group-ptt-${this.element.dataset.group || "all"}`
   }
 
   navigate(event) {

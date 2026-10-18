@@ -1,6 +1,6 @@
 <% content_for :title, t("nav.dispatch") %>
 <%= dispatch_strings_tag %>
-<div class="flex min-h-0 flex-1 flex-col md:flex-row" data-controller="dispatch toggle" data-toggle-class-value="max-md:hidden" data-group="<%= @group&.id %>" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup blur@window->dispatch#releaseAll radio:general->dispatch#updateGeneral">
+<div class="flex min-h-0 flex-1 flex-col md:flex-row" data-controller="dispatch toggle" data-toggle-class-value="max-md:hidden" data-group="<%= @group&.id %>" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup blur@window->dispatch#releaseAll radio:group->dispatch#updateGroup">
   <% if can?(:phone) %><%= render "dispatch/phone" %><% end %>
 
   <main class="flex min-w-0 flex-1 flex-col gap-3 p-3">
@@ -25,14 +25,14 @@
     <% if @radios.any? { |radio| radio_tile_access(radio)[:transmit] } %>
       <div class="card flex flex-wrap items-center gap-3 px-3 py-2">
         <button type="button" class="btn flex-col gap-0 rounded-xl border-accent/60 px-5 py-1 font-bold text-accent-ink active:border-tx active:bg-tx-strong active:text-white"
-                data-dispatch-target="generalButton" disabled
-                data-action="pointerdown->dispatch#generalDown pointerup->dispatch#generalUp pointerleave->dispatch#generalUp">
-          <span class="text-base"><%= t(".general_ptt") %></span>
+                data-dispatch-target="groupButton" disabled
+                data-action="pointerdown->dispatch#groupDown pointerup->dispatch#groupUp pointerleave->dispatch#groupUp">
+          <span class="text-base"><%= t(".group_ptt") %></span>
           <span class="text-[10px] font-normal text-muted"><%= t(".shift_space") %></span>
         </button>
         <div class="flex min-w-0 flex-1 flex-col gap-1">
           <span class="text-xs text-muted" data-dispatch-target="spaceHint"></span>
-          <div class="flex flex-wrap gap-1" data-dispatch-target="generalList"></div>
+          <div class="flex flex-wrap gap-1" data-dispatch-target="groupList"></div>
         </div>
       </div>
     <% end %>
@@ -40,9 +40,9 @@
     <% if @radios.empty? %>
       <div class="card flex flex-1 items-center justify-center p-10 text-muted"><%= t(".empty") %></div>
     <% else %>
-      <div class="relative <%= dispatch_grid_classes %>" style="<%= dispatch_grid_style(@layout) %>"
+      <div class="relative <%= dispatch_grid_classes %>" style="<%= dispatch_grid_style %>"
            data-controller="arrange links" data-arrange-url-value="<%= dispatch_layout_path(group_id: @group&.id) %>"
-           data-arrange-columns-value="<%= dispatch_grid_columns(@layout) %>"
+           data-arrange-columns-value="<%= DispatchHelper::GRID_COLUMNS %>"
            data-action="dragstart->arrange#dragStart dragover->arrange#dragOver drop->arrange#drop dragend->arrange#dragEnd">
         <% @radios.each do |radio| %>
           <%= render "dispatch/radio", radio: radio %>

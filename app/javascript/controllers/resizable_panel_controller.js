@@ -1,15 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
 
 // A panel the user resizes: the activity log (height, top edge) or the phone
-// (width, right edge). Drag the edge or use the arrows; the size is
+// (width, right edge), dragging the edge or the corner mark; the size is
 // remembered in this browser.
 export default class extends Controller {
   static values = {
     key: String,
     axis: { type: String, default: "y" },
     min: { type: Number, default: 64 },
-    max: { type: Number, default: 0.7 },
-    step: { type: Number, default: 80 }
+    max: { type: Number, default: 0.7 }
   }
 
   connect() {
@@ -33,16 +32,6 @@ export default class extends Controller {
     }
     window.addEventListener("pointermove", move)
     window.addEventListener("pointerup", up)
-  }
-
-  grow() {
-    this.setSize(this.size + this.stepValue)
-    this.save()
-  }
-
-  shrink() {
-    this.setSize(this.size - this.stepValue)
-    this.save()
   }
 
   get horizontal() {

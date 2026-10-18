@@ -2,12 +2,12 @@ import { Controller } from "@hotwired/stimulus"
 import { RadioCall } from "lib/radio_audio"
 
 // One radio tile: focus (a click or the arrows), whether it goes in the
-// general PTT, volume and mute (kept per radio in this browser), the
+// group PTT, volume and mute (kept per radio in this browser), the
 // console's WebRTC call to the radio and PTT.
 export default class extends Controller {
   static targets = [ "volume", "volumeLabel", "muteButton", "speakerIcon", "mutedIcon", "connectButton",
-    "connectionBadge", "ptt", "pttHint", "linkDialog", "audio", "problem", "generalButton" ]
-  static values = { id: Number, node: String, callUrl: String, pttUrl: String, canTransmit: Boolean }
+    "connectionBadge", "ptt", "pttHint", "linkDialog", "audio", "problem", "groupButton" ]
+  static values = { id: Number, callUrl: String, pttUrl: String }
 
   disconnect() {
     this.call?.stop()
@@ -28,14 +28,14 @@ export default class extends Controller {
     this.element.focus({ preventScroll: true })
   }
 
-  toggleGeneral() {
-    this.setGeneral(!this.selected)
+  toggleGroup() {
+    this.setGroup(!this.selected)
   }
 
-  setGeneral(included) {
+  setGroup(included) {
     this.element.toggleAttribute("data-selected", included)
-    this.generalButtonTarget.setAttribute("aria-pressed", included)
-    this.dispatch("general", { bubbles: true })
+    this.groupButtonTarget.setAttribute("aria-pressed", included)
+    this.dispatch("group", { bubbles: true })
   }
 
   get selected() {
@@ -46,9 +46,6 @@ export default class extends Controller {
     return this.element.dataset.name
   }
 
-  get transmitting() {
-    return this.hasPttTarget && this.pttTarget.hasAttribute("data-pressed")
-  }
 
   // Volume
   setVolume() {
@@ -177,7 +174,7 @@ export default class extends Controller {
     button.classList.toggle("bg-accent-soft", this.connected)
     button.classList.toggle("text-accent-ink", this.connected)
     this.setStatus(this.connected ? "connected" : "disconnected")
-    this.dispatch("general", { bubbles: true })
+    this.dispatch("group", { bubbles: true })
     if (this.hasPttTarget) {
       this.pttTarget.disabled = !this.connected
       this.pttHintTarget.textContent = this.t(this.connected ? "pttHold" : "connectFirst")

@@ -7,7 +7,8 @@ class Radio::ConsoleCallsTest < ActiveSupport::TestCase
     user_id = users(:dispatcher).id
     signature = Digest::SHA1.hexdigest("console-secret:1999:#{expires}:operate:#{user_id}")
 
-    assert_equal "#{expires}:operate:#{user_id}:#{signature}", radios(:base).console_call_token(users(:dispatcher), now: now)
+    token = radios(:base).server.console_token(subject: "1999", level: radios(:base).console_call_level(users(:dispatcher)), user: users(:dispatcher), now: now)
+    assert_equal "#{expires}:operate:#{user_id}:#{signature}", token
   end
 
   test "listen level without transmit access" do

@@ -2,7 +2,7 @@
        data-toggle-target="panel"
        data-controller="phone resizable-panel" data-phone-account-url-value="<%= phone_account_path %>" data-phone-available-value="<%= phone_available? %>"
        data-resizable-panel-key-value="dispatch-phone-width" data-resizable-panel-axis-value="x"
-       data-resizable-panel-min-value="200" data-resizable-panel-max-value="0.4" data-resizable-panel-step-value="60">
+       data-resizable-panel-min-value="200" data-resizable-panel-max-value="0.4">
   <div class="absolute inset-y-0 -right-1.5 z-10 hidden w-3 cursor-col-resize md:block" data-action="pointerdown->resizable-panel#dragStart"></div>
   <div class="hidden md:block"><%= resize_grip(t("phone.resize"), "resizable-panel#dragStart", corner: :bottom_right) %></div>
 

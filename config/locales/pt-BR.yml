@@ -178,8 +178,9 @@ pt-BR:
       disconnect: Escutando
       disconnected: Não escutando
       drop_to_link: "⇄ Solte para interligar com %{radio}"
-      general: PTT em grupo
-      general_hint: Incluir este rádio no PTT em grupo (o espaço transmite por todos os incluídos)
+      group_ptt: PTT em grupo
+      group_ptt_hint: Incluir este rádio no PTT em grupo (o espaço transmite por todos os incluídos)
+      group_ptt_talks_on: 'O PTT em grupo (botão ou Shift + espaço) transmite por:'
       incoming_audio: Áudio entrando
       last: Último
       last_activity: última atividade
@@ -209,7 +210,6 @@ pt-BR:
       register_unit: Cadastrar este ID
       resize: Arraste para redimensionar
       server_down: Sem conexão com o servidor
-      space_general: 'O PTT em grupo (botão ou Shift + espaço) transmite por:'
       space_here: "⌨ Espaço"
       stop_listening: Parar de escutar
       talking: Falando
@@ -229,7 +229,7 @@ pt-BR:
         one: 1 rádio · %{online} online
         other: "%{count} rádios · %{online} online"
       empty: Não há rádios para mostrar. Um administrador precisa lhe dar acesso a um grupo de rádios.
-      general_ptt: PTT em grupo
+      group_ptt: PTT em grupo
       listen_all: Escutar todos
       mute_all: Silenciar todos
       resize_activity: Arraste para redimensionar

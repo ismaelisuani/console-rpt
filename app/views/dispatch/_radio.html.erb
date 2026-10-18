@@ -8,10 +8,9 @@
          data-link-drop-label="<%= t("dispatch.radio.drop_to_link", radio: radio.name) %>"
          data-arrange-target="tile" data-radio-id="<%= radio.id %>" <%= radio_tile_size_data(@dispatch_layout, radio) %>
          data-controller="radio" data-dispatch-target="radio"
-         data-radio-id-value="<%= radio.id %>" data-radio-node-value="<%= radio.node %>"
+         data-radio-id-value="<%= radio.id %>"
          data-radio-call-url-value="<%= radio_call_path(radio) %>"
          data-radio-ptt-url-value="<%= radio_ptt_path(radio) %>"
-         data-radio-can-transmit-value="<%= access[:transmit] %>"
          data-action="click->radio#focus">
   <%= turbo_stream_from radio.broadcast_stream %>
   <%# The state at a glance: a strip on top of the tile %>
@@ -31,8 +30,8 @@
     <%= radio_mode_badge(radio) %>
     <% if access[:transmit] %>
       <button type="button" class="badge ml-auto cursor-pointer border border-line-strong text-muted hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-white"
-              data-radio-target="generalButton" data-action="radio#toggleGeneral" aria-pressed="false" title="<%= t("dispatch.radio.general_hint") %>">
-        <%= t("dispatch.radio.general") %>
+              data-radio-target="groupButton" data-action="radio#toggleGroup" aria-pressed="false" title="<%= t("dispatch.radio.group_ptt_hint") %>">
+        <%= t("dispatch.radio.group_ptt") %>
       </button>
     <% end %>
     <span class="badge bg-raised text-muted" title="<%= t("dispatch.radio.console_audio") %>"><%= icon(:headphones) %><span data-radio-target="connectionBadge"><%= t("dispatch.radio.disconnected") %></span></span>

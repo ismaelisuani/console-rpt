@@ -7,10 +7,6 @@ module Radio::ConsoleCalls
     user.can_transmit_on?(self) ? "operate" : "listen"
   end
 
-  def console_call_token(user, now: Time.current)
-    server.console_token(subject: node, level: console_call_level(user), user: user, now: now)
-  end
-
   def console_call(user)
     server.console_call(subject: node, level: console_call_level(user), user: user)
   end

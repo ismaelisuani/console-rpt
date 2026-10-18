@@ -178,8 +178,9 @@ en:
       disconnect: Listening
       disconnected: Not listening
       drop_to_link: "⇄ Drop to link with %{radio}"
-      general: Group PTT
-      general_hint: Include this radio in the group PTT (Space talks on every included radio)
+      group_ptt: Group PTT
+      group_ptt_hint: Include this radio in the group PTT (Space talks on every included radio)
+      group_ptt_talks_on: 'Group PTT (button or Shift + Space) talks on:'
       incoming_audio: Incoming audio
       last: Last
       last_activity: last activity
@@ -209,7 +210,6 @@ en:
       register_unit: Register this ID
       resize: Drag to resize
       server_down: No connection with the server
-      space_general: 'Group PTT (button or Shift + Space) talks on:'
       space_here: "⌨ Space"
       stop_listening: Stop listening
       talking: Talking
@@ -229,7 +229,7 @@ en:
         one: 1 radio · %{online} online
         other: "%{count} radios · %{online} online"
       empty: No radios to show. An administrator has to give you access to a group of radios.
-      general_ptt: Group PTT
+      group_ptt: Group PTT
       listen_all: Listen to all
       mute_all: Mute all
       resize_activity: Drag to resize

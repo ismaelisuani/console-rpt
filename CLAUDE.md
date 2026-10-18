@@ -89,8 +89,8 @@ step or a large dependency.
 ## Dispatch screen
 
 Agreed layout (mockup in the proposal PDF): top bar with the menu, a WebRTC
-SIP phone on the left (can be hidden), and a grid of radio tiles (4, 6 or 9
-per screen, by group) with an activity log below. Each tile shows:
+SIP phone on the left (can be hidden), and a board of radio tiles (all the
+user's radios, or one group) with an activity log below. Each tile shows:
 
 - Audio state: incoming audio (green border, live level meter, duration),
   no audio (idle, last activity), transmitting (red border, who), and

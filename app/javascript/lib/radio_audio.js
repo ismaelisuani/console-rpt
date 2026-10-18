@@ -35,27 +35,24 @@ function agentFor({ ws, host, username, password }) {
   return agent
 }
 
-// A call to a radio (microphone only while PTT is held) or, with
-// talk: "open", a phone call (microphone always on, unless muted)
+// A call to a radio: the microphone only goes out while PTT is held
 export class RadioCall {
-  constructor(audio, { onEnded, talk = "ptt" } = {}) {
+  constructor(audio, { onEnded } = {}) {
     this.audio = audio
     this.onEnded = onEnded
-    this.talk = talk
     this.pressed = false
   }
 
   // Resolves when the radio answers; rejects with "websocket", "microphone" or the SIP cause
   async start(config) {
     this.operate = config.level === "operate"
-    const microphone = this.operate || this.talk === "open"
     const agent = agentFor(config)
     await agent.ready
 
     return new Promise((resolve, reject) => {
       const session = agent.ua.call(config.uri, {
         extraHeaders: [ `X-Console-Token: ${config.token}` ],
-        mediaConstraints: { audio: microphone, video: false },
+        mediaConstraints: { audio: this.operate, video: false },
         rtcOfferConstraints: { offerToReceiveAudio: true, offerToReceiveVideo: false },
         pcConfig: { iceServers: [] }
       })
@@ -66,7 +63,7 @@ export class RadioCall {
         this.audio.play().catch(() => {})
       })
       session.on("confirmed", () => {
-        this.setMicrophone(this.talk === "open")
+        this.setMicrophone(false)
         resolve()
       })
       session.on("failed", event => {
@@ -95,11 +92,6 @@ export class RadioCall {
 
   stop() {
     if (this.session && !this.session.isEnded()) this.session.terminate()
-  }
-
-  // Phone keypad digits during a call
-  sendDigit(digit) {
-    if (this.session?.isEstablished()) this.dtmf(digit)
   }
 
   setVolume(volume, muted) {
