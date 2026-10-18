@@ -171,5 +171,10 @@ browser (`storage/playable`). New recordings are looked for right after a radio
 stops receiving or transmitting (and every minute); open recordings pages
 refresh by themselves (Turbo refresh with morph). The Docker image needs sox, rsync and ssh.
 
-Next: the SIP phone (needs decisions: extensions per user, PBX), radio
-configuration on the server, Kamal deployment.
+Phone: outgoing calls through `Server.phone_server` (the local one, else the
+first with WebRTC) with a token of level `phone` for the number; the server's
+dialplan sends them to `[console-phone-out]` (site rules; 600 = echo test).
+Keypad digits during a call go as DTMF. Permission `phone`.
+
+Next: incoming calls and transfer for the phone (needs per-user extensions
+and the site's PBX), radio configuration on the server, Kamal deployment.

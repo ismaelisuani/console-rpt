@@ -159,7 +159,7 @@ pt-BR:
       connected: Escutando
       connecting: Conectando…
       console_audio: O áudio deste console com o rádio (o estado do rádio é a barra abaixo)
-      console_user: Console · %{user}
+      console_user: "%{user}"
       disconnect: Escutando
       disconnected: Não escutando
       drop_to_link: "⇄ Solte para interligar com %{radio}"
@@ -257,6 +257,7 @@ pt-BR:
       manage_radios: Servidores, rádios e grupos; vê e opera todos os rádios.
       manage_units: A tabela de IDs de unidades, viaturas e pessoas.
       manage_users: Usuários e perfis.
+      phone: Chamadas do telefone do console (saem conforme o dialplan do servidor).
       transmit: Falar pelos rádios (PTT).
       view_dispatch: A tela de despacho com o estado ao vivo dos rádios.
       view_recordings: Escutar o arquivo de áudio.
@@ -264,20 +265,27 @@ pt-BR:
     manage_radios: Administrar rádios
     manage_units: Administrar unidades
     manage_users: Administrar usuários
+    phone: Telefone
     transmit: Transmitir
     view_dispatch: Despacho
     view_recordings: Gravações
   phone:
     call: Ligar
+    calling: Ligando…
+    ended: Chamada encerrada
+    failed: Não foi possível ligar
     hangup: Desligar
     idle: Em espera
+    in_call: Em chamada
     mute: Mudo
-    not_registered: Não registrado
     number: Número
-    pending: O telefone conecta quando o servidor tiver WebRTC.
+    ready: Pronto
+    recent: Recentes
     resize: Arraste para mudar a largura
     title: Telefone
     transfer: Transferir
+    transfer_soon: Ainda não disponível
+    unavailable: Sem servidor com WebRTC
   profiles:
     show:
       new_password: Nova senha (opcional)

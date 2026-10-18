@@ -1,5 +1,5 @@
 class Server < ApplicationRecord
-  include Server::Ami, Server::ConsoleCredentials, Server::Status, Server::Recordings
+  include Server::Ami, Server::ConsoleCredentials, Server::ConsolePhone, Server::Status, Server::Recordings
 
   has_many :radios, dependent: :restrict_with_error
   has_many :radio_events, dependent: :nullify

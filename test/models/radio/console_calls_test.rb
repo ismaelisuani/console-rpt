@@ -3,7 +3,7 @@ require "test_helper"
 class Radio::ConsoleCallsTest < ActiveSupport::TestCase
   test "the token is what the server's dialplan checks" do
     now = Time.zone.parse("2026-10-17 12:00:00")
-    expires = (now + Radio::ConsoleCalls::CALL_TOKEN_TTL).to_i
+    expires = (now + Server::ConsoleCredentials::CALL_TOKEN_TTL).to_i
     user_id = users(:dispatcher).id
     signature = Digest::SHA1.hexdigest("console-secret:1999:#{expires}:operate:#{user_id}")
 

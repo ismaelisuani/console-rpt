@@ -1,11 +1,11 @@
 <% content_for :title, t("nav.dispatch") %>
 <%= dispatch_strings_tag %>
 <div class="flex min-h-0 flex-1 flex-col md:flex-row" data-controller="dispatch toggle" data-toggle-class-value="max-md:hidden" data-group="<%= @group&.id %>" data-action="keydown@window->dispatch#keydown keyup@window->dispatch#keyup blur@window->dispatch#releaseAll radio:general->dispatch#updateGeneral">
-  <%= render "dispatch/phone" %>
+  <% if can?(:phone) %><%= render "dispatch/phone" %><% end %>
 
   <main class="flex min-w-0 flex-1 flex-col gap-3 p-3">
     <div class="flex flex-wrap items-center gap-3">
-      <button type="button" class="btn btn-sm md:hidden" data-action="toggle#toggle" data-toggle-target="button" aria-expanded="false"><%= t("phone.title") %></button>
+      <% if can?(:phone) %><button type="button" class="btn btn-sm md:hidden" data-action="toggle#toggle" data-toggle-target="button" aria-expanded="false"><%= t("phone.title") %></button><% end %>
       <h1 class="text-base font-semibold text-ink-strong"><%= Radio.model_name.human(count: 2) %></h1>
       <% if @groups.any? %>
         <nav class="flex flex-wrap gap-1">

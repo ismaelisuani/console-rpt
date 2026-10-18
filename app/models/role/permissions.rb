@@ -2,7 +2,7 @@ module Role::Permissions
   extend ActiveSupport::Concern
 
   ALL = %w[
-    view_dispatch listen transmit connect
+    view_dispatch listen transmit connect phone
     view_recordings manage_units manage_radios manage_users
   ].freeze
 

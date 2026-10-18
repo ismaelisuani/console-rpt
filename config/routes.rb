@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root "dispatch#show"
   get "dispatch" => "dispatch#show", as: :dispatch
   resource :dispatch_layout, only: %i[update destroy]
+  resource :phone_call, only: :create
 
   # Dispatch actions on a radio
   resources :radios, only: [] do

@@ -159,7 +159,7 @@ en:
       connected: Listening
       connecting: Connecting…
       console_audio: This console's audio for the radio (the radio's own state is the bar below)
-      console_user: Console · %{user}
+      console_user: "%{user}"
       disconnect: Listening
       disconnected: Not listening
       drop_to_link: "⇄ Drop to link with %{radio}"
@@ -257,6 +257,7 @@ en:
       manage_radios: Servers, radios and groups; sees and operates every radio.
       manage_units: The table of unit IDs, vehicles and people.
       manage_users: Users and roles.
+      phone: Calls from the console's phone (they go out as the server's dialplan says).
       transmit: Talk on radios (PTT).
       view_dispatch: The dispatch screen with the live state of the radios.
       view_recordings: Listen to the air archive.
@@ -264,20 +265,27 @@ en:
     manage_radios: Manage radios
     manage_units: Manage units
     manage_users: Manage users
+    phone: Phone
     transmit: Transmit
     view_dispatch: Dispatch
     view_recordings: Recordings
   phone:
     call: Call
+    calling: Calling…
+    ended: Call ended
+    failed: Could not call
     hangup: Hang up
     idle: Idle
+    in_call: In call
     mute: Mute
-    not_registered: Not registered
     number: Number
-    pending: The phone connects once the server has WebRTC.
+    ready: Ready
+    recent: Recent
     resize: Drag to resize
     title: Phone
     transfer: Transfer
+    transfer_soon: Not available yet
+    unavailable: No server with WebRTC
   profiles:
     show:
       new_password: New password (optional)

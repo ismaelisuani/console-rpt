@@ -160,6 +160,16 @@ module DispatchHelper
       title: title, data: { action: "pointerdown->#{action}" })
   end
 
+  def phone_available?
+    can?(:phone) && Server.phone_server.present?
+  end
+
+  def phone_strings_tag
+    strings = %w[ready unavailable calling in_call ended failed].to_h { |key| [ key.camelize(:lower), t("phone.#{key}") ] }
+      .merge(microphoneDenied: t("dispatch.radio.microphone_denied"))
+    tag.script(json_escape(strings.to_json).html_safe, type: "application/json", id: "phone-strings")
+  end
+
   # Texts for the Stimulus controllers
   def dispatch_strings_tag
     strings = %w[muted connected disconnected ptt_hold connect_first connecting call_failed call_ended microphone_denied
