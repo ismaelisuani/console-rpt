@@ -14,10 +14,11 @@ module DispatchHelper
 
   def radio_tile_classes(radio)
     class_names("card relative flex min-w-0 flex-col gap-2 p-3 transition-colors lg:col-span-(--w) lg:row-span-(--h)",
-      "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-rx",
-      "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-tx",
-      "has-[[data-offline]]:opacity-55 data-[selected]:outline data-[selected]:outline-2 data-[selected]:outline-accent",
-      "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
+      "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-inset has-[[data-receiving]]:ring-rx",
+      "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-inset has-[[data-transmitting]]:ring-tx",
+      "has-[[data-offline]]:opacity-55",
+      "data-[selected]:outline-2 data-[selected]:outline-dashed data-[selected]:-outline-offset-4 data-[selected]:outline-accent",
+      "focus:outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-4 focus-visible:outline-accent",
       "can-link": radio_tile_access(radio)[:link])
   end
 
