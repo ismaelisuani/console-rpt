@@ -1,6 +1,8 @@
 require "test_helper"
+require "turbo/broadcastable/test_helper"
 
 class Server::RecordingsTest < ActiveSupport::TestCase
+  include Turbo::Broadcastable::TestHelper
   setup do
     @server = servers(:local)
     @server.update!(archive_path: file_fixture("archive").to_s)
@@ -15,6 +17,15 @@ class Server::RecordingsTest < ActiveSupport::TestCase
       @server.sync_recordings!
     end
     assert @server.reload.recordings_synced_at
+  end
+
+  test "open recordings pages refresh when new recordings come in" do
+    assert_turbo_stream_broadcasts(:recordings, count: 1) { @server.sync_recordings! }
+
+    # nothing new the second time
+    ActionCable.server.pubsub.clear
+    @server.update_columns(recordings_synced_at: nil)
+    assert_no_turbo_stream_broadcasts(:recordings) { @server.sync_recordings! }
   end
 
   test "what each recording keeps" do

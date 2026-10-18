@@ -167,7 +167,9 @@ Recordings: `Server::Recordings` imports each server's air archive (`.txt` +
 GSM `.WAV` written by app_rpt, local times in the server's time zone): read in
 place on the local server, copied with rsync over SSH from the others (into
 `storage/archives`). `Recording::Audio` converts to PCM WAV with sox for the
-browser (`storage/playable`). The Docker image needs sox, rsync and ssh.
+browser (`storage/playable`). New recordings are looked for right after a radio
+stops receiving or transmitting (and every minute); open recordings pages
+refresh by themselves (Turbo refresh with morph). The Docker image needs sox, rsync and ssh.
 
 Next: the SIP phone (needs decisions: extensions per user, PBX), radio
 configuration on the server, Kamal deployment.

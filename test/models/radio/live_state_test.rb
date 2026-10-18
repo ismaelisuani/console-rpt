@@ -1,6 +1,7 @@
 require "test_helper"
 
 class Radio::LiveStateTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
   setup do
     @radio = radios(:base)
   end
@@ -27,6 +28,13 @@ class Radio::LiveStateTest < ActiveSupport::TestCase
 
     assert @radio.talking_unit_identified?
     assert_equal "43981", @radio.radio_events.find_by!(kind: "receive_start").unit_identifier
+  end
+
+  test "a reception or transmission that ends looks for its recording" do
+    @radio.apply_rpt_event(rpt_event("RPTKEY", "KEY", "Direction" => "RX"))
+    assert_enqueued_with(job: RecordingsSyncJob, args: [ @radio.server_id ]) do
+      @radio.apply_rpt_event(rpt_event("RPTKEY", "UNKEY", "Direction" => "RX"))
+    end
   end
 
   test "transmissions keep who keyed them up" do

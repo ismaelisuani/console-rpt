@@ -163,3 +163,7 @@
   content: attr(data-link-drop-label);
   @apply absolute inset-0 z-20 flex items-center justify-center rounded-xl bg-accent-soft/85 p-4 text-center text-base font-semibold text-accent-ink;
 }
+
+/* A recording that just came in (the list refreshes by itself) */
+@keyframes recording-new { from { background-color: var(--accent-soft); } to { background-color: transparent; } }
+.recording-new { animation: recording-new 4s ease-out; }

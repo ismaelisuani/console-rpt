@@ -29,8 +29,10 @@ module Server::Recordings
   def sync_recordings!
     started = Time.current
     copy_remote_archive unless local?
-    import_recordings(changed_since: recordings_synced_at && recordings_synced_at - SYNC_MARGIN)
+    imported = import_recordings(changed_since: recordings_synced_at && recordings_synced_at - SYNC_MARGIN)
     update_columns(recordings_synced_at: started, recordings_sync_error: nil)
+    # open recordings pages reload their list (each with its own filters)
+    Turbo::StreamsChannel.broadcast_refresh_to(:recordings) if imported.positive?
   end
 
   private
@@ -54,6 +56,6 @@ module Server::Recordings
         attributes = Recording.attributes_from_archive(file.read, server: self, node_dir: file.dirname.basename.to_s)
         attributes&.merge(radio_id: radio_ids[attributes[:node]])
       end
-      rows.each_slice(500) { |slice| Recording.insert_all(slice, unique_by: %i[server_id link_id]) }
+      rows.each_slice(500).sum { |slice| Recording.insert_all(slice, unique_by: %i[server_id link_id]).length }
     end
 end

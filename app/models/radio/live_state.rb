@@ -9,6 +9,8 @@ module Radio::LiveState
   UNIT_LEAD = 3.seconds
   # PTT pressed on the console this recently names the transmission
   CONSOLE_PTT_WINDOW = 5.seconds
+  # app_rpt writes a recording's .txt when it ends: look for it shortly after
+  RECORDING_DELAY = 3.seconds
 
   def apply_rpt_event(event)
     case event["Type"]
@@ -52,6 +54,7 @@ module Radio::LiveState
 
       now = Time.current
       update!(receiving: keyed, receiving_since: now, last_activity_at: now)
+      recording_finished unless keyed
       if keyed
         recent = unit_identified_at && unit_identified_at >= now - UNIT_LEAD
         log_event("receive_start", unit_identifier: (last_unit_identifier if recent), decoder: (last_decoder if recent))
@@ -71,6 +74,7 @@ module Radio::LiveState
       update!(transmitting: keyed, transmitted_by: (who if keyed), transmitted_by_user: (console_user if keyed),
         transmitting_since: now, last_activity_at: now)
       log_event("transmit_start", other_node: who, user: console_user) if keyed
+      recording_finished unless keyed
       broadcast_state
     end
 
@@ -91,6 +95,10 @@ module Radio::LiveState
       return unless receiving?
 
       radio_events.where(kind: "receive_start").where(occurred_at: (receiving_since - 1.second)..).recent.first
+    end
+
+    def recording_finished
+      RecordingsSyncJob.set(wait: RECORDING_DELAY).perform_later(server_id)
     end
 
     def log_event(kind, **attributes)

@@ -1,3 +1,5 @@
+<% turbo_refreshes_with method: :morph, scroll: :preserve %>
+<%= turbo_stream_from :recordings %>
 <%= render layout: "shared/admin_page" do %>
   <%= render "shared/page_header", title: t("nav.recordings") %>
 
@@ -23,7 +25,7 @@
       </tr></thead>
       <tbody>
         <% @page.records.each do |recording| %>
-          <tr>
+          <tr id="<%= dom_id(recording) %>" class="<%= "recording-new" if recording.created_at > 1.minute.ago %>">
             <td class="whitespace-nowrap"><%= local_time_tag(recording.started_at, format: "seconds") %></td>
             <td class="font-medium text-ink-strong"><%= recording_radio_name(recording) %></td>
             <td><%= recording_direction_badge(recording) %></td>
@@ -31,7 +33,7 @@
             <td class="tabular-nums text-muted"><%= recording_duration(recording) %></td>
             <td>
               <div class="flex items-center gap-2">
-                <audio controls preload="none" class="h-8 w-56 lg:w-72" src="<%= recording_audio_path(recording) %>"></audio>
+                <audio id="<%= dom_id(recording, :audio) %>" controls preload="none" class="h-8 w-56 lg:w-72" src="<%= recording_audio_path(recording) %>"></audio>
                 <%= link_to "⤓", recording_audio_path(recording, download: 1), class: "btn btn-sm", title: t("recordings.index.download"), data: { turbo: false } %>
               </div>
             </td>
