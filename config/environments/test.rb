@@ -4,8 +4,13 @@
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
-  # Encrypted attributes (Server#ami_password) in fixtures
+  # Encrypted attributes (Server#ami_password) in fixtures, with fixed keys
+  # for the tests only: CI has no master key (development and production keep
+  # theirs in the credentials)
   config.active_record.encryption.encrypt_fixtures = true
+  config.active_record.encryption.primary_key = "console-rpt-test-primary-key"
+  config.active_record.encryption.deterministic_key = "console-rpt-test-deterministic-key"
+  config.active_record.encryption.key_derivation_salt = "console-rpt-test-key-derivation-salt"
   config.x.archives_dir = Rails.root.join("tmp/test/archives")
   config.x.playable_audio_dir = Rails.root.join("tmp/test/playable")
 
