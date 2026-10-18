@@ -154,7 +154,9 @@ radios, units (with CSV import), the dispatch screen with live state, unit
 names, links (link and unlink from the console), the activity log, and WebRTC
 audio: the browser calls `sip:<node>@<server>` through the server's
 `webconsole` endpoint with a signed `X-Console-Token` (`Radio::ConsoleCalls`), lands in
-`Rpt(node|P)` (operate, PTT = `*99` / `#` as RFC 4733 DTMF) or `Rpt(node|Pm)`
+`Rpt(node|S)` (operate: simplex phone mode, PTT = `*` / `##` as short
+RFC 4733 DTMF; mode P with `*99` is slow and can leave the radio keyed) or
+`Rpt(node|Pm)`
 (listen only). Server side: `web-console/` in asterisk-rpt; the package needs
 SRTP (asterisk-rlink rlink2). JsSIP is vendored as one module
 (`script/vendor-jssip`).

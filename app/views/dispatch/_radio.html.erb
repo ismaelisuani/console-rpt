@@ -15,7 +15,7 @@
          data-action="click->radio#select">
   <%= turbo_stream_from radio.broadcast_stream %>
   <%# The state at a glance: a strip on top of the tile %>
-  <span class="absolute inset-x-0 top-0 h-1 bg-line-strong/60 transition-colors group-has-[[data-receiving]]:bg-rx group-has-[[data-transmitting]]:bg-tx group-has-[[data-offline]]:bg-faint" aria-hidden="true"></span>
+  <span class="absolute inset-x-0 top-0 h-1 bg-line-strong/60 transition-colors group-has-[[data-receiving]]:bg-rx group-has-[[data-transmitting]]:bg-tx group-has-[[data-offline]]:bg-faint group-data-[console-ptt]:bg-tx" aria-hidden="true"></span>
   <audio data-radio-target="audio" autoplay hidden></audio>
   <%# The whole header is the handle to move the tile (wide screens) %>
   <header class="-mx-3 -mt-4 flex min-w-0 items-center gap-2 px-3 pt-4 pb-1 select-none lg:cursor-move lg:hover:bg-raised/60"

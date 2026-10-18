@@ -17,6 +17,7 @@ module DispatchHelper
       "lg:[grid-column:var(--x,auto)/span_var(--w)] lg:[grid-row:var(--y,auto)/span_var(--h)]",
       "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-inset has-[[data-receiving]]:ring-rx",
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-inset has-[[data-transmitting]]:ring-tx",
+      "data-[console-ptt]:border-tx data-[console-ptt]:ring-2 data-[console-ptt]:ring-inset data-[console-ptt]:ring-tx",
       "has-[[data-offline]]:opacity-55",
       "data-[selected]:outline-2 data-[selected]:outline-dashed data-[selected]:-outline-offset-4 data-[selected]:outline-accent",
       "focus:outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-4 focus-visible:outline-accent",

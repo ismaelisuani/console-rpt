@@ -2,10 +2,15 @@ import JsSIP from "jssip"
 
 // WebRTC calls from the console to the radios. One SIP user agent per server
 // (WebSocket), no registration; each call carries the token the server's
-// dialplan checks. PTT is app_rpt's phone mode: *99 keys up, # unkeys, sent
-// as RFC 4733 DTMF; the microphone only goes out while PTT is held.
+// dialplan checks. PTT is app_rpt's simplex phone mode: * keys up, # always
+// unkeys, sent as short RFC 4733 DTMF; the microphone only goes out while PTT
+// is held.
 
 const agents = new Map()
+
+// Leaving or reloading the page hangs up its calls (the server would only
+// notice after its RTP timeout)
+window.addEventListener("pagehide", () => agents.forEach(agent => agent.ua.stop()))
 
 function agentFor({ ws, host, username, password }) {
   let agent = agents.get(ws)
@@ -75,9 +80,10 @@ export class RadioCall {
     clearTimeout(this.micTimer)
     if (pressed) {
       this.setMicrophone(true)
-      this.dtmf("*99")
+      this.dtmf("*")
     } else {
-      this.dtmf("#")
+      // twice: one lost tone must never leave the radio on the air
+      this.dtmf("##")
       // the last syllable still goes out
       this.micTimer = setTimeout(() => this.setMicrophone(false), 250)
     }
@@ -93,7 +99,7 @@ export class RadioCall {
   }
 
   dtmf(tones) {
-    this.session.sendDTMF(tones, { transportType: JsSIP.C.DTMF_TRANSPORT.RFC2833, duration: 100, interToneGap: 70 })
+    this.session.sendDTMF(tones, { transportType: JsSIP.C.DTMF_TRANSPORT.RFC2833, duration: 70, interToneGap: 50 })
   }
 
   setMicrophone(enabled) {

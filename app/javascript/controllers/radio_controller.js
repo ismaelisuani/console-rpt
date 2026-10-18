@@ -173,6 +173,8 @@ export default class extends Controller {
     event?.preventDefault()
     if (event?.pointerId !== undefined) this.pttTarget.setPointerCapture?.(event.pointerId)
     this.pttTarget.toggleAttribute("data-pressed", true)
+    // the tile shows it at once; app_rpt confirms it a moment later
+    this.element.toggleAttribute("data-console-ptt", true)
     this.call?.ptt(true)
     fetch(this.pttUrlValue, { method: "POST", headers: this.headers }).catch(() => {})
   }
@@ -180,6 +182,7 @@ export default class extends Controller {
   pttUp() {
     if (!this.hasPttTarget || !this.pttTarget.hasAttribute("data-pressed")) return
     this.pttTarget.removeAttribute("data-pressed")
+    this.element.removeAttribute("data-console-ptt")
     this.call?.ptt(false)
   }
 
