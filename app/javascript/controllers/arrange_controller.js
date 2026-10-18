@@ -49,7 +49,9 @@ export default class extends Controller {
     const style = getComputedStyle(this.element)
     const gap = parseFloat(style.columnGap) || 0
     const cellWidth = (this.element.clientWidth - gap * (this.columnsValue - 1)) / this.columnsValue
-    const cellHeight = parseFloat(style.gridAutoRows) || tile.getBoundingClientRect().height
+    // the row height of a one-cell-tall tile (rows grow to fit their content)
+    const box0 = tile.getBoundingClientRect()
+    const cellHeight = (box0.height - gap * ((parseInt(tile.dataset.h) || 1) - 1)) / (parseInt(tile.dataset.h) || 1)
     const box = tile.getBoundingClientRect()
 
     const move = moveEvent => {

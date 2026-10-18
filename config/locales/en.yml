@@ -149,8 +149,10 @@ en:
       tx: TX
       unlinked: "%{radio} ⇄ %{other} unlinked"
     radio:
+      audio_unreachable: No audio connection
       call_ended: Call ended
       call_failed: Could not connect
+      certificate_hint: 'The browser couldn''t reach the server''s audio. If its certificate is self-signed, open the server once and accept it:'
       connect: Connect
       connect_first: connect first
       connected: Connected
@@ -166,6 +168,7 @@ en:
       links: Links
       local: Local
       microphone_denied: Microphone blocked
+      microphone_hint: Allow the microphone for this site in the browser (and open the console over https or on this computer).
       mode:
         listen: Listen only
         operate: Operation
@@ -178,6 +181,7 @@ en:
       no_permission: no permission
       no_webrtc: The server has no WebRTC address configured
       node: node %{node}
+      open_server: open the server
       ptt: PTT
       ptt_hint: Hold to talk (space bar on the selected radios)
       ptt_hold: hold · space
@@ -194,6 +198,8 @@ en:
       volume: Volume
     show:
       activity: Activity
+      activity_bigger: Bigger
+      activity_smaller: Smaller
       count:
         one: 1 radio · %{online} online
         other: "%{count} radios · %{online} online"
@@ -202,6 +208,7 @@ en:
       listen_all: Listen to all
       mute_all: Mute all
       reset_layout: Reset layout
+      resize_activity: Drag to resize
   flash:
     created: "%{resource} created."
     destroyed: "%{resource} deleted."

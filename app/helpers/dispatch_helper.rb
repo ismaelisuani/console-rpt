@@ -112,7 +112,7 @@ module DispatchHelper
 
   def dispatch_grid_style(layout)
     columns, rows = GRIDS.fetch(layout)
-    "grid-template-columns: repeat(#{columns}, minmax(0, 1fr)); grid-auto-rows: calc((100% - #{rows - 1} * 0.75rem) / #{rows}); grid-auto-flow: dense"
+    "grid-template-columns: repeat(#{columns}, minmax(0, 1fr)); grid-auto-rows: minmax(min-content, calc((100% - #{rows - 1} * 0.75rem) / #{rows})); grid-auto-flow: dense"
   end
 
   def dispatch_grid_columns(layout)
@@ -132,7 +132,8 @@ module DispatchHelper
 
   # Texts for the Stimulus controllers
   def dispatch_strings_tag
-    strings = %w[muted connected disconnected ptt_hold connect_first connecting call_failed call_ended microphone_denied]
+    strings = %w[muted connected disconnected ptt_hold connect_first connecting call_failed call_ended microphone_denied
+      microphone_hint audio_unreachable certificate_hint open_server]
       .to_h { |key| [ key.camelize(:lower), t("dispatch.radio.#{key}") ] }
     tag.script(json_escape(strings.to_json).html_safe, type: "application/json", id: "dispatch-strings")
   end

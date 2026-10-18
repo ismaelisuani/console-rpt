@@ -5,7 +5,7 @@ import { RadioCall } from "lib/radio_audio"
 // in this browser), the console's WebRTC call to the radio and PTT.
 export default class extends Controller {
   static targets = [ "volume", "volumeLabel", "muteButton", "speakerIcon", "mutedIcon", "connectButton",
-    "connectionBadge", "ptt", "pttHint", "linkDialog", "audio" ]
+    "connectionBadge", "ptt", "pttHint", "linkDialog", "audio", "problem" ]
   static values = { id: Number, node: String, callUrl: String, pttUrl: String, canTransmit: Boolean }
 
   disconnect() {
@@ -67,12 +67,15 @@ export default class extends Controller {
   async connectRadio() {
     if (this.connectButtonTarget.disabled || this.call) return
     this.setStatus("connecting")
+    this.hideProblem()
     const call = new RadioCall(this.audioTarget, { onEnded: () => this.callEnded(call) })
     this.call = call
+    let config
     try {
       const response = await fetch(this.callUrlValue, { method: "POST", headers: this.headers })
       if (!response.ok) throw new Error(`http ${response.status}`)
-      await call.start(await response.json())
+      config = await response.json()
+      await call.start(config)
       if (this.call !== call) return call.stop()
       call.setVolume(this.volumeTarget.value / 100, this.muted)
       this.connected = true
@@ -82,8 +85,42 @@ export default class extends Controller {
       call.stop()
       this.connected = false
       this.renderConnection()
-      this.setStatus(error.message === "microphone" ? "microphoneDenied" : "callFailed", "text-tx-ink")
+      this.showProblem(error.message, config)
     }
+  }
+
+  // Why the call didn't connect, in the tile
+  showProblem(reason, config) {
+    if (reason === "microphone") {
+      this.setStatus("microphoneDenied", "text-tx-ink")
+      this.problem(this.t("microphoneHint"))
+    } else if (reason === "websocket" && config) {
+      this.setStatus("audioUnreachable", "text-tx-ink")
+      // A self-signed certificate (tests) has to be accepted once in the browser
+      const url = config.ws.replace(/^ws/, "http")
+      this.problem(this.t("certificateHint"), url, this.t("openServer"))
+    } else {
+      this.setStatus("callFailed", "text-tx-ink")
+    }
+  }
+
+  problem(text, url, linkText) {
+    const element = this.problemTarget
+    element.textContent = text + (url ? " " : "")
+    if (url) {
+      const link = document.createElement("a")
+      link.href = url
+      link.target = "_blank"
+      link.rel = "noopener"
+      link.className = "underline hover:text-ink-strong"
+      link.textContent = linkText
+      element.append(link)
+    }
+    element.hidden = false
+  }
+
+  hideProblem() {
+    this.problemTarget.hidden = true
   }
 
   disconnectRadio() {

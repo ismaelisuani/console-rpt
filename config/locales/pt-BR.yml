@@ -149,8 +149,10 @@ pt-BR:
       tx: TX
       unlinked: "%{radio} ⇄ %{other} desconectados"
     radio:
+      audio_unreachable: Sem conexão de áudio
       call_ended: Chamada encerrada
       call_failed: Não foi possível conectar
+      certificate_hint: 'O navegador não conseguiu chegar ao áudio do servidor. Se o certificado for autoassinado, abra o servidor uma vez e aceite-o:'
       connect: Conectar
       connect_first: conecte primeiro
       connected: Conectado
@@ -166,6 +168,7 @@ pt-BR:
       links: Interligações
       local: Local
       microphone_denied: Microfone bloqueado
+      microphone_hint: Permita o microfone para este site no navegador (e abra o console por https ou neste mesmo computador).
       mode:
         listen: Só escuta
         operate: Operação
@@ -178,6 +181,7 @@ pt-BR:
       no_permission: sem permissão
       no_webrtc: O servidor não tem endereço WebRTC configurado
       node: nó %{node}
+      open_server: abrir o servidor
       ptt: PTT
       ptt_hint: Segure para falar (barra de espaço nos rádios selecionados)
       ptt_hold: segure · espaço
@@ -194,6 +198,8 @@ pt-BR:
       volume: Volume
     show:
       activity: Atividade
+      activity_bigger: Maior
+      activity_smaller: Menor
       count:
         one: 1 rádio · %{online} online
         other: "%{count} rádios · %{online} online"
@@ -202,6 +208,7 @@ pt-BR:
       listen_all: Escutar todos
       mute_all: Silenciar todos
       reset_layout: Restaurar disposição
+      resize_activity: Arraste para redimensionar
   flash:
     created: "%{resource}: criado."
     destroyed: "%{resource}: excluído."

@@ -149,8 +149,10 @@ es:
       tx: TX
       unlinked: "%{radio} ⇄ %{other} desenlazadas"
     radio:
+      audio_unreachable: Sin conexión de audio
       call_ended: Llamada terminada
       call_failed: No se pudo conectar
+      certificate_hint: 'El navegador no pudo llegar al audio del servidor. Si su certificado es autofirmado, abrí el servidor una vez y aceptalo:'
       connect: Conectar
       connect_first: conectar primero
       connected: Conectada
@@ -166,6 +168,7 @@ es:
       links: Enlaces
       local: Local
       microphone_denied: Micrófono bloqueado
+      microphone_hint: Permití el micrófono para este sitio en el navegador (y abrí la consola por https o desde esta misma computadora).
       mode:
         listen: Solo escucha
         operate: Operación
@@ -178,6 +181,7 @@ es:
       no_permission: sin permiso
       no_webrtc: El servidor no tiene configurada la dirección WebRTC
       node: nodo %{node}
+      open_server: abrir el servidor
       ptt: PTT
       ptt_hint: Mantener apretado para hablar (barra espaciadora en las radios seleccionadas)
       ptt_hold: mantener · espacio
@@ -194,6 +198,8 @@ es:
       volume: Volumen
     show:
       activity: Actividad
+      activity_bigger: Más grande
+      activity_smaller: Más chico
       count:
         one: 1 radio · %{online} en línea
         other: "%{count} radios · %{online} en línea"
@@ -202,6 +208,7 @@ es:
       listen_all: Escuchar todas
       mute_all: Silenciar todas
       reset_layout: Restablecer disposición
+      resize_activity: Arrastrar para cambiar el tamaño
   flash:
     created: "%{resource}: creado."
     destroyed: "%{resource}: eliminado."
