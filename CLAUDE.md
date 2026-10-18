@@ -133,7 +133,9 @@ disk).
 - Before committing: `bin/rails test`, `bin/rubocop`, `bin/brakeman`,
   `bundle exec i18n-tasks missing` and `unused`.
 - Test server: the multipass VM `rpt` of asterisk-rpt (two nodes, simulators
-  in `/var/spool/asterisk/rpt-test`), AMI user `console`.
+  in `/var/spool/asterisk/rpt-test`), AMI user `console`, WebRTC
+  `ws://10.246.105.221:8088/ws` (plain ws is allowed because the console runs
+  on http://127.0.0.1; production needs wss with a real certificate).
 
 ## Status
 
