@@ -109,7 +109,7 @@ per screen, by group) with an activity log below. Each tile shows:
   that unlinks them; dropping a tile in the middle of another links them.
   The link data comes from each tile's live state (`data-links`).
 - Focus: a click or the arrows (by screen position). Space, while held, is PTT
-  on the radios included in the general PTT (each tile has a toggle; the bar
+  on the radios included in the group PTT (each tile has a toggle; the bar
   above the board lists them), or on the focused radio when none is
   included. Space never scrolls.
 - The phone (width) and the activity log (height) are resized with the same

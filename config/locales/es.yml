@@ -178,8 +178,8 @@ es:
       disconnect: Escuchando
       disconnected: No escuchando
       drop_to_link: "⇄ Soltar para enlazar con %{radio}"
-      general: PTT general
-      general_hint: Incluir esta radio en el PTT general (el espacio transmite por todas las incluidas)
+      general: PTT grupal
+      general_hint: Incluir esta radio en el PTT grupal (el espacio transmite por todas las incluidas)
       incoming_audio: Audio entrante
       last: Último
       last_activity: última actividad
@@ -209,7 +209,7 @@ es:
       register_unit: Registrar este ID
       resize: Arrastrar para cambiar el tamaño
       server_down: Sin conexión con el servidor
-      space_focused: El espacio transmite por la radio enfocada. Incluí radios en el PTT general para transmitir por varias a la vez.
+      space_focused: El espacio transmite por la radio enfocada. Incluí radios en el PTT grupal para transmitir por varias a la vez.
       space_general: 'El espacio (o este botón) transmite por:'
       stop_listening: Dejar de escuchar
       talking: Habla
@@ -229,7 +229,7 @@ es:
         one: 1 radio · %{online} en línea
         other: "%{count} radios · %{online} en línea"
       empty: No hay radios para mostrar. Un administrador tiene que darte acceso a un grupo de radios.
-      general_ptt: PTT general
+      general_ptt: PTT grupal
       layout: Radios por pantalla
       listen_all: Escuchar todas
       mute_all: Silenciar todas
