@@ -32,12 +32,12 @@
 /* RLink palette: brand blue (accent) and brand green (reception) */
 :root, [data-theme="dark"] {
   color-scheme: dark;
-  --canvas: #0d131c;
+  --canvas: #0a0f17;
   --panel: #111a26;
-  --surface: #152030;
-  --raised: #1d2a3c;
-  --line: #26354a;
-  --line-strong: #36485f;
+  --surface: #172334;
+  --raised: #213046;
+  --line: #2a3a50;
+  --line-strong: #3f5470;
   --ink: #dbe4ee;
   --ink-strong: #ffffff;
   --muted: #9fb1c5;
@@ -61,16 +61,16 @@
 
 [data-theme="light"] {
   color-scheme: light;
-  --canvas: #f1f4f9;
-  --panel: #ffffff;
+  --canvas: #dde4ee;
+  --panel: #f5f7fb;
   --surface: #ffffff;
-  --raised: #eef2f8;
-  --line: #dfe5ee;
-  --line-strong: #c5cfdc;
-  --ink: #1e2a3b;
-  --ink-strong: #0c1830;
-  --muted: #5b6a80;
-  --faint: #8d9ab0;
+  --raised: #e4eaf3;
+  --line: #ccd5e2;
+  --line-strong: #a3b1c4;
+  --ink: #1a2638;
+  --ink-strong: #0a1528;
+  --muted: #4c5b71;
+  --faint: #7a879c;
   --accent: #1d50a0;
   --accent-soft: #e4ecf8;
   --accent-ink: #1d50a0;
@@ -83,7 +83,7 @@
   --tx-ink: #b3262c;
   --warn-soft: #fdf3d3;
   --warn-ink: #876300;
-  --card-shadow: 0 1px 2px rgb(16 32 64 / 0.06), 0 4px 16px -6px rgb(16 32 64 / 0.10);
+  --card-shadow: 0 1px 2px rgb(16 32 64 / 0.10), 0 6px 18px -8px rgb(16 32 64 / 0.22);
   --raised-shadow: 0 12px 32px -12px rgb(16 32 64 / 0.25);
   --page-glow: radial-gradient(1200px 500px at 10% -10%, rgb(29 80 160 / 0.08), transparent 60%), radial-gradient(900px 400px at 100% 0%, rgb(98 185 44 / 0.07), transparent 60%);
 }
