@@ -209,7 +209,6 @@ en:
       register_unit: Register this ID
       resize: Drag to resize
       server_down: No connection with the server
-      space_focused: Space talks on the focused radio. Include radios in the group PTT to talk on several at once.
       space_general: 'Space (or this button) talks on:'
       stop_listening: Stop listening
       talking: Talking

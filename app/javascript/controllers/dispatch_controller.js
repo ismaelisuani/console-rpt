@@ -78,7 +78,7 @@ export default class extends Controller {
     }))
     const ready = included.some(radio => radio.connected)
     this.generalButtonTarget.disabled = !ready
-    this.spaceHintTarget.textContent = included.length ? this.t("spaceGeneral") : this.t("spaceFocused")
+    this.spaceHintTarget.textContent = included.length ? this.t("spaceGeneral") : ""
     this.saveGeneral()
   }
 

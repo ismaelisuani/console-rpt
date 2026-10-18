@@ -209,7 +209,6 @@ es:
       register_unit: Registrar este ID
       resize: Arrastrar para cambiar el tamaño
       server_down: Sin conexión con el servidor
-      space_focused: El espacio transmite por la radio enfocada. Incluí radios en el PTT grupal para transmitir por varias a la vez.
       space_general: 'El espacio (o este botón) transmite por:'
       stop_listening: Dejar de escuchar
       talking: Habla
