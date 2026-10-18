@@ -1,0 +1,4 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: t("actions.edit_resource", resource: Contact.model_name.human) %>
+  <%= render "form", contact: @contact %>
+<% end %>

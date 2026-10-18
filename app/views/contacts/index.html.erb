@@ -1,0 +1,31 @@
+<%= render layout: "shared/admin_page" do %>
+  <%= render "shared/page_header", title: Contact.model_name.human(count: 2), new_path: new_contact_path do %>
+    <%= form_with url: contacts_path, method: :get, class: "flex gap-2" do |form| %>
+      <%= form.search_field :q, value: @query, placeholder: t("contacts.index.search"), class: "input w-full py-1.5 sm:w-56" %>
+    <% end %>
+  <% end %>
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead><tr>
+        <th></th>
+        <th><%= Contact.human_attribute_name(:name) %></th>
+        <th><%= Contact.human_attribute_name(:number) %></th>
+        <th><%= Contact.human_attribute_name(:organization) %></th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        <% @page.records.each do |contact| %>
+          <tr>
+            <td class="w-10"><%= favorite_toggle(contact) %></td>
+            <td class="font-medium text-ink-strong"><%= contact.name %></td>
+            <td class="tabular-nums"><%= contact.number %></td>
+            <td class="text-muted"><%= contact.organization.presence || "—" %></td>
+            <td><%= render "shared/row_actions", record: contact, edit_path: edit_contact_path(contact), destroy_path: contact_path(contact) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @page.records.empty? %><p class="p-6 text-center text-muted"><%= t("contacts.index.empty") %></p><% end %>
+  </div>
+  <%= pagination_nav(@page) %>
+<% end %>

@@ -6,7 +6,8 @@ class Radios::LinksController < ApplicationController
     other = Current.user.radios.find(params.expect(:other_radio_id))
     @radio.link_to!(other, mode: params[:mode], by: Current.user)
     respond_to do |format|
-      format.html { redirect_back_or_to dispatch_path, notice: t(".sent", radio: @radio.name, other: other.name) }
+      # the link shows on the radios themselves when app_rpt reports it
+      format.html { redirect_back_or_to dispatch_path }
       format.json { head :no_content }
     end
   rescue *Server::Ami::CONNECTION_ERRORS => e
@@ -19,7 +20,7 @@ class Radios::LinksController < ApplicationController
 
     @radio.unlink!(node, by: Current.user)
     respond_to do |format|
-      format.html { redirect_back_or_to dispatch_path, notice: t(".sent", radio: @radio.name, node: node) }
+      format.html { redirect_back_or_to dispatch_path }
       format.json { head :no_content }
     end
   rescue *Server::Ami::CONNECTION_ERRORS => e

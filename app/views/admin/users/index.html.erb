@@ -5,6 +5,7 @@
       <thead><tr>
         <th><%= User.human_attribute_name(:name) %></th>
         <th><%= User.human_attribute_name(:username) %></th>
+        <th><%= User.human_attribute_name(:sip_extension) %></th>
         <th><%= User.human_attribute_name(:email_address) %></th>
         <th><%= User.human_attribute_name(:role) %></th>
         <th><%= RadioGroup.model_name.human(count: 2) %></th>
@@ -16,6 +17,7 @@
           <tr class="<%= inactive_row_class(user) %>">
             <td class="font-medium text-ink-strong"><%= user.name %></td>
             <td><%= user.username %></td>
+            <td class="tabular-nums"><%= user.sip_extension.presence || "—" %></td>
             <td class="text-muted"><%= user.email_address.presence || "—" %></td>
             <td><%= user.role.name %></td>
             <td>

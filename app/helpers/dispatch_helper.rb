@@ -161,12 +161,25 @@ module DispatchHelper
   end
 
   def phone_available?
-    can?(:phone) && Server.phone_server.present?
+    can?(:phone) && Current.user.phone_account? && Server.phone_server.present?
+  end
+
+  # A name to call with one click from the phone
+  def phone_dial_button(name, number, detail = nil)
+    tag.button(type: "button", class: "flex w-full items-center justify-between gap-2 rounded-md px-1.5 py-1 text-left hover:bg-raised",
+      data: { action: "phone#callNumber", number: number }, title: "#{name} · #{number}") do
+      tag.span(name, class: "truncate text-ink") + tag.span(detail.presence || number, class: "shrink-0 text-faint")
+    end
   end
 
   def phone_strings_tag
-    strings = %w[ready unavailable calling in_call ended failed].to_h { |key| [ key.camelize(:lower), t("phone.#{key}") ] }
-      .merge(microphoneDenied: t("dispatch.radio.microphone_denied"))
+    strings = {
+      registered: t("phone.status.registered"), unregistered: t("phone.status.unregistered"),
+      connecting: t("phone.status.connecting"), unavailable: t("phone.status.unavailable"),
+      registrationFailed: t("phone.status.failed"), calling: t("phone.calling"), ringing: t("phone.ringing"),
+      incoming: t("phone.incoming"), inCall: t("phone.in_call"), ended: t("phone.ended"), failed: t("phone.failed"),
+      extension: t("phone.extension"), microphoneDenied: t("dispatch.radio.microphone_denied")
+    }
     tag.script(json_escape(strings.to_json).html_safe, type: "application/json", id: "phone-strings")
   end
 

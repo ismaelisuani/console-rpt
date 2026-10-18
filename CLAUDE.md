@@ -171,10 +171,17 @@ browser (`storage/playable`). New recordings are looked for right after a radio
 stops receiving or transmitting (and every minute); open recordings pages
 refresh by themselves (Turbo refresh with morph). The Docker image needs sox, rsync and ssh.
 
-Phone: outgoing calls through `Server.phone_server` (the local one, else the
-first with WebRTC) with a token of level `phone` for the number; the server's
-dialplan sends them to `[console-phone-out]` (site rules; 600 = echo test).
-Keypad digits during a call go as DTMF. Permission `phone`.
+Phone: every user with the `phone` permission has an extension
+(`User::SipAccount`: next free from CONSOLE_EXTENSIONS, 200-299 by default,
+editable) and a generated SIP password. `Server::UserExtensions` writes their
+PJSIP endpoints and dialplan (`pjsip_console_users.conf`,
+`extensions_console_users.conf`, included by asterisk-rpt's web-console
+files) on the phone server (in place if local, over SSH if remote) and
+reloads Asterisk, after users or roles change (`ProvisionUserExtensionsJob`).
+The dispatch phone registers the user's extension (`lib/phone_agent.js`):
+status dot, incoming calls with ring/answer/reject, calls to other
+dispatchers' extensions, else out through `[console-phone-out]`. Shared
+address book (`Contact`) with per-user favorites in the phone.
 
-Next: incoming calls and transfer for the phone (needs per-user extensions
-and the site's PBX), radio configuration on the server, Kamal deployment.
+Next: transfer, calls from the site's PBX, radio configuration on the
+server, Kamal deployment.

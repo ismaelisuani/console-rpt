@@ -82,6 +82,7 @@ module ApplicationHelper
   NAV_ITEMS = [
     [ :dispatch, :view_dispatch, :dispatch_path, %w[dispatch] ],
     [ :recordings, :view_recordings, :recordings_path, %w[recordings] ],
+    [ :contacts, :phone, :contacts_path, %w[contacts] ],
     [ :radios, :manage_radios, :admin_radios_path, %w[admin/radios admin/radio_groups] ],
     [ :units, :manage_units, :units_path, %w[units] ],
     [ :servers, :manage_radios, :admin_servers_path, %w[admin/servers] ],

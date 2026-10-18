@@ -1,0 +1,9 @@
+<%= form_with model: contact, class: "card w-full space-y-4 p-4 md:p-5" do |form| %>
+  <%= render "shared/errors", record: contact %>
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="field"><%= form.label :name %><%= form.text_field :name, class: "input", required: true %></div>
+    <div class="field"><%= form.label :number %><%= form.telephone_field :number, class: "input", required: true %></div>
+    <div class="field"><%= form.label :organization %><%= form.text_field :organization, class: "input" %></div>
+  </div>
+  <%= render "shared/form_actions", form: form, cancel_path: contacts_path %>
+<% end %>

@@ -11,6 +11,10 @@ en:
     save: Save
   activerecord:
     attributes:
+      contact:
+        name: Name
+        number: Number
+        organization: Organization
       radio:
         active: Active
         name: Name
@@ -59,6 +63,7 @@ en:
         password_confirmation: Confirm password
         role: Role
         role_id: Role
+        sip_extension: Extension
         theme: Theme
         username: Username
     errors:
@@ -73,6 +78,9 @@ en:
               self: can't be turned off for your own user
           destroy_self: You can't delete your own user.
     models:
+      contact:
+        one: Contact
+        other: Contacts
       radio:
         one: Radio
         other: Radios
@@ -120,6 +128,7 @@ en:
         synced: Synced
     users:
       form:
+        extension_hint: Assigned automatically; change it if needed.
         keep_password: Leave empty to keep it
         optional: Optional
         radio_access: Radios
@@ -129,6 +138,12 @@ en:
   app_name: RPT Console
   authorization:
     denied: You don't have permission for that.
+  contacts:
+    index:
+      empty: No contacts yet.
+      favorite: Add to favorites
+      search: Search
+      unfavorite: Remove from favorites
   decoders:
     CCIR: Selcall CCIR
     DTMF: DTMF
@@ -232,6 +247,7 @@ en:
     es: Español
     pt-BR: Português (Brasil)
   nav:
+    contacts: Address book
     dispatch: Dispatch
     menu: Menu
     radios: Radios
@@ -270,22 +286,36 @@ en:
     view_dispatch: Dispatch
     view_recordings: Recordings
   phone:
+    address_book: Address book
+    answer: Answer
     call: Call
     calling: Calling…
     ended: Call ended
+    extension: Ext.
+    extension_short: ext. %{number}
+    extensions: Dispatchers
     failed: Could not call
+    favorites: Favorites
     hangup: Hang up
     idle: Idle
     in_call: In call
+    incoming: Incoming call
     mute: Mute
+    no_favorites: Mark contacts with ★ in the address book.
     number: Number
-    ready: Ready
     recent: Recent
+    reject: Reject
     resize: Drag to resize
+    ringing: Ringing…
+    status:
+      connecting: Connecting…
+      failed: Registration failed
+      registered: Registered
+      unavailable: No phone (extension or WebRTC server missing)
+      unregistered: Not registered
     title: Phone
     transfer: Transfer
     transfer_soon: Not available yet
-    unavailable: No server with WebRTC
   profiles:
     show:
       new_password: New password (optional)
@@ -299,10 +329,6 @@ en:
   radios:
     links:
       command_failed: "%{server} did not take the command: %{error}"
-      create:
-        sent: Linking %{radio} with %{other}…
-      destroy:
-        sent: Unlinking %{node} from %{radio}…
   recordings:
     index:
       all_radios: All radios

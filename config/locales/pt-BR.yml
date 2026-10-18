@@ -11,6 +11,10 @@ pt-BR:
     save: Salvar
   activerecord:
     attributes:
+      contact:
+        name: Nome
+        number: Número
+        organization: Organização
       radio:
         active: Ativo
         name: Nome
@@ -59,6 +63,7 @@ pt-BR:
         password_confirmation: Confirmar senha
         role: Perfil
         role_id: Perfil
+        sip_extension: Ramal
         theme: Tema
         username: Usuário
     errors:
@@ -73,6 +78,9 @@ pt-BR:
               self: não pode ser desativado no seu próprio usuário
           destroy_self: Você não pode excluir seu próprio usuário.
     models:
+      contact:
+        one: Contato
+        other: Contatos
       radio:
         one: Rádio
         other: Rádios
@@ -120,6 +128,7 @@ pt-BR:
         synced: Sincronizado
     users:
       form:
+        extension_hint: Atribuído automaticamente; altere se precisar.
         keep_password: Deixe vazio para manter
         optional: Opcional
         radio_access: Rádios
@@ -129,6 +138,12 @@ pt-BR:
   app_name: Console RPT
   authorization:
     denied: Você não tem permissão para isso.
+  contacts:
+    index:
+      empty: Ainda não há contatos.
+      favorite: Adicionar aos favoritos
+      search: Buscar
+      unfavorite: Remover dos favoritos
   decoders:
     CCIR: Selcall CCIR
     DTMF: DTMF
@@ -232,6 +247,7 @@ pt-BR:
     es: Español
     pt-BR: Português (Brasil)
   nav:
+    contacts: Agenda
     dispatch: Despacho
     menu: Menu
     radios: Rádios
@@ -270,22 +286,36 @@ pt-BR:
     view_dispatch: Despacho
     view_recordings: Gravações
   phone:
+    address_book: Agenda
+    answer: Atender
     call: Ligar
     calling: Ligando…
     ended: Chamada encerrada
+    extension: Ramal
+    extension_short: ramal %{number}
+    extensions: Despachantes
     failed: Não foi possível ligar
+    favorites: Favoritos
     hangup: Desligar
     idle: Em espera
     in_call: Em chamada
+    incoming: Chamada recebida
     mute: Mudo
+    no_favorites: Marque contatos com ★ na agenda.
     number: Número
-    ready: Pronto
     recent: Recentes
+    reject: Recusar
     resize: Arraste para mudar a largura
+    ringing: Chamando…
+    status:
+      connecting: Conectando…
+      failed: Falha no registro
+      registered: Registrado
+      unavailable: Sem telefone (falta o ramal ou o servidor WebRTC)
+      unregistered: Não registrado
     title: Telefone
     transfer: Transferir
     transfer_soon: Ainda não disponível
-    unavailable: Sem servidor com WebRTC
   profiles:
     show:
       new_password: Nova senha (opcional)
@@ -299,10 +329,6 @@ pt-BR:
   radios:
     links:
       command_failed: "%{server} não aceitou o comando: %{error}"
-      create:
-        sent: Interligando %{radio} com %{other}…
-      destroy:
-        sent: Desfazendo a interligação de %{radio} com %{node}…
   recordings:
     index:
       all_radios: Todos os rádios

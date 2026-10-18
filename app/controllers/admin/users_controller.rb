@@ -41,7 +41,7 @@ module Admin
       end
 
       def user_params
-        params.expect(user: [ :name, :username, :email_address, :role_id, :locale, :active, :password, :password_confirmation,
+        params.expect(user: [ :name, :username, :email_address, :sip_extension, :role_id, :locale, :active, :password, :password_confirmation,
           group_levels: {} ])
       end
   end
