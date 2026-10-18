@@ -17,6 +17,8 @@ module RecordingsHelper
       label = unit_identifier_label(recording.decoder, recording.unit_identifier)
       unit ? safe_join([ tag.b(unit_name(unit), class: "text-ink-strong"), tag.span("(#{label})", class: "text-muted") ], " ") :
         tag.span("#{label} · #{t("dispatch.radio.unregistered")}", class: "text-warn-ink")
+    elsif recording.user
+      tag.b(t("dispatch.radio.console_user", user: recording.user.name), class: "text-ink-strong")
     else
       recording.radio ? link_source_label(recording.radio, recording.other_node) : (recording.other_node || t("dispatch.radio.local"))
     end

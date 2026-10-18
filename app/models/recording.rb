@@ -1,5 +1,5 @@
 class Recording < ApplicationRecord
-  include Recording::ArchiveFile, Recording::Audio, Recording::Filtering
+  include Recording::ArchiveFile, Recording::Audio, Recording::Filtering, Recording::ConsoleOperator
 
   DIRECTIONS = %w[rx tx].freeze
 

@@ -9,7 +9,7 @@ class Server::RecordingsTest < ActiveSupport::TestCase
   end
 
   test "imports the local archive once" do
-    assert_difference -> { @server.recordings.count }, 2 do
+    assert_difference -> { @server.recordings.count }, 3 do
       @server.sync_recordings!
     end
     assert_no_difference -> { Recording.count } do
@@ -40,6 +40,16 @@ class Server::RecordingsTest < ActiveSupport::TestCase
 
     tx = @server.recordings.find_by!(link_id: "0100120261017103406444")
     assert_equal [ "tx", "2000", nil ], [ tx.direction, tx.other_node, tx.unit_identifier ]
+  end
+
+  test "a transmission from the console names the user who pressed PTT" do
+    zone = Time.find_zone("America/Argentina/Buenos_Aires")
+    radios(:base).radio_events.create!(kind: "transmit_start", user: users(:dispatcher), occurred_at: zone.parse("2026-10-17 10:34:21"))
+    @server.sync_recordings!
+
+    assert_equal users(:dispatcher), @server.recordings.find_by!(link_id: "0100120261017103420100").user
+    assert_nil @server.recordings.find_by!(link_id: "0100120261017103406444").user, "keyed up by a link, not the console"
+    assert_equal 1, Recording.filtered(unit: "dispatcher").count
   end
 
   test "remote servers need an SSH user" do

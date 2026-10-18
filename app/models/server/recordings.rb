@@ -56,6 +56,8 @@ module Server::Recordings
         attributes = Recording.attributes_from_archive(file.read, server: self, node_dir: file.dirname.basename.to_s)
         attributes&.merge(radio_id: radio_ids[attributes[:node]])
       end
-      rows.each_slice(500).sum { |slice| Recording.insert_all(slice, unique_by: %i[server_id link_id]).length }
+      ids = rows.each_slice(500).flat_map { |slice| Recording.insert_all(slice, unique_by: %i[server_id link_id]).rows.flatten }
+      Recording.assign_console_operators(Recording.where(id: ids))
+      ids.size
     end
 end

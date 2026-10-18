@@ -22,13 +22,16 @@ module Recording::Filtering
       scope
     end
 
-    # The ID itself, or the name or person of the unit it belongs to
+    # The ID itself, the name or person of the unit it belongs to, or the
+    # console user who talked
     def matching_unit(text)
       pattern = "%#{sanitize_sql_like(text.strip)}%"
       where(unit_identifier: text.strip).or(where(<<~SQL, pattern: pattern))
         EXISTS (SELECT 1 FROM units WHERE units.decoder = recordings.decoder
           AND units.identifier = recordings.unit_identifier
           AND (units.name ILIKE :pattern OR units.person ILIKE :pattern))
+        OR EXISTS (SELECT 1 FROM users WHERE users.id = recordings.user_id
+          AND (users.name ILIKE :pattern OR users.username ILIKE :pattern))
       SQL
     end
 

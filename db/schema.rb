@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_020000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -124,11 +124,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_010000) do
     t.string "audio_path", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["decoder", "unit_identifier"], name: "index_recordings_on_decoder_and_unit_identifier"
     t.index ["radio_id"], name: "index_recordings_on_radio_id"
     t.index ["server_id", "link_id"], name: "index_recordings_on_server_id_and_link_id", unique: true
     t.index ["server_id"], name: "index_recordings_on_server_id"
     t.index ["started_at"], name: "index_recordings_on_started_at"
+    t.index ["user_id"], name: "index_recordings_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -218,6 +220,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_010000) do
   add_foreign_key "radios", "users", column: "transmitted_by_user_id"
   add_foreign_key "recordings", "radios"
   add_foreign_key "recordings", "servers"
+  add_foreign_key "recordings", "users", on_delete: :nullify
   add_foreign_key "sessions", "users"
   add_foreign_key "users", "roles"
 end
