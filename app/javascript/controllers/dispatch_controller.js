@@ -4,25 +4,16 @@ import { Controller } from "@hotwired/stimulus"
 // - Arrows (or a click) focus a radio tile; a control inside it counts too.
 // - Space, while held: PTT on the focused radio. Shift + Space (or the big
 //   button): PTT on the radios included in the group PTT. Space never scrolls.
-// - The bar shows where Space talks and which radios the group PTT includes.
+// - The bar shows which radios the group PTT includes.
 export default class extends Controller {
-  static targets = [ "radio", "generalList", "generalButton", "spaceHint", "focusedName" ]
+  static targets = [ "radio", "generalList", "generalButton", "spaceHint" ]
 
   connect() {
-    this.focusChanged = () => this.showFocused()
-    document.addEventListener("focusin", this.focusChanged)
-    document.addEventListener("focusout", this.focusChanged)
     // after the radio tiles' own controllers connect
     requestAnimationFrame(() => {
       this.restoreGeneral()
       this.updateGeneral()
-      this.showFocused()
     })
-  }
-
-  disconnect() {
-    document.removeEventListener("focusin", this.focusChanged)
-    document.removeEventListener("focusout", this.focusChanged)
   }
 
   get focusedRadio() {
@@ -30,15 +21,6 @@ export default class extends Controller {
     return element && this.controllerFor(element)
   }
 
-  // "Space → <radio>" in the bar (after focus moves, so on the next frame)
-  showFocused() {
-    requestAnimationFrame(() => {
-      if (!this.hasFocusedNameTarget) return
-      const radio = this.focusedRadio
-      this.focusedNameTarget.textContent = radio ? radio.name : this.t("noFocus")
-      this.focusedNameTarget.classList.toggle("text-faint", !radio)
-    })
-  }
 
   get radios() {
     return this.radioTargets.map(element => this.controllerFor(element)).filter(Boolean)

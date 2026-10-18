@@ -197,7 +197,6 @@ es:
       mute: Silenciar
       muted: silencio
       no_audio: Sin audio
-      no_focus: elegí una radio (clic o flechas)
       no_links: ninguno
       no_permission: sin permiso
       no_webrtc: El servidor no tiene configurada la dirección WebRTC
@@ -237,7 +236,6 @@ es:
       reset_layout: Restablecer disposición
       resize_activity: Arrastrar para cambiar el tamaño
       shift_space: Shift + espacio
-      space_key: Espacio
   flash:
     created: "%{resource}: creado."
     destroyed: "%{resource}: eliminado."
