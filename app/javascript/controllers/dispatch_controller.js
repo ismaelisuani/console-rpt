@@ -1,10 +1,20 @@
 import { Controller } from "@hotwired/stimulus"
 
-// The dispatch screen's keyboard: arrows move the focus between the radio
-// tiles; Space is PTT on the focused radio (or on the selected ones) while it
-// is held. Also listen all and mute all.
+// The dispatch screen's keyboard and general PTT.
+// - Arrows (or a click) focus a radio tile.
+// - Space, while held: PTT on the radios included in the general PTT, or on
+//   the focused radio when none is included. It never scrolls the page.
+// - The general PTT bar shows which radios Space (or its button) talks on.
 export default class extends Controller {
-  static targets = [ "radio" ]
+  static targets = [ "radio", "generalList", "generalButton", "spaceHint" ]
+
+  connect() {
+    // after the radio tiles' own controllers connect
+    requestAnimationFrame(() => {
+      this.restoreGeneral()
+      this.updateGeneral()
+    })
+  }
 
   get radios() {
     return this.radioTargets.map(element => this.controllerFor(element)).filter(Boolean)
@@ -14,20 +24,23 @@ export default class extends Controller {
     return this.application.getControllerForElementAndIdentifier(element, "radio")
   }
 
+  get included() {
+    return this.radios.filter(radio => radio.selected)
+  }
+
   keydown(event) {
     if (this.typing(event)) return
     if (event.key.startsWith("Arrow")) return this.navigate(event)
-    if (event.code !== "Space" || event.repeat) return
-
-    const radios = this.pttRadios(event)
-    if (radios.length === 0) return
+    if (event.code !== "Space") return
+    // held Space repeats: none of it may scroll, nor press a focused button
     event.preventDefault()
-    radios.forEach(radio => radio.pttDown())
+    if (event.repeat) return
+    this.pttRadios().forEach(radio => radio.pttDown())
   }
 
   keyup(event) {
     if (event.code !== "Space" || this.typing(event)) return
-    if (this.radios.some(radio => radio.transmitting)) event.preventDefault()
+    event.preventDefault()
     this.releaseAll()
   }
 
@@ -36,13 +49,51 @@ export default class extends Controller {
     this.radios.forEach(radio => radio.pttUp())
   }
 
-  // The focused tile, else the selected ones (not when a button has the focus:
-  // Space presses it)
-  pttRadios(event) {
-    const focused = this.radioTargets.find(element => element === document.activeElement)
-    if (focused) return [ this.controllerFor(focused) ].filter(Boolean)
-    if (event.target.closest("button, a, [role=button]")) return []
-    return this.radios.filter(radio => radio.selected)
+  pttRadios() {
+    if (this.included.length) return this.included
+    const focused = this.radioTargets.find(element => element.contains(document.activeElement))
+    return focused ? [ this.controllerFor(focused) ].filter(Boolean) : []
+  }
+
+  // General PTT button
+  generalDown(event) {
+    event.preventDefault()
+    this.generalButtonTarget.setPointerCapture?.(event.pointerId)
+    this.included.forEach(radio => radio.pttDown())
+  }
+
+  generalUp() {
+    this.included.forEach(radio => radio.pttUp())
+  }
+
+  // Which radios the general PTT talks on; kept per group in this browser
+  updateGeneral() {
+    if (!this.hasGeneralListTarget) return
+    const included = this.included
+    this.generalListTarget.replaceChildren(...included.map(radio => {
+      const chip = document.createElement("span")
+      chip.className = radio.connected ? "badge bg-accent text-white" : "badge bg-warn-soft text-warn-ink"
+      chip.textContent = radio.connected ? radio.name : `${radio.name} · ${this.t("notListening")}`
+      return chip
+    }))
+    const ready = included.some(radio => radio.connected)
+    this.generalButtonTarget.disabled = !ready
+    this.spaceHintTarget.textContent = included.length ? this.t("spaceGeneral") : this.t("spaceFocused")
+    this.saveGeneral()
+  }
+
+  restoreGeneral() {
+    let ids = []
+    try { ids = JSON.parse(localStorage.getItem(this.storageKey)) || [] } catch {}
+    this.radios.forEach(radio => { if (ids.includes(radio.idValue)) radio.setGeneral(true) })
+  }
+
+  saveGeneral() {
+    try { localStorage.setItem(this.storageKey, JSON.stringify(this.included.map(radio => radio.idValue))) } catch {}
+  }
+
+  get storageKey() {
+    return `dispatch-general-${this.element.dataset.group || "all"}`
   }
 
   navigate(event) {
@@ -89,5 +140,9 @@ export default class extends Controller {
 
   typing(event) {
     return event.target.closest("input, textarea, select, [contenteditable], dialog")
+  }
+
+  t(key) {
+    return JSON.parse(document.getElementById("dispatch-strings").textContent)[key]
   }
 }

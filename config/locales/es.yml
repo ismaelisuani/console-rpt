@@ -163,6 +163,8 @@ es:
       disconnect: Escuchando
       disconnected: No escuchando
       drop_to_link: "⇄ Soltar para enlazar con %{radio}"
+      general: PTT general
+      general_hint: Incluir esta radio en el PTT general (el espacio transmite por todas las incluidas)
       incoming_audio: Audio entrante
       last: Último
       last_activity: última actividad
@@ -184,6 +186,7 @@ es:
       no_permission: sin permiso
       no_webrtc: El servidor no tiene configurada la dirección WebRTC
       node: nodo %{node}
+      not_listening: no escuchando
       open_server: abrir el servidor
       ptt: PTT
       ptt_hint: Mantener apretado para hablar (barra espaciadora en las radios seleccionadas)
@@ -191,6 +194,8 @@ es:
       register_unit: Registrar este ID
       resize: Arrastrar para cambiar el tamaño
       server_down: Sin conexión con el servidor
+      space_focused: El espacio transmite por la radio enfocada. Incluí radios en el PTT general para transmitir por varias a la vez.
+      space_general: 'El espacio (o este botón) transmite por:'
       stop_listening: Dejar de escuchar
       talking: Habla
       transceive: Transceptor
@@ -208,6 +213,7 @@ es:
         one: 1 radio · %{online} en línea
         other: "%{count} radios · %{online} en línea"
       empty: No hay radios para mostrar. Un administrador tiene que darte acceso a un grupo de radios.
+      general_ptt: PTT general
       layout: Radios por pantalla
       listen_all: Escuchar todas
       mute_all: Silenciar todas

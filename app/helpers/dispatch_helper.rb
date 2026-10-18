@@ -19,8 +19,8 @@ module DispatchHelper
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-inset has-[[data-transmitting]]:ring-tx",
       "data-[console-ptt]:border-tx data-[console-ptt]:ring-2 data-[console-ptt]:ring-inset data-[console-ptt]:ring-tx",
       "has-[[data-offline]]:opacity-55",
-      "data-[selected]:outline-2 data-[selected]:outline-dashed data-[selected]:-outline-offset-4 data-[selected]:outline-accent",
-      "focus:outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-4 focus-visible:outline-accent",
+      "data-[selected]:bg-accent-soft/40",
+      "focus:outline-2 focus:outline-solid focus:-outline-offset-4 focus:outline-accent",
       "can-link": radio_tile_access(radio)[:link])
   end
 
@@ -163,7 +163,7 @@ module DispatchHelper
   # Texts for the Stimulus controllers
   def dispatch_strings_tag
     strings = %w[muted connected disconnected ptt_hold connect_first connecting call_failed call_ended microphone_denied
-      microphone_hint audio_unreachable certificate_hint open_server unlink]
+      microphone_hint audio_unreachable certificate_hint open_server unlink not_listening space_general space_focused]
       .to_h { |key| [ key.camelize(:lower), t("dispatch.radio.#{key}") ] }
       .merge(unlinkPair: t("dispatch.radio.unlink_pair", a: "{a}", b: "{b}"),
         unlinkPairConfirm: t("dispatch.radio.unlink_pair_confirm", a: "{a}", b: "{b}"))

@@ -163,6 +163,8 @@ en:
       disconnect: Listening
       disconnected: Not listening
       drop_to_link: "⇄ Drop to link with %{radio}"
+      general: In general PTT
+      general_hint: Include this radio in the general PTT (Space talks on every included radio)
       incoming_audio: Incoming audio
       last: Last
       last_activity: last activity
@@ -184,6 +186,7 @@ en:
       no_permission: no permission
       no_webrtc: The server has no WebRTC address configured
       node: node %{node}
+      not_listening: not listening
       open_server: open the server
       ptt: PTT
       ptt_hint: Hold to talk (space bar on the selected radios)
@@ -191,6 +194,8 @@ en:
       register_unit: Register this ID
       resize: Drag to resize
       server_down: No connection with the server
+      space_focused: Space talks on the focused radio. Include radios in the general PTT to talk on several at once.
+      space_general: 'Space (or this button) talks on:'
       stop_listening: Stop listening
       talking: Talking
       transceive: Transceive
@@ -208,6 +213,7 @@ en:
         one: 1 radio · %{online} online
         other: "%{count} radios · %{online} online"
       empty: No radios to show. An administrator has to give you access to a group of radios.
+      general_ptt: General PTT
       layout: Radios per screen
       listen_all: Listen to all
       mute_all: Mute all
