@@ -24,8 +24,8 @@
             <td><%= server.radios.size %></td>
             <td><%= recordings_sync_status(server) %></td>
             <td>
-              <div class="flex justify-end gap-2">
-                <%= button_to t("admin.servers.index.check"), admin_server_connection_check_path(server), class: "btn btn-sm" %>
+              <div class="flex items-center justify-end gap-2">
+                <%= button_to t("admin.servers.index.check"), admin_server_connection_check_path(server), class: "btn btn-sm", form: { class: "flex" } %>
                 <%= render "shared/row_actions", record: server, edit_path: edit_admin_server_path(server), destroy_path: admin_server_path(server) %>
               </div>
             </td>

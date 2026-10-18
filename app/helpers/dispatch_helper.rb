@@ -13,7 +13,7 @@ module DispatchHelper
   end
 
   def radio_tile_classes(radio)
-    class_names("card relative flex min-w-0 flex-col gap-2 p-3 transition-colors lg:col-span-(--w) lg:row-span-(--h)",
+    class_names("card group relative flex min-w-0 flex-col gap-2 overflow-hidden p-3 pt-4 transition-colors lg:col-span-(--w) lg:row-span-(--h)",
       "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-inset has-[[data-receiving]]:ring-rx",
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-inset has-[[data-transmitting]]:ring-tx",
       "has-[[data-offline]]:opacity-55",

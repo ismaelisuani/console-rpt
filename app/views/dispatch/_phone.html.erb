@@ -8,14 +8,14 @@
     <h2 class="font-semibold text-ink-strong"><%= t("phone.title") %></h2>
     <span class="truncate text-xs text-faint" data-phone-target="status"><%= t("phone.not_registered") %></span>
   </div>
-  <div class="rounded-md border border-line bg-canvas p-2">
+  <div class="rounded-xl border border-line bg-raised/60 p-2.5">
     <div class="text-xs text-muted" data-phone-target="callState"><%= t("phone.idle") %></div>
     <input type="tel" class="w-full bg-transparent text-xl text-ink-strong outline-none" data-phone-target="number"
            placeholder="<%= t("phone.number") %>" aria-label="<%= t("phone.number") %>">
   </div>
   <div class="grid grid-cols-3 gap-1.5">
     <% [ %w[1], %w[2 ABC], %w[3 DEF], %w[4 GHI], %w[5 JKL], %w[6 MNO], %w[7 PQRS], %w[8 TUV], %w[9 WXYZ], %w[*], %w[0], %w[#] ].each do |key, letters| %>
-      <button type="button" class="flex flex-col items-center rounded-md border border-line bg-raised py-1.5 text-lg leading-tight text-ink-strong hover:border-line-strong"
+      <button type="button" class="flex flex-col items-center rounded-xl border border-line bg-surface py-1.5 text-lg leading-tight text-ink-strong shadow-xs transition-colors hover:border-accent/50 hover:bg-raised"
               data-action="phone#press" data-key="<%= key %>">
         <%= key %><span class="h-3 text-[9px] text-faint"><%= letters %></span>
       </button>

@@ -1,6 +1,6 @@
 <%# locals: (edit_path:, record:, destroy_path:) %>
-<div class="flex justify-end gap-2">
+<div class="flex items-center justify-end gap-2">
   <%= link_to t("actions.edit"), edit_path, class: "btn btn-sm" %>
   <%= button_to t("actions.delete"), destroy_path, method: :delete, class: "btn-danger btn-sm",
-        form: { data: { turbo_confirm: t("actions.confirm_delete", name: record.try(:name)) } } %>
+        form: { class: "flex", data: { turbo_confirm: t("actions.confirm_delete", name: record.try(:name)) } } %>
 </div>

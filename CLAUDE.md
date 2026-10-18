@@ -21,6 +21,10 @@ certified 22.8 with the RLink app_rpt. Local checkout of that repo:
   theme, switched from the top bar. Colors are CSS variables: use the palette
   utilities (`bg-canvas`, `text-ink`, `text-rx-ink`, ...) and define every new
   color for both themes in `app/assets/tailwind/application.css`.
+- Brand: RLink blue `#1d50a0` (accent) and green `#62b92c` (reception).
+  `brand_logo` shows the logo (or the "r" mark) in the version for the
+  theme (`app/assets/images/rlink-*.png`, `-dark` with the blue made light);
+  favicons in `public/` come from the mark.
 
 ## Code conventions
 

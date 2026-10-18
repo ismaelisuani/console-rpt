@@ -25,88 +25,102 @@
   --color-tx-ink: var(--tx-ink);
   --color-warn-soft: var(--warn-soft);
   --color-warn-ink: var(--warn-ink);
+  --shadow-card: var(--card-shadow);
+  --shadow-raised: var(--raised-shadow);
 }
 
+/* RLink palette: brand blue (accent) and brand green (reception) */
 :root, [data-theme="dark"] {
   color-scheme: dark;
-  --canvas: #10161e;
-  --panel: #141c27;
-  --surface: #172130;
-  --raised: #1f2b3a;
-  --line: #2b3746;
-  --line-strong: #3a495b;
+  --canvas: #0d131c;
+  --panel: #111a26;
+  --surface: #152030;
+  --raised: #1d2a3c;
+  --line: #26354a;
+  --line-strong: #36485f;
   --ink: #dbe4ee;
   --ink-strong: #ffffff;
   --muted: #9fb1c5;
-  --faint: #5c6b7c;
-  --accent: #2f8cff;
-  --accent-soft: #1d3a5c;
-  --accent-ink: #9cc8ff;
-  --rx: #14c38e;
-  --rx-soft: #0f3b2f;
-  --rx-ink: #34e0a6;
+  --faint: #61728a;
+  --accent: #3b7bdc;
+  --accent-soft: #16305a;
+  --accent-ink: #a7c6f5;
+  --rx: #62b92c;
+  --rx-soft: #16351a;
+  --rx-ink: #86d35a;
   --tx: #ff4d57;
   --tx-strong: #d6404a;
   --tx-soft: #4a161c;
   --tx-ink: #ff8088;
   --warn-soft: #33301c;
   --warn-ink: #e6cf6a;
+  --card-shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --raised-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.7);
+  --page-glow: radial-gradient(1200px 500px at 10% -10%, rgb(59 123 220 / 0.12), transparent 60%);
 }
 
 [data-theme="light"] {
   color-scheme: light;
-  --canvas: #eef2f6;
-  --panel: #e6ebf1;
+  --canvas: #f1f4f9;
+  --panel: #ffffff;
   --surface: #ffffff;
-  --raised: #e9eef4;
-  --line: #d3dbe5;
-  --line-strong: #b4c0cd;
-  --ink: #1d2733;
-  --ink-strong: #0b1220;
-  --muted: #52637a;
-  --faint: #8494a6;
-  --accent: #1f6fe0;
-  --accent-soft: #dbe8fb;
-  --accent-ink: #1755b3;
-  --rx: #0e9f6e;
-  --rx-soft: #d5f3e6;
-  --rx-ink: #05754e;
-  --tx: #e5484d;
-  --tx-strong: #d1343b;
-  --tx-soft: #fde1e2;
-  --tx-ink: #b4232a;
-  --warn-soft: #fbefc4;
-  --warn-ink: #7d5f00;
+  --raised: #eef2f8;
+  --line: #dfe5ee;
+  --line-strong: #c5cfdc;
+  --ink: #1e2a3b;
+  --ink-strong: #0c1830;
+  --muted: #5b6a80;
+  --faint: #8d9ab0;
+  --accent: #1d50a0;
+  --accent-soft: #e4ecf8;
+  --accent-ink: #1d50a0;
+  --rx: #4fa524;
+  --rx-soft: #e8f5df;
+  --rx-ink: #3a8516;
+  --tx: #e0464c;
+  --tx-strong: #cf3a40;
+  --tx-soft: #fde4e5;
+  --tx-ink: #b3262c;
+  --warn-soft: #fdf3d3;
+  --warn-ink: #876300;
+  --card-shadow: 0 1px 2px rgb(16 32 64 / 0.06), 0 4px 16px -6px rgb(16 32 64 / 0.10);
+  --raised-shadow: 0 12px 32px -12px rgb(16 32 64 / 0.25);
+  --page-glow: radial-gradient(1200px 500px at 10% -10%, rgb(29 80 160 / 0.08), transparent 60%), radial-gradient(900px 400px at 100% 0%, rgb(98 185 44 / 0.07), transparent 60%);
 }
 
 /* Button base, composable with @apply */
 @utility btn {
-  @apply inline-flex items-center justify-center gap-1.5 rounded-md border border-line-strong px-3 py-1.5 font-medium text-ink hover:bg-raised cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed;
+  @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-line-strong bg-surface px-3 py-1.5 font-medium text-ink transition-colors hover:border-accent/50 hover:bg-raised cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed;
 }
 
 @layer base {
-  body { @apply bg-canvas text-ink text-sm antialiased; }
+  body { @apply bg-canvas text-ink text-sm antialiased; background-image: var(--page-glow); background-attachment: fixed; }
 }
 
 @layer components {
-  .btn-primary { @apply btn border-accent bg-accent text-white hover:bg-accent/85; }
-  .btn-danger { @apply btn border-tx-strong text-tx-ink hover:bg-tx-soft; }
-  .btn-sm { @apply px-2 py-1 text-xs; }
-  .card { @apply rounded-lg border border-line bg-surface; }
-  .page-title { @apply text-lg font-semibold text-ink-strong; }
-  .field { @apply flex flex-col gap-1; }
-  .field label, .label { @apply text-xs font-medium text-muted; }
-  .input { @apply w-full rounded-md border border-line-strong bg-canvas px-3 py-2 text-ink placeholder:text-faint focus:border-accent focus:outline-none; }
-  .checkbox { @apply size-4 rounded border-line-strong bg-canvas accent-accent; }
+  .btn-primary { @apply btn border-accent bg-accent text-white shadow-sm hover:border-accent hover:bg-accent/90; }
+  .btn-danger { @apply btn border-tx-strong/60 text-tx-ink hover:border-tx-strong hover:bg-tx-soft; }
+  .btn-sm { @apply rounded-md px-2 py-1 text-xs; }
+  .card { @apply rounded-xl border border-line bg-surface shadow-card; }
+  .page-title { @apply text-xl font-semibold tracking-tight text-ink-strong; }
+  .field { @apply flex flex-col gap-1.5; }
+  .field label, .label { @apply text-xs font-semibold text-muted; }
+  .input { @apply w-full rounded-lg border border-line-strong bg-surface px-3 py-2 text-ink shadow-xs placeholder:text-faint focus:border-accent focus:ring-3 focus:ring-accent/15 focus:outline-none; }
+  .checkbox { @apply size-4 rounded border-line-strong bg-surface accent-accent; }
   .table { @apply w-full text-left; }
-  .table th { @apply border-b border-line px-3 py-2 text-xs font-medium uppercase tracking-wide text-muted; }
-  .table td { @apply border-b border-line/60 px-3 py-2 align-middle; }
-  .badge { @apply inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs; }
-  .flash-notice { @apply rounded-md border border-rx/40 bg-rx-soft px-3 py-2 text-rx-ink; }
-  .flash-alert { @apply rounded-md border border-tx/40 bg-tx-soft px-3 py-2 text-tx-ink; }
-  .errors { @apply rounded-md border border-tx/40 bg-tx-soft px-3 py-2 text-tx-ink; }
-  .nav-link { @apply border-b-2 border-transparent py-3 text-muted hover:text-ink-strong; }
-  .nav-link.active { @apply border-accent text-ink-strong; }
+  .table th { @apply border-b border-line bg-raised/60 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-muted; }
+  .table td { @apply border-b border-line/70 px-4 py-2.5 align-middle; }
+  .table tbody tr { @apply transition-colors hover:bg-raised/50; }
+  .table tbody tr:last-child td { @apply border-b-0; }
+  .badge { @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium; }
+  .flash-notice { @apply rounded-lg border border-rx/40 bg-rx-soft px-3 py-2 text-rx-ink shadow-card; }
+  .flash-alert { @apply rounded-lg border border-tx/40 bg-tx-soft px-3 py-2 text-tx-ink shadow-card; }
+  .errors { @apply rounded-lg border border-tx/40 bg-tx-soft px-3 py-2 text-tx-ink; }
+  .nav-link { @apply rounded-lg px-3 py-1.5 font-medium text-muted transition-colors hover:bg-raised hover:text-ink-strong; }
+  .nav-link.active { @apply bg-accent-soft text-accent-ink; }
+  /* The logo that fits the theme */
+  .logo-light { @apply [[data-theme=dark]_&]:hidden; }
+  .logo-dark { @apply hidden [[data-theme=dark]_&]:block; }
 }
 
 /* Level meter of a radio that is receiving or transmitting */

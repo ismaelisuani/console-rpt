@@ -1,4 +1,11 @@
 module ApplicationHelper
+  # The RLink logo (or its "r" mark), in the version that fits the theme
+  def brand_logo(css_class, mark: false)
+    name = mark ? "rlink-mark" : "rlink-logo"
+    image_tag("#{name}.png", alt: "RLink", class: "logo-light #{css_class}") +
+      image_tag("#{name}-dark.png", alt: "RLink", class: "logo-dark #{css_class}")
+  end
+
   def initials(name)
     name.to_s.split.first(2).map { |word| word[0] }.join.upcase
   end

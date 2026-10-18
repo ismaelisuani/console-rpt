@@ -1,12 +1,12 @@
-<header class="relative flex h-12 shrink-0 items-center gap-3 border-b border-line bg-surface px-3 md:gap-6 md:px-4" data-controller="toggle">
+<header class="relative z-20 flex h-14 shrink-0 items-center gap-3 border-b border-line bg-surface/95 px-3 shadow-card backdrop-blur md:gap-5 md:px-5" data-controller="toggle">
   <button type="button" class="btn btn-sm size-8 p-0 lg:hidden" data-action="toggle#toggle"
           title="<%= t("nav.menu") %>" aria-label="<%= t("nav.menu") %>" aria-expanded="false" data-toggle-target="button"><%= icon(:menu, size: "size-4") %></button>
-  <%= link_to root_path, class: "flex shrink-0 items-center gap-2 font-semibold text-ink-strong" do %>
-    <span class="size-5 rounded bg-gradient-to-br from-accent to-rx"></span>
-    <span class="hidden sm:inline"><%= t("app_name") %></span>
+  <%= link_to root_path, class: "flex shrink-0 items-center gap-2.5" do %>
+    <%= brand_logo("h-6 w-auto") %>
+    <span class="hidden border-l border-line pl-2.5 text-xs font-semibold uppercase tracking-wider text-muted sm:inline"><%= t("app_name") %></span>
   <% end %>
 
-  <nav class="hidden items-center gap-5 self-stretch lg:flex">
+  <nav class="hidden items-center gap-1 lg:flex">
     <% nav_items.each do |item| %>
       <%= link_to item[:label], item[:path], class: class_names("nav-link flex items-center", active: item[:active]) %>
     <% end %>
@@ -25,7 +25,7 @@
     <%= button_to t("sessions.sign_out"), session_path, method: :delete, class: "btn btn-sm" %>
   </div>
 
-  <nav class="absolute inset-x-0 top-12 z-30 flex flex-col border-b border-line bg-surface p-2 shadow-lg lg:hidden" data-toggle-target="panel" hidden>
+  <nav class="absolute inset-x-0 top-14 z-30 flex flex-col border-b border-line bg-surface p-2 shadow-lg lg:hidden" data-toggle-target="panel" hidden>
     <% nav_items.each do |item| %>
       <%= link_to item[:label], item[:path], class: class_names("rounded-md px-3 py-2 hover:bg-raised", "bg-raised text-ink-strong": item[:active]) %>
     <% end %>

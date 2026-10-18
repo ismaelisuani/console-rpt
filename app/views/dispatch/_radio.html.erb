@@ -12,6 +12,8 @@
          data-radio-can-transmit-value="<%= access[:transmit] %>"
          data-action="click->radio#select">
   <%= turbo_stream_from radio.broadcast_stream %>
+  <%# The state at a glance: a strip on top of the tile %>
+  <span class="absolute inset-x-0 top-0 h-1 bg-line-strong/60 transition-colors group-has-[[data-receiving]]:bg-rx group-has-[[data-transmitting]]:bg-tx group-has-[[data-offline]]:bg-faint" aria-hidden="true"></span>
   <audio data-radio-target="audio" autoplay hidden></audio>
   <header class="flex min-w-0 items-center gap-2">
     <span class="-ml-1 cursor-grab select-none px-0.5 text-faint hover:text-ink active:cursor-grabbing" title="<%= t("dispatch.radio.move") %>"
@@ -49,7 +51,7 @@
     </button>
     <button type="button" class="btn flex-1" data-action="radio#openLink" <%= "disabled" unless access[:link] %>>⇄ <%= t("dispatch.radio.link") %></button>
     <% if access[:transmit] %>
-      <button type="button" class="btn flex-[1.4] flex-col gap-0 py-1 font-bold data-[pressed]:border-tx data-[pressed]:bg-tx-strong" data-radio-target="ptt"
+      <button type="button" class="btn flex-[1.4] flex-col gap-0 rounded-xl py-1.5 font-bold enabled:border-accent/60 enabled:text-accent-ink data-[pressed]:border-tx data-[pressed]:bg-tx-strong data-[pressed]:text-white data-[pressed]:shadow-[0_0_0_4px] data-[pressed]:shadow-tx/25" data-radio-target="ptt"
               data-action="pointerdown->radio#pttDown pointerup->radio#pttUp pointerleave->radio#pttUp" disabled
               title="<%= t("dispatch.radio.ptt_hint") %>">
         <span class="text-base"><%= t("dispatch.radio.ptt") %></span>

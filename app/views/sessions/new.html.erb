@@ -1,9 +1,10 @@
 <% content_for :title, t("sessions.sign_in") %>
-<div class="card p-6">
-  <div class="mb-5 flex items-center gap-2 text-lg font-semibold text-ink-strong">
-    <span class="size-6 rounded bg-gradient-to-br from-accent to-rx"></span>
-    <%= t("app_name") %>
-  </div>
+<div class="mb-6 flex flex-col items-center gap-3">
+  <%= brand_logo("h-16 w-auto") %>
+  <span class="text-sm font-semibold uppercase tracking-[0.2em] text-muted"><%= t("app_name") %></span>
+</div>
+<div class="card rounded-2xl p-6 shadow-raised md:p-7">
+  <h1 class="mb-5 text-lg font-semibold text-ink-strong"><%= t("sessions.sign_in") %></h1>
 
   <%= form_with url: session_path, class: "space-y-4" do |form| %>
     <div class="field">
