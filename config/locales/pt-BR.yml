@@ -230,10 +230,8 @@ pt-BR:
         other: "%{count} rádios · %{online} online"
       empty: Não há rádios para mostrar. Um administrador precisa lhe dar acesso a um grupo de rádios.
       general_ptt: PTT em grupo
-      layout: Rádios por tela
       listen_all: Escutar todos
       mute_all: Silenciar todos
-      reset_layout: Restaurar disposição
       resize_activity: Arraste para redimensionar
       shift_space: Shift + espaço
   flash:

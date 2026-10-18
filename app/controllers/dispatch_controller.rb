@@ -1,6 +1,4 @@
 class DispatchController < ApplicationController
-  LAYOUTS = %w[4 6 9].freeze
-
   before_action { redirect_to profile_path unless can?(:view_dispatch) }
 
   def show
@@ -9,8 +7,8 @@ class DispatchController < ApplicationController
     @group = @groups.find { |group| group.id == params[:group_id].to_i }
     @dispatch_layout = Current.user.dispatch_layout_for(@group)
     @radios = @dispatch_layout.arrange(radios_to_show)
-    @layout = params[:layout].presence_in(LAYOUTS) || cookies[:dispatch_layout].presence_in(LAYOUTS) || "6"
-    cookies.permanent[:dispatch_layout] = @layout
+    # three columns and three rows per screen; users arrange and size the tiles
+    @layout = "9"
     @events = RadioEvent.where(radio: @radios).recent.limit(30).includes(:radio, :user).to_a
   end
 

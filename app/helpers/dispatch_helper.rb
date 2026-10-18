@@ -13,7 +13,7 @@ module DispatchHelper
   end
 
   def radio_tile_classes(radio)
-    class_names("card group relative flex min-w-0 flex-col gap-2 overflow-hidden p-3 pt-4 transition-colors",
+    class_names("card group relative flex min-w-0 flex-col gap-1.5 overflow-hidden p-3 pt-3.5 transition-colors",
       "lg:[grid-column:var(--x,auto)/span_var(--w)] lg:[grid-row:var(--y,auto)/span_var(--h)]",
       "has-[[data-receiving]]:border-rx has-[[data-receiving]]:ring-1 has-[[data-receiving]]:ring-inset has-[[data-receiving]]:ring-rx",
       "has-[[data-transmitting]]:border-tx has-[[data-transmitting]]:ring-1 has-[[data-transmitting]]:ring-inset has-[[data-transmitting]]:ring-tx",
@@ -119,7 +119,7 @@ module DispatchHelper
   def dispatch_grid_classes
     "grid min-h-0 flex-1 grid-flow-row-dense gap-3 overflow-y-auto grid-cols-1 sm:grid-cols-2 auto-rows-[minmax(min-content,auto)] " \
       "lg:grid-cols-[repeat(var(--columns),minmax(0,1fr))] " \
-      "lg:auto-rows-[minmax(19rem,calc((100%_-_(var(--rows)_-_1)_*_0.75rem)_/_var(--rows)))]"
+      "lg:auto-rows-[minmax(15.5rem,calc((100%_-_(var(--rows)_-_1)_*_0.75rem)_/_var(--rows)))]"
   end
 
   def dispatch_grid_style(layout)

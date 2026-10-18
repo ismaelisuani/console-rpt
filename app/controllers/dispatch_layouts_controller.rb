@@ -7,11 +7,6 @@ class DispatchLayoutsController < ApplicationController
     head :no_content
   end
 
-  def destroy
-    @dispatch_layout.destroy if @dispatch_layout.persisted?
-    redirect_to dispatch_path(group_id: @dispatch_layout.radio_group_id)
-  end
-
   private
     def set_dispatch_layout
       group = Current.user.visible_radio_groups.find_by(id: params[:group_id])

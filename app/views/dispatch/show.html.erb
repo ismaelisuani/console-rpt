@@ -19,14 +19,6 @@
       <div class="flex flex-wrap items-center gap-2 lg:ml-auto">
         <button type="button" class="btn btn-sm" data-action="dispatch#connectAll"><%= t(".listen_all") %></button>
         <button type="button" class="btn btn-sm" data-action="dispatch#muteAll"><%= t(".mute_all") %></button>
-        <% if @dispatch_layout.persisted? %>
-          <%= button_to t(".reset_layout"), dispatch_layout_path(group_id: @group&.id), method: :delete, class: "btn btn-sm" %>
-        <% end %>
-        <div class="hidden gap-1 lg:flex" title="<%= t(".layout") %>">
-          <% DispatchController::LAYOUTS.each do |layout| %>
-            <%= link_to layout, dispatch_path(group_id: @group&.id, layout: layout), class: class_names("btn btn-sm", "bg-raised text-ink-strong": layout == @layout) %>
-          <% end %>
-        </div>
       </div>
     </div>
 

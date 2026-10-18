@@ -14,12 +14,4 @@ class DispatchLayoutsTest < ActionDispatch::IntegrationTest
       assert_match "--w: 2", tiles.first["style"]
     end
   end
-
-  test "reset" do
-    users(:dispatcher).dispatch_layout_for(radio_groups(:north)).update!(tiles: [ { radio_id: radios(:mobile).id } ])
-    delete dispatch_layout_path(group_id: radio_groups(:north).id)
-
-    assert_redirected_to dispatch_path(group_id: radio_groups(:north).id)
-    assert_not DispatchLayout.exists?(user: users(:dispatcher))
-  end
 end

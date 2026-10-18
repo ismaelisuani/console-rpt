@@ -230,10 +230,8 @@ en:
         other: "%{count} radios · %{online} online"
       empty: No radios to show. An administrator has to give you access to a group of radios.
       general_ptt: Group PTT
-      layout: Radios per screen
       listen_all: Listen to all
       mute_all: Mute all
-      reset_layout: Reset layout
       resize_activity: Drag to resize
       shift_space: Shift + Space
   flash:
