@@ -1,7 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Radio tiles arranged by the user: drag a tile by its grip to move it, drag
-// its corner to resize it (in grid cells). Every change is saved.
+// Radio tiles arranged by the user: drag a tile by its grip to move it (or
+// drop it in the middle of another radio to link them), drag its corner to
+// resize it (in grid cells). Every change is saved.
 export default class extends Controller {
   static targets = [ "tile" ]
   static values = { url: String, columns: Number, maxHeight: { type: Number, default: 3 } }
@@ -23,14 +24,21 @@ export default class extends Controller {
     if (!this.dragged) return
     event.preventDefault()
     const tile = event.target.closest("[data-arrange-target=tile]")
-    if (!tile || tile === this.dragged) return
+    if (!tile || tile === this.dragged) return this.setLinkTarget(null)
     const box = tile.getBoundingClientRect()
+    // the middle of another radio: link; its sides: move there
+    const middle = Math.abs(event.clientX - (box.left + box.width / 2)) < box.width / 4 &&
+      Math.abs(event.clientY - (box.top + box.height / 2)) < box.height / 4
+    if (middle && this.dragged.classList.contains("can-link")) return this.setLinkTarget(tile)
+    this.setLinkTarget(null)
     const after = event.clientX - box.left > box.width / 2
     tile.parentNode.insertBefore(this.dragged, after ? tile.nextSibling : tile)
+    this.moved = true
   }
 
   drop(event) {
     event.preventDefault()
+    if (this.linkTarget) this.link(this.dragged, this.linkTarget)
   }
 
   dragEnd() {
@@ -38,7 +46,26 @@ export default class extends Controller {
     this.dragged.classList.remove("opacity-40")
     this.dragged.draggable = false
     this.dragged = null
-    this.save()
+    this.setLinkTarget(null)
+    if (this.moved) this.save()
+    this.moved = false
+  }
+
+  setLinkTarget(tile) {
+    if (this.linkTarget === tile) return
+    this.linkTarget?.removeAttribute("data-link-drop")
+    this.linkTarget = tile
+    tile?.setAttribute("data-link-drop", "")
+  }
+
+  // The new link shows up (line between the tiles) when app_rpt reports it
+  link(tile, other) {
+    fetch(tile.dataset.linkUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json",
+        "X-CSRF-Token": document.querySelector("meta[name=csrf-token]")?.content },
+      body: JSON.stringify({ other_radio_id: other.dataset.radioId, mode: "transceive" })
+    })
   }
 
   // Resizing

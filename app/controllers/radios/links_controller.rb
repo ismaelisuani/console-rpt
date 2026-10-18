@@ -5,7 +5,10 @@ class Radios::LinksController < ApplicationController
   def create
     other = Current.user.radios.find(params.expect(:other_radio_id))
     @radio.link_to!(other, mode: params[:mode], by: Current.user)
-    redirect_back_or_to dispatch_path, notice: t(".sent", radio: @radio.name, other: other.name)
+    respond_to do |format|
+      format.html { redirect_back_or_to dispatch_path, notice: t(".sent", radio: @radio.name, other: other.name) }
+      format.json { head :no_content }
+    end
   rescue *Server::Ami::CONNECTION_ERRORS => e
     command_failed(e)
   end
@@ -15,7 +18,10 @@ class Radios::LinksController < ApplicationController
     return head :unprocessable_entity unless node.match?(/\A\d+\z/)
 
     @radio.unlink!(node, by: Current.user)
-    redirect_back_or_to dispatch_path, notice: t(".sent", radio: @radio.name, node: node)
+    respond_to do |format|
+      format.html { redirect_back_or_to dispatch_path, notice: t(".sent", radio: @radio.name, node: node) }
+      format.json { head :no_content }
+    end
   rescue *Server::Ami::CONNECTION_ERRORS => e
     command_failed(e)
   end

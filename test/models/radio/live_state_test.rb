@@ -57,6 +57,12 @@ class Radio::LiveStateTest < ActiveSupport::TestCase
   test "links from rpt nodes on connect" do
     @radio.links_from_node_list("T2000, R2010, C2020")
     assert_equal [ { "node" => "2000", "mode" => "transceive" }, { "node" => "2010", "mode" => "monitor" } ], @radio.links
+
+    @radio.links_from_node_list("\n*** CONNECTED NODES ***\n\n2000\n")
+    assert_equal [ { "node" => "2000", "mode" => "transceive" } ], @radio.links
+
+    @radio.links_from_node_list("\n*** CONNECTED NODES ***\n\n<NONE>\n")
+    assert_empty @radio.links
   end
 
   test "a server going down clears the state of its radios" do

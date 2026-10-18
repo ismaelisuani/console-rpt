@@ -19,10 +19,11 @@ module Radio::Links
     run_link_function("*1", node, by)
   end
 
-  # "rpt nodes" output: T<node> transceive, R<node> monitor, C<node> connecting
+  # "rpt nodes" output: <node> or T<node> transceive, R<node> monitor,
+  # C<node> still connecting (skipped)
   def links_from_node_list(output)
-    current = output.to_s.scan(/\b([TR])(\d+)\b/).map do |mode, node|
-      { "node" => node, "mode" => mode == "R" ? "monitor" : "transceive" }
+    current = output.to_s.scan(/\b([TRC]?)(\d+)\b/).filter_map do |mode, node|
+      { "node" => node, "mode" => mode == "R" ? "monitor" : "transceive" } unless mode == "C"
     end
     return if current == links
 

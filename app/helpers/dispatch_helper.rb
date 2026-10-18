@@ -46,7 +46,7 @@ module DispatchHelper
 
   def radio_state_data(radio)
     { receiving: :receiving, transmitting: :transmitting, offline: :offline }.slice(radio_status(radio))
-      .transform_values { "" }
+      .transform_values { "" }.merge(links: radio.links.to_json, links_target: "state")
   end
 
   STATUS_BAR = {
@@ -154,8 +154,10 @@ module DispatchHelper
   # Texts for the Stimulus controllers
   def dispatch_strings_tag
     strings = %w[muted connected disconnected ptt_hold connect_first connecting call_failed call_ended microphone_denied
-      microphone_hint audio_unreachable certificate_hint open_server]
+      microphone_hint audio_unreachable certificate_hint open_server unlink]
       .to_h { |key| [ key.camelize(:lower), t("dispatch.radio.#{key}") ] }
+      .merge(unlinkPair: t("dispatch.radio.unlink_pair", a: "{a}", b: "{b}"),
+        unlinkPairConfirm: t("dispatch.radio.unlink_pair_confirm", a: "{a}", b: "{b}"))
     tag.script(json_escape(strings.to_json).html_safe, type: "application/json", id: "dispatch-strings")
   end
 

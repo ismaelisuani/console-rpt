@@ -155,19 +155,21 @@ pt-BR:
       call_failed: Não foi possível conectar
       certificate_hint: 'O navegador não conseguiu chegar ao áudio do servidor. Se o certificado for autoassinado: abra o servidor, aceite o certificado (depois a página mostra um erro, é normal), volte e conecte de novo:'
       connect: Conectar
-      connect_first: conecte primeiro
-      connected: Conectado
+      connect_first: conecte o áudio
+      connected: Escutando
       connecting: Conectando…
+      console_audio: O áudio deste console com o rádio (o estado do rádio é a barra abaixo)
       console_user: Console · %{user}
       disconnect: Desconectar
-      disconnected: Desconectado
+      disconnected: Não escutando
+      drop_to_link: "⇄ Solte para interligar com %{radio}"
       incoming_audio: Áudio entrando
       last: Último
       last_activity: última atividade
       link: Interligar
       link_title: Interligar %{radio} com
       links: Interligações
-      local: Local
+      local: Anúncio do nó
       microphone_denied: Microfone bloqueado
       microphone_hint: Permita o microfone para este site no navegador (e abra o console por https ou neste mesmo computador).
       mode:
@@ -195,6 +197,8 @@ pt-BR:
       transmitting: Transmitindo
       unlink: Desfazer interligação
       unlink_confirm: Desfazer a interligação com %{node}?
+      unlink_pair: Desfazer a interligação de %{a} e %{b}
+      unlink_pair_confirm: Desfazer a interligação de %{a} e %{b}?
       unregistered: não cadastrado
       volume: Volume
     show:

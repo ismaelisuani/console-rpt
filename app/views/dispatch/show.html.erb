@@ -32,8 +32,8 @@
     <% if @radios.empty? %>
       <div class="card flex flex-1 items-center justify-center p-10 text-muted"><%= t(".empty") %></div>
     <% else %>
-      <div class="<%= dispatch_grid_classes %>" style="<%= dispatch_grid_style(@layout) %>"
-           data-controller="arrange" data-arrange-url-value="<%= dispatch_layout_path(group_id: @group&.id) %>"
+      <div class="relative <%= dispatch_grid_classes %>" style="<%= dispatch_grid_style(@layout) %>"
+           data-controller="arrange links" data-arrange-url-value="<%= dispatch_layout_path(group_id: @group&.id) %>"
            data-arrange-columns-value="<%= dispatch_grid_columns(@layout) %>"
            data-action="dragstart->arrange#dragStart dragover->arrange#dragOver drop->arrange#drop dragend->arrange#dragEnd">
         <% @radios.each do |radio| %>

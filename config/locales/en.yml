@@ -155,19 +155,21 @@ en:
       call_failed: Could not connect
       certificate_hint: 'The browser couldn''t reach the server''s audio. If its certificate is self-signed: open the server, accept the certificate (the page then shows an error, that''s fine), come back and connect again:'
       connect: Connect
-      connect_first: connect first
-      connected: Connected
+      connect_first: connect the audio first
+      connected: Listening
       connecting: Connecting…
+      console_audio: This console's audio for the radio (the radio's own state is the bar below)
       console_user: Console · %{user}
       disconnect: Disconnect
-      disconnected: Disconnected
+      disconnected: Not listening
+      drop_to_link: "⇄ Drop to link with %{radio}"
       incoming_audio: Incoming audio
       last: Last
       last_activity: last activity
       link: Link
       link_title: Link %{radio} with
       links: Links
-      local: Local
+      local: Node announcement
       microphone_denied: Microphone blocked
       microphone_hint: Allow the microphone for this site in the browser (and open the console over https or on this computer).
       mode:
@@ -195,6 +197,8 @@ en:
       transmitting: Transmitting
       unlink: Unlink
       unlink_confirm: Unlink %{node}?
+      unlink_pair: Unlink %{a} and %{b}
+      unlink_pair_confirm: Unlink %{a} and %{b}?
       unregistered: unregistered
       volume: Volume
     show:

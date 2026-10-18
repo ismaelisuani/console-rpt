@@ -129,3 +129,37 @@
   50% { height: 0.9rem; }
 }
 .meter-bar { animation: meter 0.7s ease-in-out infinite; }
+
+/* Links between radio tiles (links_controller.js): a bridge across the gap
+   with a chain button on the seam, and the linked tiles framed in blue */
+[data-linked] { border-color: var(--accent); }
+.link-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 14 6;
+  animation: link-flow 0.8s linear infinite;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 50%, transparent));
+  transition: opacity 0.6s, stroke-width 0.6s;
+}
+.link-line-monitor { stroke: var(--warn-ink); stroke-dasharray: 4 8; }
+.link-line-new { animation: link-draw 0.6s ease-out, link-flow 0.8s linear 0.6s infinite; }
+.link-line-breaking { stroke: var(--tx); animation: link-flow 0.25s linear infinite; }
+.link-line-broken { stroke: var(--tx); stroke-dasharray: 2 18; opacity: 0; stroke-width: 12; animation: none; }
+@keyframes link-flow { to { stroke-dashoffset: -20; } }
+@keyframes link-draw {
+  from { stroke-dasharray: 0 calc(var(--length) * 1px); }
+  to { stroke-dasharray: calc(var(--length) * 1px) 0; }
+}
+.link-chain {
+  @apply absolute flex size-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-2 border-accent bg-surface text-accent-ink shadow-raised ring-4 ring-accent/20 transition hover:scale-110 hover:border-tx hover:bg-tx-soft hover:text-tx-ink hover:ring-tx/25 disabled:cursor-default disabled:hover:scale-100 disabled:hover:border-accent disabled:hover:bg-surface disabled:hover:text-accent-ink;
+}
+.link-chain svg { @apply size-5; }
+
+/* A radio tile under a dragged one: dropping links them */
+[data-link-drop] { outline: 2px dashed var(--accent); outline-offset: -4px; }
+[data-link-drop]::after {
+  content: attr(data-link-drop-label);
+  @apply absolute inset-0 z-20 flex items-center justify-center rounded-xl bg-accent-soft/85 p-4 text-center text-base font-semibold text-accent-ink;
+}

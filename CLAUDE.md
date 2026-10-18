@@ -102,6 +102,10 @@ per screen, by group) with an activity log below. Each tile shows:
 - Tiles can be moved (drag the grip) and resized (drag the corner, in grid
   cells); each user's arrangement is saved per radio group (`DispatchLayout`)
   and can be reset.
+- Links on screen (`links_controller.js`): linked tiles are framed and joined
+  by an animated seam (neighbours) or line (far apart) with a chain button
+  that unlinks them; dropping a tile in the middle of another links them.
+  The link data comes from each tile's live state (`data-links`).
 - Keyboard: arrows move the focus between tiles (by screen position); Space
   is PTT on the focused tile (or the selected ones) while held.
 - The phone (width) and the activity log (height) are resized with the same

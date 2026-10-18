@@ -3,7 +3,9 @@
 <article id="<%= dom_id(radio) %>"
          class="<%= radio_tile_classes(radio) %>"
          style="<%= radio_tile_style(@dispatch_layout, radio) %>"
-         tabindex="0" aria-label="<%= radio.name %>"
+         tabindex="0" aria-label="<%= radio.name %>" data-node="<%= radio.node %>" data-name="<%= radio.name %>"
+         data-unlink-url="<%= radio_links_path(radio) %>" data-link-url="<%= radio_links_path(radio) %>"
+         data-link-drop-label="<%= t("dispatch.radio.drop_to_link", radio: radio.name) %>"
          data-arrange-target="tile" data-radio-id="<%= radio.id %>" <%= radio_tile_size_data(@dispatch_layout, radio) %>
          data-controller="radio" data-dispatch-target="radio"
          data-radio-id-value="<%= radio.id %>" data-radio-node-value="<%= radio.node %>"
@@ -25,7 +27,7 @@
 
   <div class="flex items-center gap-1.5 text-xs">
     <%= radio_mode_badge(radio) %>
-    <span class="badge bg-raised text-muted" data-radio-target="connectionBadge"><%= t("dispatch.radio.disconnected") %></span>
+    <span class="badge bg-raised text-muted" title="<%= t("dispatch.radio.console_audio") %>"><%= icon(:headphones) %><span data-radio-target="connectionBadge"><%= t("dispatch.radio.disconnected") %></span></span>
   </div>
 
   <%= render "dispatch/radio_state", radio: radio %>

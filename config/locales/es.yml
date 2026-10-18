@@ -155,19 +155,21 @@ es:
       call_failed: No se pudo conectar
       certificate_hint: 'El navegador no pudo llegar al audio del servidor. Si su certificado es autofirmado: abrí el servidor, aceptá el certificado (después la página muestra un error, es normal), volvé y conectá de nuevo:'
       connect: Conectar
-      connect_first: conectar primero
-      connected: Conectada
+      connect_first: conectá el audio
+      connected: Escuchando
       connecting: Conectando…
+      console_audio: El audio de esta consola con la radio (el estado de la radio es la barra de abajo)
       console_user: Consola · %{user}
       disconnect: Desconectar
-      disconnected: Desconectada
+      disconnected: No escuchando
+      drop_to_link: "⇄ Soltar para enlazar con %{radio}"
       incoming_audio: Audio entrante
       last: Último
       last_activity: última actividad
       link: Enlazar
       link_title: Enlazar %{radio} con
       links: Enlaces
-      local: Local
+      local: Anuncio del nodo
       microphone_denied: Micrófono bloqueado
       microphone_hint: Permití el micrófono para este sitio en el navegador (y abrí la consola por https o desde esta misma computadora).
       mode:
@@ -195,6 +197,8 @@ es:
       transmitting: Transmitiendo
       unlink: Desenlazar
       unlink_confirm: "¿Desenlazar %{node}?"
+      unlink_pair: Desenlazar %{a} y %{b}
+      unlink_pair_confirm: "¿Desenlazar %{a} y %{b}?"
       unregistered: sin registrar
       volume: Volumen
     show:
