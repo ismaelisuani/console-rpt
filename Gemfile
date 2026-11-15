@@ -69,6 +69,6 @@ end
 
 gem "rails-i18n", "~> 8.1"
 
-gem "i18n-tasks", "~> 1.1", groups: [ :development, :test ]
+gem "i18n-tasks", "~> 1.2", groups: [ :development, :test ]
 
 gem "csv", "~> 3.3"
